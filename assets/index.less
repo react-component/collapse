@@ -1,0 +1,15 @@
+@prefixCls: rc-accordion;
+
+.@{prefixCls} {
+  &-content {
+    height: 0;
+    opacity: 0;
+    transition: all 0.4s ease-in;
+    overflow: hidden;
+  }
+
+  &-content-active {
+    opacity: 1;
+    height: auto;
+  }
+}
