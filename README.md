@@ -27,11 +27,6 @@ rc-accordion ui component for react
 [download-image]: https://img.shields.io/npm/dm/rc-rc-accordion.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-rc-accordion
 
-## Screenshots
-
-<img src="http://gtms02.alicdn.com/tps/i2/TB1luFKHXXXXXb3XXXXl4OqLpXX-574-596.png" width="288"/>
-
-
 ## Development
 
 ```
@@ -56,39 +51,18 @@ online example: http://react-component.github.io/rc-accordion/examples/
 
 ## install
 
-[![rc-rc-accordion](https://nodei.co/npm/rc-rc-accordion.png)](https://npmjs.org/package/rc-rc-accordion)
+[![rc-accordion](https://nodei.co/npm/rc-accordion.png)](https://npmjs.org/package/rc-accordion)
 
 ## Usage
 
 ```js
-var Rcrc-accordion = require('rc-rc-accordion');
+var Accordion = require('rc-accordion');
 var React = require('react');
-React.render(<Rcrc-accordion />, container);
+var items = [
+  { header: 'hello', content: <p>text</p> }
+];
+React.render(<Accordion items={items} />, container);
 ```
-
-## API
-
-### props
-
-<table class="table table-bordered table-striped">
-    <thead>
-    <tr>
-        <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
-        <th style="width: 50px;">default</th>
-        <th>description</th>
-    </tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td>className</td>
-          <td>String</td>
-          <td></td>
-          <td>additional css class of root dom node</td>
-        </tr>
-    </tbody>
-</table>
-
 
 ## Test Case
 
