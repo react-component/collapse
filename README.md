@@ -25,7 +25,7 @@ npm start
 
 http://localhost:8000/examples/
 
-online example: http://react-component.github.io/rc-accordion/examples/
+online example: http://react-component.github.io/accordion/examples/
 
 
 ## Feature
