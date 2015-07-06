@@ -53,8 +53,13 @@ module.exports = React.createClass({
 
       let style = isActive ? { height: this.state.height } : {};
       let ref = isActive ? 'active' : null;
+
+      let itemCls = classnames({
+        [`${prefixCls}-item`]: true,
+        [`${prefixCls}-item-active`]: isActive
+      });
       return (
-        <div className={`${prefixCls}-item`} key={key}>
+        <div className={itemCls} key={key}>
           <div className={headerCls} onClick={this.handleClickItem(i)}>{item.header}</div>
           <div className={contentCls} style={style} ref={ref}>{item.content}</div>
         </div>

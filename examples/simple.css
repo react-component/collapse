@@ -4,4 +4,8 @@ body {
 .rc-accordion {
   width: 500px;
 }
+p {
+  padding: 0;
+  margin: 0;
+}
 

@@ -1,8 +1,9 @@
 'use strict';
 
 require('./simple.css');
-require('../assets/index.css');
-var Accordion = require('../src/Accordion');
+require('rc-accordion/assets/index.css');
+require('rc-accordion/assets/ant.css');
+var Accordion = require('rc-accordion');
 var React = require('react');
 
 var items = [];
