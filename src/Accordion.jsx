@@ -2,6 +2,17 @@
 
 const React = require('react');
 const classnames = require('classnames');
+var cssAnimation = require('css-animation');
+
+function getActiveKey(props) {
+  var activeKey = props.activeKey;
+  if (!activeKey) {
+    props.items.forEach(function (item) {
+      activeKey = item.key;
+    });
+  }
+  return activeKey;
+}
 
 module.exports = React.createClass({
 
@@ -16,60 +27,87 @@ module.exports = React.createClass({
   getDefaultProps() {
     return {
       items: [],
-      prefixCls: 'rc-accordion',
-      active: 0
+      prefixCls: 'rc-accordion'
     };
   },
 
   getInitialState() {
     return {
-      active: this.props.active,
-      height: 'auto'
+      activeKey: getActiveKey(this.props)
     };
   },
 
-  handleClickItem(i) {
-    return (e) => {
-      if (i === this.state.active) {
-        return this.setState({ active: -1 });
-      }
-      let height = e.target.nextSibling.scrollHeight;
+  componentWillReceiveProps(nextProps) {
+    if ('activeKey' in nextProps) {
+      this.setState({
+        activeKey: nextProps.activeKey
+      });
+    }
+  },
 
-      this.setState({ active: i, height: height });
+  handleClickItem(key) {
+    return (e) => {
+      this.setState({
+        activeKey: key
+      });
     };
   },
 
   getItems() {
     let prefixCls = this.props.prefixCls;
-    let active = this.state.active;
+    let activeKey = this.state.activeKey;
     return this.props.items.map((item, i) => {
       let headerCls = `${prefixCls}-header`;
       let key = item.key || i;
-      let isActive = active === i;
+      let isActive = activeKey === key;
       let contentCls = classnames({
         [`${prefixCls}-content`]: true,
         [`${prefixCls}-content-active`]: isActive
       });
-
-      let style = isActive ? { height: this.state.height } : {};
-      let ref = isActive ? 'active' : null;
-
       let itemCls = classnames({
         [`${prefixCls}-item`]: true,
         [`${prefixCls}-item-active`]: isActive
       });
       return (
         <div className={itemCls} key={key}>
-          <div className={headerCls} onClick={this.handleClickItem(i)}>{item.header}</div>
-          <div className={contentCls} style={style} ref={ref}>{item.content}</div>
+          <div className={headerCls} onClick={this.handleClickItem(key)}>{item.header}</div>
+          <div className={contentCls} ref={key}>{item.content}</div>
         </div>
       );
     });
   },
 
+  componentDidUpdate(_, prevState) {
+    if (prevState.activeKey !== this.state.activeKey) {
+      var preNode = React.findDOMNode(this.refs[prevState.activeKey]);
+      var currentNode = React.findDOMNode(this.refs[this.state.activeKey]);
+      preNode.style.height = preNode.scrollHeight + 'px';
+      preNode.style.opacity = 1;
+      currentNode.style.height = 0;
+      cssAnimation.setTransition(preNode, 'Property', 'height ,opacity');
+      cssAnimation.setTransition(currentNode, 'Property', 'height ,opacity');
+      cssAnimation.style(preNode, {
+        height: 0,
+        opacity: 0
+      }, function () {
+        preNode.style.height = '';
+        preNode.style.opacity = '';
+        cssAnimation.setTransition(preNode, 'Property', '');
+      });
+      cssAnimation.style(currentNode, {
+        height: currentNode.scrollHeight + 'px',
+        opacity: 1
+      }, function () {
+        currentNode.style.height = 'auto';
+        currentNode.style.opacity = 1;
+        cssAnimation.setTransition(currentNode, 'Property', '');
+      });
+    }
+  },
+
   componentDidMount() {
-    let el = React.findDOMNode(this.refs.active);
-    el.style.height = el.clientHeight + 'px';
+    React.findDOMNode(this.refs[this.state.activeKey]).style.height = 'auto';
+    React.findDOMNode(this.refs[this.state.activeKey]).style.opacity = 1;
   },
 
   render() {
