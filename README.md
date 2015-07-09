@@ -9,10 +9,10 @@ rc-accordion ui component for react
 
 [npm-image]: http://img.shields.io/npm/v/rc-accordion.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-accordion
-[travis-image]: https://img.shields.io/travis/react-component/rc-accordion.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/rc-accordion
-[coveralls-image]: https://img.shields.io/coveralls/react-component/rc-accordion.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/rc-accordion?branch=master
+[travis-image]: https://img.shields.io/travis/react-component/accordion.svg?style=flat-square
+[travis-url]: https://travis-ci.org/react-component/accordion
+[coveralls-image]: https://img.shields.io/coveralls/react-component/accordion.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/accordion?branch=master
 
 ## Development
 
@@ -32,10 +32,6 @@ online example: http://react-component.github.io/accordion/examples/
 
 * support ie8,ie8+,chrome,firefox,safari
 
-### Keyboard
-
-
-
 ## install
 
 [![rc-accordion](https://nodei.co/npm/rc-accordion.png)](https://npmjs.org/package/rc-accordion)
@@ -44,11 +40,15 @@ online example: http://react-component.github.io/accordion/examples/
 
 ```js
 var Accordion = require('rc-accordion');
+var Panel = Accordion.Panel;
 var React = require('react');
-var items = [
-  { header: 'hello', content: <p>text</p> }
-];
-React.render(<Accordion items={items} />, container);
+var accordion = (
+  <Accordion>
+    <Panel header="hello">this is panel content</Panel>
+    <Panel header="title2">this is panel content2 or other</Panel>
+  </Accordion>
+);
+React.render(accordion, container);
 ```
 
 ## Test Case

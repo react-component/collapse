@@ -2,7 +2,7 @@
 
 require('rc-accordion/assets/index.css');
 var Accordion = require('rc-accordion');
-var Pannel = Accordion.Pannel;
+var Panel = Accordion.Panel;
 var React = require('react');
 
 
@@ -16,15 +16,10 @@ var Test = React.createClass({
   getItems() {
     var items = [];
     for (var i = 0, len = 3; i < len; i++) {
-      let props = {
-        header: 'This is panel header ' + i,
-        key: i
-      };
-
       items.push(
-        <Pannel {...props}>
+        <Panel header={`This is panel header ${i + 1}`} key={i}>
           <p>{text.repeat(parseInt(Math.random() * 10) + 1)}</p>
-        </Pannel>
+        </Panel>
       );
     }
 
