@@ -6,7 +6,7 @@ const cssAnimation = require('css-animation');
 
 module.exports = createClass({
 
-  displayName: 'AccordionPanel',
+  displayName: 'CollapsePanel',
 
   propTypes: {
     prefixCls: PropTypes.string,

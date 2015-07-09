@@ -1,8 +1,8 @@
 'use strict';
 
-require('rc-accordion/assets/index.css');
-var Accordion = require('rc-accordion');
-var Panel = Accordion.Panel;
+require('rc-collapse/assets/index.css');
+var Collapse = require('rc-collapse');
+var Panel = Collapse.Panel;
 var React = require('react');
 
 
@@ -35,7 +35,7 @@ var Test = React.createClass({
   render() {
     return <div style={{margin: 20, width: 400}}>
       <button onClick={this.reRender}>reRender</button><br/><br/>
-      <Accordion>{this.getItems()}</Accordion>
+      <Collapse>{this.getItems()}</Collapse>
     </div>;
   }
 });

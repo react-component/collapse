@@ -1,22 +1,22 @@
 'use strict';
 
 const React = require('react');
-const AccordionPanel = require('./Panel');
+const CollapsePanel = require('./Panel');
 
 module.exports = React.createClass({
 
-  displayName: 'Accordion',
+  displayName: 'Collapse',
 
   propTypes: {
     prefixCls: React.PropTypes.string,
     activeKey: React.PropTypes.string,
-    onSwitch: React.PropTypes.func
+    onChange: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
-      prefixCls: 'rc-accordion',
-      onSwitch: () => {}
+      prefixCls: 'rc-collapse',
+      onChange: () => {}
     };
   },
 
@@ -36,7 +36,7 @@ module.exports = React.createClass({
 
   handleClickItem(key) {
     return () => {
-      this.props.onSwitch(key);
+      this.props.onChange(key);
       this.setState({
         activeKey: key
       });
@@ -66,7 +66,7 @@ module.exports = React.createClass({
         onItemClick: this.handleClickItem(key).bind(this)
       };
 
-      return <AccordionPanel {...props} />;
+      return <CollapsePanel {...props} />;
     });
   },
 
