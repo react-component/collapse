@@ -16,18 +16,37 @@ module.exports = createClass({
       PropTypes.node
     ]),
     isActive: PropTypes.bool,
+    accordion: PropTypes.bool,
     onItemClick: PropTypes.func
+  },
+
+  getInitialState() {
+    return { isActive: this.props.isActive };
   },
 
   getDefaultProps() {
     return {
       isActive: false,
+      accordion: false,
       onItemClick: () => {}
     };
   },
 
+  handleItemClick() {
+    if (!this.props.accordion) {
+      this.setState({
+        isActive: !this.state.isActive
+      });
+    }
+    this.props.onItemClick();
+  },
+
   render() {
-    let { prefixCls, header, children, onItemClick, isActive } = this.props;
+    let { prefixCls, header, children, isActive } = this.props;
+    if (!this.props.accordion) {
+      isActive = this.state.isActive;
+    }
+
     let headerCls = `${prefixCls}-header`;
     let contentCls = classnames({
       [`${prefixCls}-content`]: true,
@@ -40,7 +59,7 @@ module.exports = createClass({
 
     return (
       <div className={itemCls}>
-        <div className={headerCls} onClick={onItemClick}>{header}</div>
+        <div className={headerCls} onClick={this.handleItemClick}>{header}</div>
         <div className={contentCls} ref="content">{children}</div>
       </div>
     );
@@ -53,15 +72,24 @@ module.exports = createClass({
     }
   },
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
+
+    var accordion = this.props.accordion;
+    var prev = prevState;
+    var isActive = this.state.isActive;
+
+    if (accordion) {
+      prev = prevProps;
+      isActive = this.props.isActive;
+    }
 
     // no change
-    if (prevProps.isActive === this.props.isActive) {
+    if (prev.isActive === isActive) {
       return;
     }
 
     // current isActive
-    if (!this.props.isActive) {
+    if (!isActive) {
       var preNode = findDOMNode(this.refs.content);
       preNode.style.height = preNode.scrollHeight + 'px';
       preNode.style.opacity = 1;
