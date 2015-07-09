@@ -9,10 +9,10 @@ rc-accordion ui component for react
 
 [npm-image]: http://img.shields.io/npm/v/rc-accordion.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-accordion
-[travis-image]: https://img.shields.io/travis/react-component/rc-accordion.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/rc-accordion
-[coveralls-image]: https://img.shields.io/coveralls/react-component/rc-accordion.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/rc-accordion?branch=master
+[travis-image]: https://img.shields.io/travis/react-component/accordion.svg?style=flat-square
+[travis-url]: https://travis-ci.org/react-component/accordion
+[coveralls-image]: https://img.shields.io/coveralls/react-component/accordion.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/accordion?branch=master
 
 ## Development
 
