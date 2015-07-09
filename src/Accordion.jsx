@@ -3,36 +3,26 @@
 const React = require('react');
 const AccordionPanel = require('./panel');
 
-function getActiveKey(props) {
-  var activeKey = props.activeKey;
-  if (!activeKey) {
-    props.items.forEach(function(item) {
-      activeKey = item.key;
-    });
-  }
-  return activeKey;
-}
-
 module.exports = React.createClass({
 
   displayName: 'Accordion',
 
   propTypes: {
-    items: React.PropTypes.array,
     prefixCls: React.PropTypes.string,
-    active: React.PropTypes.number
+    activeKey: React.PropTypes.string,
+    onSwitch: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
-      items: [],
-      prefixCls: 'rc-accordion'
+      prefixCls: 'rc-accordion',
+      onSwitch: () => {}
     };
   },
 
   getInitialState() {
     return {
-      activeKey: getActiveKey(this.props)
+      activeKey: null
     };
   },
 
@@ -46,6 +36,7 @@ module.exports = React.createClass({
 
   handleClickItem(key) {
     return () => {
+      this.props.onSwitch(key);
       this.setState({
         activeKey: key
       });
@@ -56,7 +47,8 @@ module.exports = React.createClass({
     let activeKey = this.state.activeKey;
     let prefixCls = this.props.prefixCls;
     return React.Children.map(this.props.children, (child, i) => {
-      let key = child.key;
+      // If there is no key provide, use the panel order as default key
+      let key = child.key || i;
       let header = child.props.header;
       let isActive = false;
       if (!activeKey) {
