@@ -1,3 +1,3 @@
 // export this package's api
 module.exports = require('./Accordion');
-module.exports.Panel = require('./panel');
+module.exports.Panel = require('./Panel');

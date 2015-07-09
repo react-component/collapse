@@ -1,7 +1,7 @@
 'use strict';
 
 const React = require('react');
-const AccordionPanel = require('./panel');
+const AccordionPanel = require('./Panel');
 
 module.exports = React.createClass({
 
