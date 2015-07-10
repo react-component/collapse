@@ -7,6 +7,8 @@ rc-collapse ui component for react
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![npm download][download-image]][download-url]
+[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-collapse)](https://saucelabs.com/u/rc-collapse)
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-collapse.svg)](https://saucelabs.com/u/rc-collapse)
 
 [npm-image]: http://img.shields.io/npm/v/rc-collapse.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-collapse

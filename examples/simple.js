@@ -1,10 +1,10 @@
 'use strict';
 
 require('rc-collapse/assets/index.css');
+require('string.prototype.repeat');
 var Collapse = require('rc-collapse');
 var Panel = Collapse.Panel;
 var React = require('react');
-
 
 var text = `
   A dog is a type of domesticated animal.

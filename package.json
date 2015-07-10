@@ -38,11 +38,12 @@
   },
   "devDependencies": {
     "expect.js": "0.3.x",
+    "node-dev": "2.x",
     "precommit-hook": "1.x",
     "rc-server": "3.x",
     "rc-tools": "3.x",
     "react": "0.13.x",
-    "node-dev": "2.x"
+    "string.prototype.repeat": "^0.2.0"
   },
   "precommit": [
     "precommit"
