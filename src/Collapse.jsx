@@ -1,17 +1,30 @@
 'use strict';
 
-const React = require('react');
+const { PropTypes, createClass, Children } = require('react');
 const CollapsePanel = require('./Panel');
 
-module.exports = React.createClass({
+if (!Array.isArray) {
+  Array.isArray = function(arg) {
+    return Object.prototype.toString.call(arg) === '[object Array]';
+  };
+}
+
+module.exports = createClass({
 
   displayName: 'Collapse',
 
   propTypes: {
-    prefixCls: React.PropTypes.string,
-    activeKey: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    accordion: React.PropTypes.bool
+    prefixCls: PropTypes.string,
+    activeKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    defaultActiveKey: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    onChange: PropTypes.func,
+    accordion: PropTypes.bool
   },
 
   getDefaultProps() {
@@ -23,8 +36,14 @@ module.exports = React.createClass({
   },
 
   getInitialState() {
+    let { defaultActiveKey, activeKey, accordion } = this.props;
+    // If is not accordion mode, then, defaultActiveKey should be an array
+    if (!accordion) {
+      defaultActiveKey = defaultActiveKey || [];
+    }
+
     return {
-      activeKey: null
+      activeKey: activeKey || defaultActiveKey
     };
   },
 
@@ -38,25 +57,54 @@ module.exports = React.createClass({
 
   handleClickItem(key) {
     return () => {
-      this.props.onChange(key);
       if (this.props.accordion) {
         this.setState({
           activeKey: key
         });
+      } else {
+
+        var activeKey = this._getActivityKey();
+        var index = activeKey.indexOf(key);
+        var isActive = index > -1;
+        if (isActive) {
+          // remove active state
+          activeKey.splice(index, 1);
+        } else {
+          activeKey.push(key);
+        }
+
+        this.setState({ activeKey: activeKey });
       }
+      this.props.onChange(key);
     };
   },
 
-  getItems() {
+  _getActivityKey() {
     let activeKey = this.state.activeKey;
+    let { accordion } = this.props;
+    if (accordion && Array.isArray(activeKey)) {
+      activeKey = activeKey[0];
+    }
+
+    if (!accordion && !Array.isArray(activeKey)) {
+      activeKey = activeKey ? [activeKey] : [];
+    }
+    return activeKey;
+  },
+
+  getItems() {
+    let activeKey = this._getActivityKey();
     let { prefixCls, accordion } = this.props;
-    return React.Children.map(this.props.children, (child, i) => {
+
+    return Children.map(this.props.children, (child, i) => {
       // If there is no key provide, use the panel order as default key
       let key = child.key || i;
       let header = child.props.header;
       let isActive = false;
       if (accordion) {
         isActive = !activeKey ? !i : activeKey === key;
+      } else {
+        isActive = activeKey.indexOf(key) > -1;
       }
 
       const props = {
@@ -64,7 +112,6 @@ module.exports = React.createClass({
         header,
         isActive,
         prefixCls,
-        accordion,
         children: child.props.children,
         onItemClick: this.handleClickItem(key).bind(this)
       };

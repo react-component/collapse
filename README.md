@@ -46,7 +46,7 @@ var Collapse = require('rc-collapse');
 var Panel = Collapse.Panel;
 var React = require('react');
 var collapse = (
-  <Collapse>
+  <Collapse accordion={true}>
     <Panel header="hello">this is panel content</Panel>
     <Panel header="title2">this is panel content2 or other</Panel>
   </Collapse>
@@ -72,9 +72,21 @@ React.render(collapse, container);
     <tbody>
       <tr>
           <td>activeKey</td>
-          <td>String</td>
+          <td>Array<String>|String</td>
           <th>The first panel key</th>
           <td>current active Panel key</td>
+      </tr>
+      <tr>
+          <td>defaultActiveKey</td>
+          <td>Array<String>|String</td>
+          <th>null</th>
+          <td>default active key</td>
+      </tr>
+      <tr>
+          <td>accordion</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>accordion mode, default is null, is collapse mode</td>
       </tr>
       <tr>
           <td>onChange</td>
@@ -84,6 +96,14 @@ React.render(collapse, container);
       </tr>
     </tbody>
 </table>
+
+If accordion is null or false, every panel open, will not close other panel.
+`activekey` should be an array. string will work fine, activekey will be an
+array, and the only item is the activeKey string provided;
+
+If accordion is true, only on panel can be active.
+`activekey` should be an string, but array is support too, just use the first
+item.
 
 ### Collapse.Panel
 

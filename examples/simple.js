@@ -27,8 +27,9 @@ var Test = React.createClass({
   getItems() {
     var items = [];
     for (var i = 0, len = 3; i < len; i++) {
+      var key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${i + 1}`} key={i}>
+        <Panel header={`This is panel header ${key}`} key={key}>
           <p>{text.repeat(this.state.time)}</p>
         </Panel>
       );
@@ -45,13 +46,19 @@ var Test = React.createClass({
     this.setState({ time: random() });
   },
 
+  setActivityKey() {
+    this.setState({ activeKey: ['2'] });
+  },
+
   render() {
     var accordion = this.state.accordion;
     var btn = accordion ? 'accordion' : 'collapse';
+    var activeKey = this.state.activeKey;
     return <div style={{margin: 20, width: 400}}>
       <button onClick={this.reRender}>reRender</button>
       <button onClick={this.toggle}>{btn}</button><br/><br/>
-      <Collapse accordion={accordion}>{this.getItems()}</Collapse>
+      <button onClick={this.setActivityKey}>active header 2</button><br/><br/>
+      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['3']}>{this.getItems()}</Collapse>
     </div>;
   }
 });

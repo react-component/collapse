@@ -16,7 +16,6 @@ module.exports = createClass({
       PropTypes.node
     ]),
     isActive: PropTypes.bool,
-    accordion: PropTypes.bool,
     onItemClick: PropTypes.func
   },
 
@@ -27,25 +26,16 @@ module.exports = createClass({
   getDefaultProps() {
     return {
       isActive: false,
-      accordion: false,
       onItemClick: () => {}
     };
   },
 
   handleItemClick() {
-    if (!this.props.accordion) {
-      this.setState({
-        isActive: !this.state.isActive
-      });
-    }
     this.props.onItemClick();
   },
 
   render() {
     let { prefixCls, header, children, isActive } = this.props;
-    if (!this.props.accordion) {
-      isActive = this.state.isActive;
-    }
 
     let headerCls = `${prefixCls}-header`;
     let contentCls = classnames({
@@ -72,19 +62,12 @@ module.exports = createClass({
     }
   },
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
 
-    var accordion = this.props.accordion;
-    var prev = prevState;
-    var isActive = this.state.isActive;
-
-    if (accordion) {
-      prev = prevProps;
-      isActive = this.props.isActive;
-    }
+    var isActive = this.props.isActive;
 
     // no change
-    if (prev.isActive === isActive) {
+    if (prevProps.isActive === isActive) {
       return;
     }
 
