@@ -6,7 +6,7 @@ const cssAnimation = require('css-animation');
 
 module.exports = createClass({
 
-  displayName: 'AccordionPanel',
+  displayName: 'CollapsePanel',
 
   propTypes: {
     prefixCls: PropTypes.string,
@@ -19,6 +19,10 @@ module.exports = createClass({
     onItemClick: PropTypes.func
   },
 
+  getInitialState() {
+    return { isActive: this.props.isActive };
+  },
+
   getDefaultProps() {
     return {
       isActive: false,
@@ -26,8 +30,13 @@ module.exports = createClass({
     };
   },
 
+  handleItemClick() {
+    this.props.onItemClick();
+  },
+
   render() {
-    let { prefixCls, header, children, onItemClick, isActive } = this.props;
+    let { prefixCls, header, children, isActive } = this.props;
+
     let headerCls = `${prefixCls}-header`;
     let contentCls = classnames({
       [`${prefixCls}-content`]: true,
@@ -40,7 +49,7 @@ module.exports = createClass({
 
     return (
       <div className={itemCls}>
-        <div className={headerCls} onClick={onItemClick}>{header}</div>
+        <div className={headerCls} onClick={this.handleItemClick}>{header}</div>
         <div className={contentCls} ref="content">{children}</div>
       </div>
     );
@@ -55,13 +64,15 @@ module.exports = createClass({
 
   componentDidUpdate(prevProps) {
 
+    var isActive = this.props.isActive;
+
     // no change
-    if (prevProps.isActive === this.props.isActive) {
+    if (prevProps.isActive === isActive) {
       return;
     }
 
     // current isActive
-    if (!this.props.isActive) {
+    if (!isActive) {
       var preNode = findDOMNode(this.refs.content);
       preNode.style.height = preNode.scrollHeight + 'px';
       preNode.style.opacity = 1;

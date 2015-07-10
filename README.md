@@ -1,21 +1,21 @@
-# rc-accordion
+# rc-collapse
 ---
 
-rc-accordion ui component for react
+rc-collapse ui component for react
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![npm download][download-image]][download-url]
 
-[npm-image]: http://img.shields.io/npm/v/rc-accordion.svg?style=flat-square
-[npm-url]: http://npmjs.org/package/rc-accordion
-[travis-image]: https://img.shields.io/travis/react-component/accordion.svg?style=flat-square
-[travis-url]: https://travis-ci.org/react-component/accordion
-[coveralls-image]: https://img.shields.io/coveralls/react-component/accordion.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/accordion?branch=master
-[download-image]: https://img.shields.io/npm/dm/rc-accordion.svg?style=flat-square
-[download-url]: https://npmjs.org/package/rc-accordion
+[npm-image]: http://img.shields.io/npm/v/rc-collapse.svg?style=flat-square
+[npm-url]: http://npmjs.org/package/rc-collapse
+[travis-image]: https://img.shields.io/travis/react-component/collapse.svg?style=flat-square
+[travis-url]: https://travis-ci.org/react-component/collapse
+[coveralls-image]: https://img.shields.io/coveralls/react-component/collapse.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/react-component/collapse?branch=master
+[download-image]: https://img.shields.io/npm/dm/rc-collapse.svg?style=flat-square
+[download-url]: https://npmjs.org/package/rc-collapse
 
 ## Development
 
@@ -28,7 +28,7 @@ npm start
 
 http://localhost:8000/examples/
 
-online example: http://react-component.github.io/accordion/examples/
+online example: http://react-component.github.io/collapse/examples/
 
 
 ## Feature
@@ -37,26 +37,26 @@ online example: http://react-component.github.io/accordion/examples/
 
 ## install
 
-[![rc-accordion](https://nodei.co/npm/rc-accordion.png)](https://npmjs.org/package/rc-accordion)
+[![rc-collapse](https://nodei.co/npm/rc-collapse.png)](https://npmjs.org/package/rc-collapse)
 
 ## Usage
 
 ```js
-var Accordion = require('rc-accordion');
-var Panel = Accordion.Panel;
+var Collapse = require('rc-collapse');
+var Panel = Collapse.Panel;
 var React = require('react');
-var accordion = (
-  <Accordion>
+var collapse = (
+  <Collapse accordion={true}>
     <Panel header="hello">this is panel content</Panel>
     <Panel header="title2">this is panel content2 or other</Panel>
-  </Accordion>
+  </Collapse>
 );
-React.render(accordion, container);
+React.render(collapse, container);
 ```
 
 ## API
 
-### Accordion
+### Collapse
 
 #### props:
 
@@ -72,20 +72,40 @@ React.render(accordion, container);
     <tbody>
       <tr>
           <td>activeKey</td>
-          <td>String</td>
+          <td>Array<String>|String</td>
           <th>The first panel key</th>
           <td>current active Panel key</td>
       </tr>
       <tr>
-          <td>onSwitch</td>
+          <td>defaultActiveKey</td>
+          <td>Array<String>|String</td>
+          <th>null</th>
+          <td>default active key</td>
+      </tr>
+      <tr>
+          <td>accordion</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>accordion mode, default is null, is collapse mode</td>
+      </tr>
+      <tr>
+          <td>onChange</td>
           <td>Function(key)</td>
           <th>noop</th>
-          <td>called when accordion Panel is changed</td>
+          <td>called when collapse Panel is changed</td>
       </tr>
     </tbody>
 </table>
 
-### Accordion.Panel
+If accordion is null or false, every panel open, will not close other panel.
+`activekey` should be an array. string will work fine, activekey will be an
+array, and the only item is the activeKey string provided;
+
+If accordion is true, only on panel can be active.
+`activekey` should be an string, but array is support too, just use the first
+item.
+
+### Collapse.Panel
 
 #### props
 
@@ -122,4 +142,4 @@ http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front
 
 ## License
 
-rc-accordion is released under the MIT license.
+rc-collapse is released under the MIT license.

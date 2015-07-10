@@ -1,8 +1,8 @@
 'use strict';
 
-require('rc-accordion/assets/index.css');
-var Accordion = require('rc-accordion');
-var Panel = Accordion.Panel;
+require('rc-collapse/assets/index.css');
+var Collapse = require('rc-collapse');
+var Panel = Collapse.Panel;
 var React = require('react');
 
 
@@ -12,13 +12,25 @@ var text = `
   it can be found as a welcome guest in many households across the world.
 `;
 
+function random() {
+  return parseInt(Math.random() * 10) + 1;
+}
+
 var Test = React.createClass({
+  getInitialState() {
+    return {
+      time: random(),
+      accordion: false
+    };
+  },
+
   getItems() {
     var items = [];
     for (var i = 0, len = 3; i < len; i++) {
+      var key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${i + 1}`} key={i}>
-          <p>{text.repeat(parseInt(Math.random() * 10) + 1)}</p>
+        <Panel header={`This is panel header ${key}`} key={key}>
+          <p>{text.repeat(this.state.time)}</p>
         </Panel>
       );
     }
@@ -26,16 +38,27 @@ var Test = React.createClass({
     return items;
   },
 
+  toggle() {
+    this.setState({ accordion: !this.state.accordion });
+  },
+
   reRender() {
-    this.setState({
-      time: 1
-    });
+    this.setState({ time: random() });
+  },
+
+  setActivityKey() {
+    this.setState({ activeKey: ['2'] });
   },
 
   render() {
+    var accordion = this.state.accordion;
+    var btn = accordion ? 'accordion' : 'collapse';
+    var activeKey = this.state.activeKey;
     return <div style={{margin: 20, width: 400}}>
-      <button onClick={this.reRender}>reRender</button><br/><br/>
-      <Accordion>{this.getItems()}</Accordion>
+      <button onClick={this.reRender}>reRender</button>
+      <button onClick={this.toggle}>{btn}</button><br/><br/>
+      <button onClick={this.setActivityKey}>active header 2</button><br/><br/>
+      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['3']}>{this.getItems()}</Collapse>
     </div>;
   }
 });
