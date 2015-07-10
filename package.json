@@ -1,12 +1,14 @@
 {
   "name": "rc-collapse",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "rc-collapse ui component for react",
   "keywords": [
     "react",
     "react-component",
     "react-rc-collapse",
-    "rc-collapse"
+    "rc-collapse",
+    "collapse",
+    "accordion"
   ],
   "homepage": "http://github.com/react-component/rc-collapse",
   "author": "eward.song@gmail.com",
