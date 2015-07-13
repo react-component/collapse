@@ -34,6 +34,15 @@ var Test = React.createClass({
         </Panel>
       );
     }
+    items.push(
+      <Panel header={`This is panel header 4`} key="4">
+        <Collapse defaultActiveKey="1">
+          <Panel header={`This is panel nest panel`} key="1">
+            <p>{text}</p>
+          </Panel>
+        </Collapse>
+      </Panel>
+    );
 
     return items;
   },
