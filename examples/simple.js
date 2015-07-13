@@ -67,7 +67,7 @@ var Test = React.createClass({
       <button onClick={this.reRender}>reRender</button>
       <button onClick={this.toggle}>{btn}</button><br/><br/>
       <button onClick={this.setActivityKey}>active header 2</button><br/><br/>
-      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['3']}>{this.getItems()}</Collapse>
+      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['4']}>{this.getItems()}</Collapse>
     </div>;
   }
 });
