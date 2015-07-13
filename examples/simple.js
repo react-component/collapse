@@ -34,6 +34,15 @@ var Test = React.createClass({
         </Panel>
       );
     }
+    items.push(
+      <Panel header={`This is panel header 4`} key="4">
+        <Collapse defaultActiveKey="1">
+          <Panel header={`This is panel nest panel`} key="1">
+            <p>{text}</p>
+          </Panel>
+        </Collapse>
+      </Panel>
+    );
 
     return items;
   },
@@ -58,7 +67,7 @@ var Test = React.createClass({
       <button onClick={this.reRender}>reRender</button>
       <button onClick={this.toggle}>{btn}</button><br/><br/>
       <button onClick={this.setActivityKey}>active header 2</button><br/><br/>
-      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['3']}>{this.getItems()}</Collapse>
+      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['4']}>{this.getItems()}</Collapse>
     </div>;
   }
 });

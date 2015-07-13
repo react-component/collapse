@@ -58,7 +58,8 @@ module.exports = createClass({
   componentDidMount() {
     if (this.props.isActive) {
       var el = findDOMNode(this.refs.content);
-      el.style.height = el.scrollHeight + 'px';
+      el.style.height = 'auto';
+      el.style.opacity = 1;
     }
   },
 
@@ -71,33 +72,26 @@ module.exports = createClass({
       return;
     }
 
-    // current isActive
-    if (!isActive) {
-      var preNode = findDOMNode(this.refs.content);
-      preNode.style.height = preNode.scrollHeight + 'px';
-      preNode.style.opacity = 1;
-      cssAnimation.setTransition(preNode, 'Property', 'height ,opacity');
-      cssAnimation.style(preNode, {
-        height: 0,
-        opacity: 0
-      }, function() {
-        preNode.style.height = '';
-        preNode.style.opacity = '';
-        cssAnimation.setTransition(preNode, 'Property', '');
-      });
-    } else {
-      // from isActive to hide
-      var currentNode = findDOMNode(this.refs.content);
-      currentNode.style.height = 0;
-      cssAnimation.setTransition(currentNode, 'Property', 'height ,opacity');
-      cssAnimation.style(currentNode, {
-        height: currentNode.scrollHeight + 'px',
-        opacity: 1
-      }, function() {
-        currentNode.style.height = 'auto';
-        currentNode.style.opacity = 1;
-        cssAnimation.setTransition(currentNode, 'Property', '');
-      });
-    }
+    this._anim(isActive ? 0 : 1);
+  },
+
+  _anim(opacity) {
+    var el = findDOMNode(this.refs.content);
+    var scrollHeight = el.scrollHeight + 'px';
+
+    // start state
+    el.style.height = opacity ? scrollHeight : 0;
+    el.style.opacity = opacity;
+
+    cssAnimation.setTransition(el, 'Property', 'height ,opacity');
+    cssAnimation.style(el, {
+      height: opacity ? 0 : scrollHeight,
+      opacity: opacity ? 0 : 1
+    }, function() {
+      el.style.height = opacity ? 0 : 'auto';
+      el.style.opacity = opacity ? 0 : 1;
+      cssAnimation.setTransition(el, 'Property', '');
+    });
   }
+
 });
