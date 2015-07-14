@@ -1,5 +1,5 @@
 @prefixCls: rc-collapse;
-@borderStyle: 1px solid #d9d9d9;
+@borderStyle: 1px solid #e9e9e9;
 
 #arrow {
   .common(){
@@ -22,40 +22,54 @@
 }
 
 .@{prefixCls} {
-  background-color: #f3f5f7;
+  background-color: #fbfbfb;
   border-radius: 3px;
   border-top: @borderStyle;
   border-left: @borderStyle;
   border-right: @borderStyle;
 
-  &-header {
-    height: 38px;
-    line-height: 38px;
-    text-indent: 16px;
-    color: #666;
-    border-bottom: @borderStyle;
-    &:before {
-      display: inline-block;
-      content: '\20';
-      #arrow > .common();
-      #arrow > .right(3px, 4px, #666);
-      vertical-align: middle;
-      margin-right: 8px;
+  & > &-item {
+    > .@{prefixCls}-header {
+      height: 38px;
+      line-height: 38px;
+      text-indent: 16px;
+      color: #666;
+      border-bottom: @borderStyle;
+      &:before {
+        display: inline-block;
+        content: '\20';
+        #arrow > .common();
+        #arrow > .right(3px, 4px, #666);
+        vertical-align: middle;
+        margin-right: 8px;
+      }
     }
   }
 
   &-content {
     color: #999;
     padding: 0 16px;
-    background-color: #fbfbfb;
+    background-color: #f4f4f4;
+  }
+
+  &-item:last-child {
+    > .@{prefixCls}-content {
+      border-radius: 0 0 3px 3px;
+    }
   }
 
   &-content-active {
     border-bottom: @borderStyle;
   }
-  &-item-active {
-    .@{prefixCls}-header::before {
-      #arrow > .bottom(3px, 4px, #666);
+
+  & > &-item-active {
+    > .@{prefixCls}-header {
+      border-bottom: none;
+
+      &:before {
+        #arrow > .bottom(3px, 4px, #666);
+        margin-right: 6px;
+      }
     }
   }
 }
