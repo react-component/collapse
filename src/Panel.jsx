@@ -49,8 +49,9 @@ module.exports = createClass({
 
     return (
       <div className={itemCls}>
-        <div className={headerCls} onClick={this.handleItemClick}>{header}</div>
-        <div className={contentCls} ref="content">
+        <div className={headerCls} onClick={this.handleItemClick}
+          role="tab" aria-expanded={isActive}>{header}</div>
+        <div className={contentCls} ref="content" role="tabpanel">
           <div className={`${prefixCls}-content-box`}>{children}</div>
         </div>
       </div>
@@ -61,7 +62,6 @@ module.exports = createClass({
     if (this.props.isActive) {
       var el = findDOMNode(this.refs.content);
       el.style.height = 'auto';
-      el.style.opacity = 1;
     }
   },
 
