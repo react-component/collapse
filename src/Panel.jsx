@@ -49,8 +49,11 @@ module.exports = createClass({
 
     return (
       <div className={itemCls}>
-        <div className={headerCls} onClick={this.handleItemClick}>{header}</div>
-        <div className={contentCls} ref="content">{children}</div>
+        <div className={headerCls} onClick={this.handleItemClick}
+          role="tab" aria-expanded={isActive}>{header}</div>
+        <div className={contentCls} ref="content" role="tabpanel">
+          <div className={`${prefixCls}-content-box`}>{children}</div>
+        </div>
       </div>
     );
   },
@@ -59,7 +62,6 @@ module.exports = createClass({
     if (this.props.isActive) {
       var el = findDOMNode(this.refs.content);
       el.style.height = 'auto';
-      el.style.opacity = 1;
     }
   },
 
@@ -81,15 +83,12 @@ module.exports = createClass({
 
     // start state
     el.style.height = opacity ? scrollHeight : 0;
-    el.style.opacity = opacity;
 
-    cssAnimation.setTransition(el, 'Property', 'height ,opacity');
+    cssAnimation.setTransition(el, 'Property', 'height');
     cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight,
-      opacity: opacity ? 0 : 1
+      height: opacity ? 0 : scrollHeight
     }, function() {
       el.style.height = opacity ? 0 : 'auto';
-      el.style.opacity = opacity ? 0 : 1;
       cssAnimation.setTransition(el, 'Property', '');
     });
   }
