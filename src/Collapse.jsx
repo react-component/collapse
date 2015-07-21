@@ -57,13 +57,13 @@ module.exports = createClass({
 
   handleClickItem(key) {
     return () => {
+      var activeKey = this._getActivityKey();
       if (this.props.accordion) {
         this.setState({
-          activeKey: key
+          activeKey: key === activeKey ? null : key
         });
       } else {
 
-        var activeKey = this._getActivityKey();
         var index = activeKey.indexOf(key);
         var isActive = index > -1;
         if (isActive) {
@@ -102,7 +102,7 @@ module.exports = createClass({
       let header = child.props.header;
       let isActive = false;
       if (accordion) {
-        isActive = !activeKey ? !i : activeKey === key;
+        isActive = activeKey === key;
       } else {
         isActive = activeKey.indexOf(key) > -1;
       }

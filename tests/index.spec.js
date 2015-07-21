@@ -102,8 +102,23 @@ describe('collapse', function() {
       changeHook = null;
     });
 
-    it('accordion item, should default open one item', function() {
-      expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(1);
+    it('accordion item, should default open zero item', function() {
+      expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(0);
+    });
+
+    it('should toggle show on panel', function(done) {
+      var header = findDOMNode(collapse, 'rc-accordion-header')[1];
+      Simulate.click(header);
+      setTimeout(function() {
+        expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(1);
+        header = findDOMNode(collapse, 'rc-accordion-header')[1];
+        Simulate.click(header);
+
+        setTimeout(function() {
+          expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(0);
+          done();
+        }, 20)
+      }, 30);
     });
 
     it('should only show on panel', function(done) {
