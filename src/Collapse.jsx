@@ -1,6 +1,7 @@
 'use strict';
 
-const { PropTypes, createClass, Children } = require('react');
+const React = require('react');
+const { PropTypes, createClass, Children } = React;
 const CollapsePanel = require('./Panel');
 
 if (!Array.isArray) {
