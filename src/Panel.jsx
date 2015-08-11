@@ -1,6 +1,7 @@
 'use strict';
 
-const { createClass, PropTypes, findDOMNode } = require('react');
+const React = require('react');
+const { PropTypes, createClass } = React;
 const classnames = require('classnames');
 const cssAnimation = require('css-animation');
 
