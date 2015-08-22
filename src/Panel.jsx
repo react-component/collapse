@@ -81,7 +81,9 @@ module.exports = createClass({
   _anim(opacity) {
     var el = findDOMNode(this.refs.content);
     var scrollHeight = el.scrollHeight + 'px';
+    var collapsing = `${this.props.prefixCls}-collapsing`;
 
+    cssAnimation.addClass(el, collapsing);
     // start state
     el.style.height = opacity ? scrollHeight : 0;
 
@@ -91,6 +93,7 @@ module.exports = createClass({
     }, function() {
       el.style.height = opacity ? 0 : 'auto';
       cssAnimation.setTransition(el, 'Property', '');
+      cssAnimation.removeClass(el, collapsing);
     });
   }
 
