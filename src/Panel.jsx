@@ -4,6 +4,8 @@ const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
 const classnames = require('classnames');
 const cssAnimation = require('css-animation');
+const event = require('css-animation/lib/Event');
+const isSupportCssAnimate = event.endEvents.length > 0;
 
 module.exports = createClass({
 
@@ -80,10 +82,16 @@ module.exports = createClass({
 
   _anim(opacity) {
     var el = findDOMNode(this.refs.content);
+    if (!isSupportCssAnimate) {
+      el.style.height = opacity ? 'auto' : 0;
+      return;
+    }
+
     var scrollHeight = el.scrollHeight + 'px';
     var collapsing = `${this.props.prefixCls}-collapsing`;
 
     cssAnimation.addClass(el, collapsing);
+
     // start state
     el.style.height = opacity ? scrollHeight : 0;
 
