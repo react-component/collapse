@@ -30,7 +30,7 @@ npm start
 
 http://localhost:8000/examples/
 
-online example: http://react-component.github.io/collapse/examples/
+online example: http://react-component.github.io/collapse/
 
 
 ## Feature
