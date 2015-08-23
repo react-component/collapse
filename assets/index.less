@@ -38,7 +38,8 @@
       line-height: 38px;
       text-indent: 16px;
       color: #666;
-      &:before {
+      cursor: pointer;
+      .arrow {
         display: inline-block;
         content: '\20';
         #arrow > .common();
@@ -81,7 +82,7 @@
   & > &-item-active {
     > .@{prefixCls}-header {
 
-      &:before {
+      .arrow {
         #arrow > .bottom(3px, 4px, #666);
         margin-right: 6px;
       }

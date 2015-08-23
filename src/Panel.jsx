@@ -53,7 +53,10 @@ module.exports = createClass({
     return (
       <div className={itemCls}>
         <div className={headerCls} onClick={this.handleItemClick}
-          role="tab" aria-expanded={isActive}>{header}</div>
+          role="tab" aria-expanded={isActive}>
+          <i className="arrow"></i>
+          {header}
+        </div>
         <div className={contentCls} ref="content" role="tabpanel">
           <div className={`${prefixCls}-content-box`}>{children}</div>
         </div>
@@ -83,7 +86,7 @@ module.exports = createClass({
   _anim(opacity) {
     var el = findDOMNode(this.refs.content);
     if (!isSupportCssAnimate) {
-      el.style.height = opacity ? 'auto' : 0;
+      el.style.height = opacity ? 0 : '';
       return;
     }
 
