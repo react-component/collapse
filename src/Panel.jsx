@@ -3,7 +3,7 @@
 const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
 const classnames = require('classnames');
-const cssAnimation = require('css-animation');
+//const cssAnimation = require('css-animation');
 const event = require('css-animation/lib/Event');
 const isSupportCssAnimate = event.endEvents.length > 0;
 
@@ -23,13 +23,14 @@ module.exports = createClass({
   },
 
   getInitialState() {
-    return { isActive: this.props.isActive };
+    return {isActive: this.props.isActive};
   },
 
   getDefaultProps() {
     return {
       isActive: false,
-      onItemClick: () => {}
+      onItemClick: () => {
+      }
     };
   },
 
@@ -53,11 +54,11 @@ module.exports = createClass({
     return (
       <div className={itemCls}>
         <div className={headerCls} onClick={this.handleItemClick}
-          role="tab" aria-expanded={isActive}>
+             role="tab" aria-expanded={isActive}>
           <i className="arrow"></i>
           {header}
         </div>
-        <div className={contentCls} ref="content" role="tabpanel">
+        <div className={contentCls} ref="content" role="tabpanel" style={{height: isActive ? 'auto' : 0}}>
           <div className={`${prefixCls}-content-box`}>{children}</div>
         </div>
       </div>
@@ -90,22 +91,37 @@ module.exports = createClass({
       return;
     }
 
+    var keyframeNames = 'random' + new Date().getTime();
     var scrollHeight = el.scrollHeight + 'px';
-    var collapsing = `${this.props.prefixCls}-collapsing`;
+    var end = el.style.height, start = 0;
 
-    cssAnimation.addClass(el, collapsing);
+    if (end === '0px') {
+      start = scrollHeight;
+    }
+    if (end === 'auto') {
+      end = scrollHeight;
+    }
 
-    // start state
-    el.style.height = opacity ? scrollHeight : 0;
+    function createKeyframe(keyframeName, startVal, endVal) {
+      var domPrefixes = ['webkit', 'moz', 'o', 'ms'], css = '';
 
-    cssAnimation.setTransition(el, 'Property', 'height');
-    cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight
-    }, function() {
-      el.style.height = opacity ? 0 : 'auto';
-      cssAnimation.setTransition(el, 'Property', '');
-      cssAnimation.removeClass(el, collapsing);
-    });
+      for (var i = 0, l = domPrefixes.length; i < l; i++) {
+        css += '@-' + domPrefixes[i] + '-keyframes ' + keyframeName + ' {';
+        css += '0%{height:' + startVal + ';}';
+        css += '100%{height:' + endVal + ';}';
+        css += '}';
+      }
+      return css;
+    }
+
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    style.innerHTML = createKeyframe(keyframeNames, start, end);
+
+    el.style.animationName = keyframeNames;
+    // Safari
+    el.style.WebkitAnimationName = keyframeNames;
   }
 
 });
