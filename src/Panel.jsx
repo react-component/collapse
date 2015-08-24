@@ -2,10 +2,6 @@
 
 const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
-const classnames = require('classnames');
-//const cssAnimation = require('css-animation');
-const event = require('css-animation/lib/Event');
-const isSupportCssAnimate = event.endEvents.length > 0;
 
 module.exports = createClass({
 
@@ -40,16 +36,9 @@ module.exports = createClass({
 
   render() {
     let { prefixCls, header, children, isActive } = this.props;
-
     let headerCls = `${prefixCls}-header`;
-    let contentCls = classnames({
-      [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive
-    });
-    let itemCls = classnames({
-      [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive
-    });
+    let contentCls = `${prefixCls}-content`;
+    let itemCls = `${prefixCls}-item`;
 
     return (
       <div className={itemCls}>
@@ -73,24 +62,16 @@ module.exports = createClass({
   },
 
   componentDidUpdate(prevProps) {
-
     var isActive = this.props.isActive;
-
     // no change
     if (prevProps.isActive === isActive) {
       return;
     }
-
-    this._anim(isActive ? 0 : 1);
+    this._anim();
   },
 
-  _anim(opacity) {
+  _anim() {
     var el = findDOMNode(this.refs.content);
-    if (!isSupportCssAnimate) {
-      el.style.height = opacity ? 0 : '';
-      return;
-    }
-
     var keyframeNames = 'random' + new Date().getTime();
     var scrollHeight = el.scrollHeight + 'px';
     var end = el.style.height, start = 0;
@@ -104,7 +85,6 @@ module.exports = createClass({
 
     function createKeyframe(keyframeName, startVal, endVal) {
       var domPrefixes = ['webkit', 'moz', 'o', 'ms'], css = '';
-
       for (var i = 0, l = domPrefixes.length; i < l; i++) {
         css += '@-' + domPrefixes[i] + '-keyframes ' + keyframeName + ' {';
         css += '0%{height:' + startVal + ';}';
