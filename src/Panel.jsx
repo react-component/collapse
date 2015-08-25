@@ -94,14 +94,15 @@ module.exports = createClass({
       return css;
     };
 
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    document.getElementsByTagName('head')[0].appendChild(style);
+    var style = document.getElementById('random-keyframes');
+    if (!style) {
+      style = document.createElement('style');
+      style.type = 'text/css';
+      style.id = 'random-keyframes';
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
     style.innerHTML = createKeyframe(keyframeNames, start, end);
-
     el.style.animationName = keyframeNames;
-    // Safari
-    el.style.WebkitAnimationName = keyframeNames;
+    el.style.WebkitAnimationName = keyframeNames;// Safari
   }
-
 });
