@@ -39,16 +39,15 @@ module.exports = createClass({
     let headerCls = `${prefixCls}-header`;
     let contentCls = `${prefixCls}-content`;
     let itemCls = `${prefixCls}-item`;
-    let itemActiveCls = isActive ? ` ${prefixCls}-item-active` : '';
 
     return (
-      <div className={itemCls+itemActiveCls}>
-        <div className={headerCls} onClick={this.handleItemClick} role="tab" aria-expanded={isActive}>
+      <div className={itemCls}>
+        <div className={headerCls} onClick={this.handleItemClick}
+             role="tab" aria-expanded={isActive}>
           <i className="arrow"></i>
           {header}
         </div>
-        <div className={contentCls} ref="content" role="tabpanel"
-             style={{height: isActive ? 'auto' : 0}}>
+        <div className={contentCls} ref="content" role="tabpanel" style={{height: isActive ? 'auto' : 0}}>
           <div className={`${prefixCls}-content-box`}>{children}</div>
         </div>
       </div>
@@ -84,7 +83,7 @@ module.exports = createClass({
       end = scrollHeight;
     }
 
-    var createKeyframe = function (keyframeName, startVal, endVal) {
+    function createKeyframe(keyframeName, startVal, endVal) {
       var domPrefixes = ['webkit', 'moz', 'o', 'ms'], css = '';
       for (var i = 0, l = domPrefixes.length; i < l; i++) {
         css += '@-' + domPrefixes[i] + '-keyframes ' + keyframeName + ' {';
@@ -93,7 +92,7 @@ module.exports = createClass({
         css += '}';
       }
       return css;
-    };
+    }
 
     var style = document.createElement('style');
     style.type = 'text/css';
