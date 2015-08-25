@@ -3,7 +3,7 @@
 @borderStyle: 1px solid #d9d9d9;
 
 #arrow {
-  .common(){
+  .common() {
     width: 0;
     height: 0;
     font-size: 0;
@@ -51,11 +51,13 @@
   }
 
   &-content {
-    height: 0;
     overflow: hidden;
     color: @text-color;
     padding: 0 16px;
     background-color: #fff;
+
+    animation-duration: .3s;
+    animation-timing-function: ease-in-out;
 
     & > &-box {
       margin-top: 16px;
@@ -67,16 +69,6 @@
     > .@{prefixCls}-content {
       border-radius: 0 0 3px 3px;
     }
-  }
-
-  &-collapsing {
-    transition-duration: .3s;
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition-property: height;
-  }
-
-  &-content-active {
-    height: auto;
   }
 
   & > &-item-active {

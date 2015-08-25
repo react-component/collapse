@@ -2,10 +2,6 @@
 
 const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
-const classnames = require('classnames');
-const cssAnimation = require('css-animation');
-const event = require('css-animation/lib/Event');
-const isSupportCssAnimate = event.endEvents.length > 0;
 
 module.exports = createClass({
 
@@ -23,13 +19,14 @@ module.exports = createClass({
   },
 
   getInitialState() {
-    return { isActive: this.props.isActive };
+    return {isActive: this.props.isActive};
   },
 
   getDefaultProps() {
     return {
       isActive: false,
-      onItemClick: () => {}
+      onItemClick: () => {
+      }
     };
   },
 
@@ -39,25 +36,18 @@ module.exports = createClass({
 
   render() {
     let { prefixCls, header, children, isActive } = this.props;
-
     let headerCls = `${prefixCls}-header`;
-    let contentCls = classnames({
-      [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive
-    });
-    let itemCls = classnames({
-      [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive
-    });
-
+    let contentCls = `${prefixCls}-content`;
+    let itemCls = `${prefixCls}-item`;
+    let itemActiveCls = isActive ? ` ${prefixCls}-item-active` : '';
     return (
-      <div className={itemCls}>
+      <div className={itemCls + itemActiveCls}>
         <div className={headerCls} onClick={this.handleItemClick}
-          role="tab" aria-expanded={isActive}>
+             role="tab" aria-expanded={isActive}>
           <i className="arrow"></i>
           {header}
         </div>
-        <div className={contentCls} ref="content" role="tabpanel">
+        <div className={contentCls} ref="content" role="tabpanel" style={{height: isActive ? 'auto' : 0}}>
           <div className={`${prefixCls}-content-box`}>{children}</div>
         </div>
       </div>
@@ -72,40 +62,47 @@ module.exports = createClass({
   },
 
   componentDidUpdate(prevProps) {
-
     var isActive = this.props.isActive;
-
     // no change
     if (prevProps.isActive === isActive) {
       return;
     }
-
-    this._anim(isActive ? 0 : 1);
+    this._anim();
   },
 
-  _anim(opacity) {
+  _anim() {
     var el = findDOMNode(this.refs.content);
-    if (!isSupportCssAnimate) {
-      el.style.height = opacity ? 0 : '';
-      return;
+    var keyframeNames = 'random' + new Date().getTime();
+    var scrollHeight = el.scrollHeight + 'px';
+    var end = el.style.height, start = 0;
+
+    if (end === '0px') {
+      start = scrollHeight;
+    }
+    if (end === 'auto') {
+      end = scrollHeight;
     }
 
-    var scrollHeight = el.scrollHeight + 'px';
-    var collapsing = `${this.props.prefixCls}-collapsing`;
+    var createKeyframe = function (keyframeName, startVal, endVal) {
+      var domPrefixes = ['webkit', 'moz', 'o', 'ms'], css = '';
+      for (var i = 0, l = domPrefixes.length; i < l; i++) {
+        css += '@-' + domPrefixes[i] + '-keyframes ' + keyframeName + ' {';
+        css += '0%{height:' + startVal + ';}';
+        css += '100%{height:' + endVal + ';}';
+        css += '}';
+      }
+      return css;
+    };
 
-    cssAnimation.addClass(el, collapsing);
-
-    // start state
-    el.style.height = opacity ? scrollHeight : 0;
-
-    cssAnimation.setTransition(el, 'Property', 'height');
-    cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight
-    }, function() {
-      el.style.height = opacity ? 0 : 'auto';
-      cssAnimation.setTransition(el, 'Property', '');
-      cssAnimation.removeClass(el, collapsing);
-    });
+    var style = document.getElementById('random-keyframes');
+    if (!style) {
+      style = document.createElement('style');
+      style.type = 'text/css';
+      style.id = 'random-keyframes';
+      document.getElementsByTagName('head')[0].appendChild(style);
+    }
+    style.innerHTML = createKeyframe(keyframeNames, start, end);
+    el.style.animationName = keyframeNames;
+    el.style.WebkitAnimationName = keyframeNames;// Safari
   }
-
 });
