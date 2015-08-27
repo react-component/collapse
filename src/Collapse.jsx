@@ -31,7 +31,8 @@ module.exports = createClass({
   },
 
   getInitialState() {
-    const { defaultActiveKey, activeKey, accordion } = this.props;
+    const { activeKey, accordion } = this.props;
+    let { defaultActiveKey } = this.props;
     // If is not accordion mode, then, defaultActiveKey should be an array
     if (!accordion) {
       defaultActiveKey = defaultActiveKey || [];
