@@ -1,14 +1,8 @@
-'use strict';
+
 
 const React = require('react');
 const { PropTypes, createClass, Children } = React;
 const CollapsePanel = require('./Panel');
-
-if (!Array.isArray) {
-  Array.isArray = function(arg) {
-    return Object.prototype.toString.call(arg) === '[object Array]';
-  };
-}
 
 module.exports = createClass({
 
@@ -18,55 +12,54 @@ module.exports = createClass({
     prefixCls: PropTypes.string,
     activeKey: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     defaultActiveKey: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     onChange: PropTypes.func,
-    accordion: PropTypes.bool
+    accordion: PropTypes.bool,
   },
 
   getDefaultProps() {
     return {
       prefixCls: 'rc-collapse',
       onChange: () => {},
-      accordion: false
+      accordion: false,
     };
   },
 
   getInitialState() {
-    let { defaultActiveKey, activeKey, accordion } = this.props;
+    const { defaultActiveKey, activeKey, accordion } = this.props;
     // If is not accordion mode, then, defaultActiveKey should be an array
     if (!accordion) {
       defaultActiveKey = defaultActiveKey || [];
     }
 
     return {
-      activeKey: activeKey || defaultActiveKey
+      activeKey: activeKey || defaultActiveKey,
     };
   },
 
   componentWillReceiveProps(nextProps) {
     if ('activeKey' in nextProps) {
       this.setState({
-        activeKey: nextProps.activeKey
+        activeKey: nextProps.activeKey,
       });
     }
   },
 
   handleClickItem(key) {
     return () => {
-      var activeKey = this._getActivityKey();
+      const activeKey = this._getActivityKey();
       if (this.props.accordion) {
         this.setState({
-          activeKey: key === activeKey ? null : key
+          activeKey: key === activeKey ? null : key,
         });
       } else {
-
-        var index = activeKey.indexOf(key);
-        var isActive = index > -1;
+        const index = activeKey.indexOf(key);
+        const isActive = index > -1;
         if (isActive) {
           // remove active state
           activeKey.splice(index, 1);
@@ -82,7 +75,7 @@ module.exports = createClass({
 
   _getActivityKey() {
     let activeKey = this.state.activeKey;
-    let { accordion } = this.props;
+    const { accordion } = this.props;
     if (accordion && Array.isArray(activeKey)) {
       activeKey = activeKey[0];
     }
@@ -94,13 +87,13 @@ module.exports = createClass({
   },
 
   getItems() {
-    let activeKey = this._getActivityKey();
-    let { prefixCls, accordion } = this.props;
+    const activeKey = this._getActivityKey();
+    const { prefixCls, accordion } = this.props;
 
     return Children.map(this.props.children, (child, i) => {
       // If there is no key provide, use the panel order as default key
-      let key = child.key || i;
-      let header = child.props.header;
+      const key = child.key || i;
+      const header = child.props.header;
       let isActive = false;
       if (accordion) {
         isActive = activeKey === key;
@@ -114,7 +107,7 @@ module.exports = createClass({
         isActive,
         prefixCls,
         children: child.props.children,
-        onItemClick: this.handleClickItem(key).bind(this)
+        onItemClick: this.handleClickItem(key).bind(this),
       };
 
       return <CollapsePanel {...props} />;
@@ -122,11 +115,11 @@ module.exports = createClass({
   },
 
   render() {
-    let prefixCls = this.props.prefixCls;
+    const prefixCls = this.props.prefixCls;
     return (
       <div className={prefixCls}>
         {this.getItems()}
       </div>
     );
-  }
+  },
 });

@@ -1,5 +1,3 @@
-'use strict';
-
 const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
 const classnames = require('classnames');
@@ -16,20 +14,21 @@ module.exports = createClass({
     header: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
-      PropTypes.node
+      PropTypes.node,
     ]),
     isActive: PropTypes.bool,
-    onItemClick: PropTypes.func
+    onItemClick: PropTypes.func,
   },
 
   getInitialState() {
-    return { isActive: this.props.isActive };
+    return {isActive: this.props.isActive};
   },
 
   getDefaultProps() {
     return {
       isActive: false,
-      onItemClick: () => {}
+      onItemClick() {
+      },
     };
   },
 
@@ -38,22 +37,22 @@ module.exports = createClass({
   },
 
   render() {
-    let { prefixCls, header, children, isActive } = this.props;
+    const { prefixCls, header, children, isActive } = this.props;
 
-    let headerCls = `${prefixCls}-header`;
-    let contentCls = classnames({
+    const headerCls = `${prefixCls}-header`;
+    const contentCls = classnames({
       [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive
+      [`${prefixCls}-content-active`]: isActive,
     });
-    let itemCls = classnames({
+    const itemCls = classnames({
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive
+      [`${prefixCls}-item-active`]: isActive,
     });
 
     return (
       <div className={itemCls}>
         <div className={headerCls} onClick={this.handleItemClick}
-          role="tab" aria-expanded={isActive}>
+             role="tab" aria-expanded={isActive}>
           <i className="arrow"></i>
           {header}
         </div>
@@ -66,14 +65,13 @@ module.exports = createClass({
 
   componentDidMount() {
     if (this.props.isActive) {
-      var el = findDOMNode(this.refs.content);
+      const el = findDOMNode(this.refs.content);
       el.style.height = 'auto';
     }
   },
 
   componentDidUpdate(prevProps) {
-
-    var isActive = this.props.isActive;
+    const isActive = this.props.isActive;
 
     // no change
     if (prevProps.isActive === isActive) {
@@ -84,14 +82,14 @@ module.exports = createClass({
   },
 
   _anim(opacity) {
-    var el = findDOMNode(this.refs.content);
+    const el = findDOMNode(this.refs.content);
     if (!isSupportCssAnimate) {
       el.style.height = opacity ? 0 : '';
       return;
     }
 
-    var scrollHeight = el.scrollHeight + 'px';
-    var collapsing = `${this.props.prefixCls}-collapsing`;
+    const scrollHeight = el.scrollHeight + 'px';
+    const collapsing = `${this.props.prefixCls}-collapsing`;
 
     cssAnimation.addClass(el, collapsing);
 
@@ -100,12 +98,11 @@ module.exports = createClass({
 
     cssAnimation.setTransition(el, 'Property', 'height');
     cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight
-    }, function() {
+      height: opacity ? 0 : scrollHeight,
+    }, () => {
       el.style.height = opacity ? 0 : 'auto';
       cssAnimation.setTransition(el, 'Property', '');
       cssAnimation.removeClass(el, collapsing);
     });
-  }
-
+  },
 });
