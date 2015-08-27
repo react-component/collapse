@@ -23,13 +23,14 @@ module.exports = createClass({
   },
 
   getInitialState() {
-    return { isActive: this.props.isActive };
+    return {isActive: this.props.isActive};
   },
 
   getDefaultProps() {
     return {
       isActive: false,
-      onItemClick: () => {}
+      onItemClick: () => {
+      }
     };
   },
 
@@ -53,7 +54,7 @@ module.exports = createClass({
     return (
       <div className={itemCls}>
         <div className={headerCls} onClick={this.handleItemClick}
-          role="tab" aria-expanded={isActive}>
+             role="tab" aria-expanded={isActive}>
           <i className="arrow"></i>
           {header}
         </div>
@@ -65,14 +66,15 @@ module.exports = createClass({
   },
 
   componentDidMount() {
+    var el = findDOMNode(this.refs.content);
     if (this.props.isActive) {
-      var el = findDOMNode(this.refs.content);
       el.style.height = 'auto';
+    } else {
+      el.style.height = 0;
     }
   },
 
   componentDidUpdate(prevProps) {
-
     var isActive = this.props.isActive;
 
     // no change
@@ -80,32 +82,44 @@ module.exports = createClass({
       return;
     }
 
+    var el = findDOMNode(this.refs.content);
+    var pos = el.getBoundingClientRect();
+    var start = pos.bottom - pos.top + 'px';
+    el.style.height = start;
     this._anim(isActive ? 0 : 1);
   },
 
   _anim(opacity) {
     var el = findDOMNode(this.refs.content);
     if (!isSupportCssAnimate) {
-      el.style.height = opacity ? 0 : '';
+      el.style.height = opacity ? 0 : 'auto';
       return;
     }
 
     var scrollHeight = el.scrollHeight + 'px';
     var collapsing = `${this.props.prefixCls}-collapsing`;
-
     cssAnimation.addClass(el, collapsing);
-
-    // start state
-    el.style.height = opacity ? scrollHeight : 0;
-
-    cssAnimation.setTransition(el, 'Property', 'height');
-    cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight
-    }, function() {
-      el.style.height = opacity ? 0 : 'auto';
-      cssAnimation.setTransition(el, 'Property', '');
+    clearTimeout(this.timer);
+    if (opacity) {
+      //收缩
+      el.style.height = 0;
       cssAnimation.removeClass(el, collapsing);
-    });
+    } else {
+      //展开
+      el.style.height = scrollHeight;
+      cssAnimation.removeClass(el, collapsing);
+      this.timer = setTimeout(function () {
+        el.style.height = 'auto';
+      }, 300);
+    }
+
+    //cssAnimation.style(el, {
+    //  maxHeight: opacity ? 0 : scrollHeight
+    //}, function () {
+    //  el.style.maxHeight = opacity ? 0 : '10000px';
+    //  cssAnimation.setTransition(el, 'Property', null);
+    //  cssAnimation.removeClass(el, collapsing);
+    //});
   }
 
 });

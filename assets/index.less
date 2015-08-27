@@ -3,7 +3,7 @@
 @borderStyle: 1px solid #d9d9d9;
 
 #arrow {
-  .common(){
+  .common() {
     width: 0;
     height: 0;
     font-size: 0;
@@ -51,7 +51,12 @@
   }
 
   &-content {
-    height: 0;
+    //height: 0;
+    //max-height: 0px;
+    //transition-property: height;
+    transition-duration: .3s;
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+
     overflow: hidden;
     color: @text-color;
     padding: 0 16px;
@@ -70,13 +75,14 @@
   }
 
   &-collapsing {
-    transition-duration: .3s;
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    transition-property: height;
+    //transition-property: height;
+    //transition-duration: .3s;
+    //transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   &-content-active {
-    height: auto;
+    //max-height: 1000px;
+    //height: auto;
   }
 
   & > &-item-active {
