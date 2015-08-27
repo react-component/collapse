@@ -1,6 +1,6 @@
 'use strict';
 
-require('rc-collapse/assets/index.css');
+require('rc-collapse/assets/index.less');
 require('string.prototype.repeat');
 var Collapse = require('rc-collapse');
 var Panel = Collapse.Panel;
