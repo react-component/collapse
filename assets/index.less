@@ -51,12 +51,6 @@
   }
 
   &-content {
-    //height: 0;
-    //max-height: 0px;
-    //transition-property: height;
-    transition-duration: .3s;
-    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-
     overflow: hidden;
     color: @text-color;
     padding: 0 16px;
@@ -75,14 +69,10 @@
   }
 
   &-collapsing {
-    //transition-property: height;
-    //transition-duration: .3s;
-    //transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: height .3s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   &-content-active {
-    //max-height: 1000px;
-    //height: auto;
   }
 
   & > &-item-active {
@@ -95,4 +85,3 @@
     }
   }
 }
-

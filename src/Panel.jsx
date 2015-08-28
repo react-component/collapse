@@ -76,16 +76,15 @@ module.exports = createClass({
 
   componentDidUpdate(prevProps) {
     var isActive = this.props.isActive;
-
     // no change
     if (prevProps.isActive === isActive) {
       return;
     }
-
     var el = findDOMNode(this.refs.content);
     var pos = el.getBoundingClientRect();
     var start = pos.bottom - pos.top + 'px';
     el.style.height = start;
+
     this._anim(isActive ? 0 : 1);
   },
 
@@ -95,31 +94,24 @@ module.exports = createClass({
       el.style.height = opacity ? 0 : 'auto';
       return;
     }
-
-    var scrollHeight = el.scrollHeight + 'px';
     var collapsing = `${this.props.prefixCls}-collapsing`;
-    cssAnimation.addClass(el, collapsing);
+    var scrollHeight = el.scrollHeight + 'px';
     clearTimeout(this.timer);
     if (opacity) {
       //收缩
+      cssAnimation.addClass(el, collapsing);
       el.style.height = 0;
-      cssAnimation.removeClass(el, collapsing);
+      this.timer = setTimeout(function () {
+        cssAnimation.removeClass(el, collapsing);
+      }, 280);
     } else {
       //展开
+      cssAnimation.addClass(el, collapsing);
       el.style.height = scrollHeight;
-      cssAnimation.removeClass(el, collapsing);
       this.timer = setTimeout(function () {
         el.style.height = 'auto';
-      }, 300);
+        cssAnimation.removeClass(el, collapsing);
+      }, 280);
     }
-
-    //cssAnimation.style(el, {
-    //  maxHeight: opacity ? 0 : scrollHeight
-    //}, function () {
-    //  el.style.maxHeight = opacity ? 0 : '10000px';
-    //  cssAnimation.setTransition(el, 'Property', null);
-    //  cssAnimation.removeClass(el, collapsing);
-    //});
   }
-
 });
