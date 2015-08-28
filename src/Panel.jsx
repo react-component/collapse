@@ -1,5 +1,3 @@
-'use strict';
-
 const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
 const classnames = require('classnames');
@@ -29,7 +27,7 @@ module.exports = createClass({
   getDefaultProps() {
     return {
       isActive: false,
-      onItemClick: () => {
+      onItemClick() {
       }
     };
   },
@@ -39,14 +37,14 @@ module.exports = createClass({
   },
 
   render() {
-    let { prefixCls, header, children, isActive } = this.props;
+    const { prefixCls, header, children, isActive } = this.props;
 
-    let headerCls = `${prefixCls}-header`;
-    let contentCls = classnames({
+    const headerCls = `${prefixCls}-header`;
+    const contentCls = classnames({
       [`${prefixCls}-content`]: true,
       [`${prefixCls}-content-active`]: isActive
     });
-    let itemCls = classnames({
+    const itemCls = classnames({
       [`${prefixCls}-item`]: true,
       [`${prefixCls}-item-active`]: isActive
     });
@@ -66,7 +64,7 @@ module.exports = createClass({
   },
 
   componentDidMount() {
-    var el = findDOMNode(this.refs.content);
+    const el = findDOMNode(this.refs.content);
     if (this.props.isActive) {
       el.style.height = 'auto';
     } else {
@@ -75,7 +73,7 @@ module.exports = createClass({
   },
 
   componentDidUpdate(prevProps) {
-    var isActive = this.props.isActive;
+    const isActive = this.props.isActive;
     // no change
     if (prevProps.isActive === isActive) {
       return;
@@ -89,13 +87,13 @@ module.exports = createClass({
   },
 
   _anim(opacity) {
-    var el = findDOMNode(this.refs.content);
+    const el = findDOMNode(this.refs.content);
     if (!isSupportCssAnimate) {
       el.style.height = opacity ? 0 : 'auto';
       return;
     }
-    var collapsing = `${this.props.prefixCls}-collapsing`;
-    var scrollHeight = el.scrollHeight + 'px';
+    const collapsing = `${this.props.prefixCls}-collapsing`;
+    const scrollHeight = el.scrollHeight + 'px';
     clearTimeout(this.timer);
     if (opacity) {
       //收缩
