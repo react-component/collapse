@@ -14,10 +14,10 @@ module.exports = createClass({
     header: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
-      PropTypes.node,
+      PropTypes.node
     ]),
     isActive: PropTypes.bool,
-    onItemClick: PropTypes.func,
+    onItemClick: PropTypes.func
   },
 
   getInitialState() {
@@ -28,7 +28,7 @@ module.exports = createClass({
     return {
       isActive: false,
       onItemClick() {
-      },
+      }
     };
   },
 
@@ -41,12 +41,11 @@ module.exports = createClass({
 
     const headerCls = `${prefixCls}-header`;
     const contentCls = classnames({
-      [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive,
+      [`${prefixCls}-content`]: true
     });
     const itemCls = classnames({
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive,
+      [`${prefixCls}-item-active`]: isActive
     });
 
     return (
@@ -64,19 +63,24 @@ module.exports = createClass({
   },
 
   componentDidMount() {
+    const el = findDOMNode(this.refs.content);
     if (this.props.isActive) {
-      const el = findDOMNode(this.refs.content);
       el.style.height = 'auto';
+    } else {
+      el.style.height = 0;
     }
   },
 
   componentDidUpdate(prevProps) {
     const isActive = this.props.isActive;
-
     // no change
     if (prevProps.isActive === isActive) {
       return;
     }
+    var el = findDOMNode(this.refs.content);
+    var pos = el.getBoundingClientRect();
+    var start = pos.bottom - pos.top + 'px';
+    el.style.height = start;
 
     this._anim(isActive ? 0 : 1);
   },
@@ -84,25 +88,27 @@ module.exports = createClass({
   _anim(opacity) {
     const el = findDOMNode(this.refs.content);
     if (!isSupportCssAnimate) {
-      el.style.height = opacity ? 0 : '';
+      el.style.height = opacity ? 0 : 'auto';
       return;
     }
-
-    const scrollHeight = el.scrollHeight + 'px';
     const collapsing = `${this.props.prefixCls}-collapsing`;
-
-    cssAnimation.addClass(el, collapsing);
-
-    // start state
-    el.style.height = opacity ? scrollHeight : 0;
-
-    cssAnimation.setTransition(el, 'Property', 'height');
-    cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight,
-    }, () => {
-      el.style.height = opacity ? 0 : 'auto';
-      cssAnimation.setTransition(el, 'Property', '');
-      cssAnimation.removeClass(el, collapsing);
-    });
-  },
+    const scrollHeight = el.scrollHeight + 'px';
+    clearTimeout(this.timer);
+    if (opacity) {
+      //收缩
+      cssAnimation.addClass(el, collapsing);
+      el.style.height = 0;
+      this.timer = setTimeout(function () {
+        cssAnimation.removeClass(el, collapsing);
+      }, 280);
+    } else {
+      //展开
+      cssAnimation.addClass(el, collapsing);
+      el.style.height = scrollHeight;
+      this.timer = setTimeout(function () {
+        el.style.height = 'auto';
+        cssAnimation.removeClass(el, collapsing);
+      }, 280);
+    }
+  }
 });
