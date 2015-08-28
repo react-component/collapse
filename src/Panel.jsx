@@ -41,8 +41,7 @@ module.exports = createClass({
 
     const headerCls = `${prefixCls}-header`;
     const contentCls = classnames({
-      [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive
+      [`${prefixCls}-content`]: true
     });
     const itemCls = classnames({
       [`${prefixCls}-item`]: true,
