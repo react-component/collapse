@@ -12,21 +12,21 @@ module.exports = createClass({
     prefixCls: PropTypes.string,
     activeKey: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     defaultActiveKey: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
     ]),
     onChange: PropTypes.func,
-    accordion: PropTypes.bool
+    accordion: PropTypes.bool,
   },
 
   getDefaultProps() {
     return {
       prefixCls: 'rc-collapse',
       onChange: () => {},
-      accordion: false
+      accordion: false,
     };
   },
 
@@ -39,14 +39,14 @@ module.exports = createClass({
     }
 
     return {
-      activeKey: activeKey || defaultActiveKey
+      activeKey: activeKey || defaultActiveKey,
     };
   },
 
   componentWillReceiveProps(nextProps) {
     if ('activeKey' in nextProps) {
       this.setState({
-        activeKey: nextProps.activeKey
+        activeKey: nextProps.activeKey,
       });
     }
   },
@@ -56,7 +56,7 @@ module.exports = createClass({
       const activeKey = this._getActivityKey();
       if (this.props.accordion) {
         this.setState({
-          activeKey: key === activeKey ? null : key
+          activeKey: key === activeKey ? null : key,
         });
       } else {
         const index = activeKey.indexOf(key);
@@ -108,7 +108,7 @@ module.exports = createClass({
         isActive,
         prefixCls,
         children: child.props.children,
-        onItemClick: this.handleClickItem(key).bind(this)
+        onItemClick: this.handleClickItem(key).bind(this),
       };
 
       return <CollapsePanel {...props} />;
@@ -122,5 +122,5 @@ module.exports = createClass({
         {this.getItems()}
       </div>
     );
-  }
+  },
 });

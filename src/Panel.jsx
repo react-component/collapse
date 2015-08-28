@@ -14,10 +14,10 @@ module.exports = createClass({
     header: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
-      PropTypes.node
+      PropTypes.node,
     ]),
     isActive: PropTypes.bool,
-    onItemClick: PropTypes.func
+    onItemClick: PropTypes.func,
   },
 
   getInitialState() {
@@ -28,7 +28,7 @@ module.exports = createClass({
     return {
       isActive: false,
       onItemClick() {
-      }
+      },
     };
   },
 
@@ -41,11 +41,11 @@ module.exports = createClass({
 
     const headerCls = `${prefixCls}-header`;
     const contentCls = classnames({
-      [`${prefixCls}-content`]: true
+      [`${prefixCls}-content`]: true,
     });
     const itemCls = classnames({
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive
+      [`${prefixCls}-item-active`]: isActive,
     });
 
     return (
@@ -77,9 +77,9 @@ module.exports = createClass({
     if (prevProps.isActive === isActive) {
       return;
     }
-    var el = findDOMNode(this.refs.content);
-    var pos = el.getBoundingClientRect();
-    var start = pos.bottom - pos.top + 'px';
+    const el = findDOMNode(this.refs.content);
+    const pos = el.getBoundingClientRect();
+    const start = pos.bottom - pos.top + 'px';
     el.style.height = start;
 
     this._anim(isActive ? 0 : 1);
@@ -95,20 +95,18 @@ module.exports = createClass({
     const scrollHeight = el.scrollHeight + 'px';
     clearTimeout(this.timer);
     if (opacity) {
-      //收缩
       cssAnimation.addClass(el, collapsing);
       el.style.height = 0;
-      this.timer = setTimeout(function () {
+      this.timer = setTimeout(function() {
         cssAnimation.removeClass(el, collapsing);
-      }, 280);
+      }, 300);
     } else {
-      //展开
       cssAnimation.addClass(el, collapsing);
       el.style.height = scrollHeight;
-      this.timer = setTimeout(function () {
+      this.timer = setTimeout(function() {
         el.style.height = 'auto';
         cssAnimation.removeClass(el, collapsing);
-      }, 280);
+      }, 300);
     }
-  }
+  },
 });
