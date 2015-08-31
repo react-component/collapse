@@ -1,12 +1,11 @@
+import React, { PropTypes, createClass, Children }from 'react';
+import CollapsePanel from './Panel';
+import openAnimation from './openAnimation';
 
-
-const React = require('react');
-const { PropTypes, createClass, Children } = React;
-const CollapsePanel = require('./Panel');
-
-module.exports = createClass({
-
-  displayName: 'Collapse',
+const Collapse = createClass({
+  statics: {
+    Panel: CollapsePanel,
+  },
 
   propTypes: {
     prefixCls: PropTypes.string,
@@ -18,6 +17,7 @@ module.exports = createClass({
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
     ]),
+    openAnimation: PropTypes.object,
     onChange: PropTypes.func,
     accordion: PropTypes.bool,
   },
@@ -25,7 +25,9 @@ module.exports = createClass({
   getDefaultProps() {
     return {
       prefixCls: 'rc-collapse',
-      onChange: () => {},
+      onChange: () => {
+      },
+      openAnimation: openAnimation,
       accordion: false,
     };
   },
@@ -68,7 +70,7 @@ module.exports = createClass({
           activeKey.push(key);
         }
 
-        this.setState({ activeKey: activeKey });
+        this.setState({activeKey: activeKey});
       }
       this.props.onChange(key);
     };
@@ -107,6 +109,7 @@ module.exports = createClass({
         header,
         isActive,
         prefixCls,
+        openAnimation: this.props.openAnimation,
         children: child.props.children,
         onItemClick: this.handleClickItem(key).bind(this),
       };
@@ -124,3 +127,5 @@ module.exports = createClass({
     );
   },
 });
+
+export default Collapse;

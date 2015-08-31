@@ -51,6 +51,7 @@
   ],
   "dependencies": {
     "classnames": "^2.1.2",
-    "css-animation": "~1.0.5"
+    "rc-animate": "1.x",
+    "velocity-animate": "1.x"
   }
 }
