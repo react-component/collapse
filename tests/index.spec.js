@@ -1,5 +1,8 @@
 'use strict';
 
+var jQuery = require('jquery');
+window.jQuery = jQuery;
+
 var expect = require('expect.js');
 var Collapse = require('../index');
 var Panel = Collapse.Panel;
