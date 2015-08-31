@@ -40,7 +40,7 @@ const CollapsePanel = createClass({
     });
 
     return (
-      <div className=`${prefixCls}-item`>
+      <div className={`${prefixCls}-item`}>
         <div className={headerCls} onClick={this.handleItemClick}
              role="tab" aria-expanded={isActive}>
           <i className="arrow"></i>
