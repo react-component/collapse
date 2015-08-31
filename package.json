@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "expect.js": "0.3.x",
+    "jquery": "~1.11.3",
     "precommit-hook": "1.x",
     "rc-server": "3.x",
     "rc-tools": "4.x",
@@ -50,7 +51,7 @@
     "lint"
   ],
   "dependencies": {
-    "classnames": "^2.1.2",
+    "classnames": "~2.1.2",
     "rc-animate": "1.x",
     "velocity-animate": "1.x"
   }
