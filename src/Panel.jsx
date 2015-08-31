@@ -1,13 +1,10 @@
-const React = require('react');
-const { PropTypes, createClass, findDOMNode } = React;
-const classnames = require('classnames');
-const velocity = require('velocity-animate');
+import React, { PropTypes, createClass } from 'react';
+import classnames from 'classnames';
+import Animate from 'rc-animate';
 
-module.exports = createClass({
-
-  displayName: 'CollapsePanel',
-
+const CollapsePanel = createClass({
   propTypes: {
+    openAnimation: PropTypes.object,
     prefixCls: PropTypes.string,
     header: PropTypes.oneOfType([
       PropTypes.string,
@@ -36,7 +33,6 @@ module.exports = createClass({
 
   render() {
     const { prefixCls, header, children, isActive } = this.props;
-
     const headerCls = `${prefixCls}-header`;
     const contentCls = classnames({
       [`${prefixCls}-content`]: true,
@@ -53,30 +49,18 @@ module.exports = createClass({
           <i className="arrow"></i>
           {header}
         </div>
-        <div className={contentCls} ref="content" role="tabpanel">
-          <div className={`${prefixCls}-content-box`}>{children}</div>
-        </div>
+        <Animate showProp="data-active"
+                 exclusive={true}
+                 animation={this.props.openAnimation}>
+          <div className={contentCls}
+               data-active={isActive}
+               role="tabpanel">
+            <div className={`${prefixCls}-content-box`}>{children}</div>
+          </div>
+        </Animate>
       </div>
     );
   },
-
-  componentDidUpdate(prevProps) {
-    const isActive = this.props.isActive;
-    // no change
-    if (prevProps.isActive === isActive) {
-      return;
-    }
-    const node = findDOMNode(this.refs.content);
-    if (isActive) {
-      node.style.display = 'none';
-      velocity(node, 'slideDown', {
-        duration: 300,
-      });
-    } else {
-      node.style.display = 'block';
-      velocity(node, 'slideUp', {
-        duration: 300,
-      });
-    }
-  },
 });
+
+export default CollapsePanel;
