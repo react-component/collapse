@@ -1,9 +1,7 @@
 const React = require('react');
 const { PropTypes, createClass, findDOMNode } = React;
 const classnames = require('classnames');
-const cssAnimation = require('css-animation');
-const event = require('css-animation/lib/Event');
-const isSupportCssAnimate = event.endEvents.length > 0;
+const velocity = require('velocity-animate');
 
 module.exports = createClass({
 
@@ -46,7 +44,6 @@ module.exports = createClass({
     });
     const itemCls = classnames({
       [`${prefixCls}-item`]: true,
-      [`${prefixCls}-item-active`]: isActive,
     });
 
     return (
@@ -63,46 +60,23 @@ module.exports = createClass({
     );
   },
 
-  componentDidMount() {
-    if (this.props.isActive) {
-      const el = findDOMNode(this.refs.content);
-      el.style.height = 'auto';
-    }
-  },
-
   componentDidUpdate(prevProps) {
     const isActive = this.props.isActive;
-
     // no change
     if (prevProps.isActive === isActive) {
       return;
     }
-
-    this._anim(isActive ? 0 : 1);
-  },
-
-  _anim(opacity) {
-    const el = findDOMNode(this.refs.content);
-    if (!isSupportCssAnimate) {
-      el.style.height = opacity ? 0 : '';
-      return;
+    const node = findDOMNode(this.refs.content);
+    if (isActive) {
+      node.style.display = 'none';
+      velocity(node, 'slideDown', {
+        duration: 300,
+      });
+    } else {
+      node.style.display = 'block';
+      velocity(node, 'slideUp', {
+        duration: 300,
+      });
     }
-
-    const scrollHeight = el.scrollHeight + 'px';
-    const collapsing = `${this.props.prefixCls}-collapsing`;
-
-    cssAnimation.addClass(el, collapsing);
-
-    // start state
-    el.style.height = opacity ? scrollHeight : 0;
-
-    cssAnimation.setTransition(el, 'Property', 'height');
-    cssAnimation.style(el, {
-      height: opacity ? 0 : scrollHeight,
-    }, () => {
-      el.style.height = opacity ? 0 : 'auto';
-      cssAnimation.setTransition(el, 'Property', '');
-      cssAnimation.removeClass(el, collapsing);
-    });
   },
 });

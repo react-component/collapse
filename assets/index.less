@@ -51,7 +51,7 @@
   }
 
   &-content {
-    height: 0;
+    display: none;
     overflow: hidden;
     color: @text-color;
     padding: 0 16px;
@@ -60,6 +60,10 @@
     & > &-box {
       margin-top: 16px;
       margin-bottom: 16px;
+    }
+
+    &-active {
+      display: block;
     }
   }
 
@@ -73,10 +77,6 @@
     transition-duration: .3s;
     transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
     transition-property: height;
-  }
-
-  &-content-active {
-    height: auto;
   }
 
   & > &-item-active {
