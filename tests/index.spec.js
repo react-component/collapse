@@ -68,10 +68,10 @@ describe('collapse', function() {
       var header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(function() {
-        expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(1);
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
         Simulate.click(header);
         setTimeout(function() {
-          expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
+          expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
           done();
         }, 30)
       }, 30);
@@ -103,19 +103,19 @@ describe('collapse', function() {
     });
 
     it('accordion item, should default open zero item', function() {
-      expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(0);
+      expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
     });
 
     it('should toggle show on panel', function(done) {
       var header = findDOMNode(collapse, 'rc-accordion-header')[1];
       Simulate.click(header);
       setTimeout(function() {
-        expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(1);
+        expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
         header = findDOMNode(collapse, 'rc-accordion-header')[1];
         Simulate.click(header);
 
         setTimeout(function() {
-          expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(0);
+          expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(0);
           done();
         }, 20)
       }, 30);
@@ -125,12 +125,12 @@ describe('collapse', function() {
       var header = findDOMNode(collapse, 'rc-accordion-header')[1];
       Simulate.click(header);
       setTimeout(function() {
-        expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(1);
+        expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
         header = findDOMNode(collapse, 'rc-accordion-header')[2];
         Simulate.click(header);
 
         setTimeout(function() {
-          expect(findDOMNode(collapse, 'rc-accordion-item-active').length).to.be(1);
+          expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
           done();
         }, 20)
       }, 30);
