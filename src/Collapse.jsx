@@ -93,9 +93,9 @@ const Collapse = createClass({
     const activeKey = this._getActivityKey();
     const { prefixCls, accordion } = this.props;
 
-    return Children.map(this.props.children, (child, i) => {
+    return Children.map(this.props.children, (child, index) => {
       // If there is no key provide, use the panel order as default key
-      const key = child.key || i;
+      const key = child.key || index;
       const header = child.props.header;
       let isActive = false;
       if (accordion) {

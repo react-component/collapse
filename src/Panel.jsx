@@ -47,7 +47,7 @@ const CollapsePanel = createClass({
           {header}
         </div>
         <Animate showProp="data-active"
-                 exclusive={true}
+                 exclusive
                  animation={this.props.openAnimation}>
           <div className={contentCls}
                data-active={isActive}

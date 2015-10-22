@@ -5,6 +5,7 @@ require('string.prototype.repeat');
 var Collapse = require('rc-collapse');
 var Panel = Collapse.Panel;
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 var text = `
   A dog is a type of domesticated animal.
@@ -72,4 +73,4 @@ var Test = React.createClass({
   }
 });
 
-React.render(<Test/>, document.getElementById('__react-content'));
+ReactDOM.render(<Test/>, document.getElementById('__react-content'));
