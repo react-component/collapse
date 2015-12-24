@@ -1,4 +1,7 @@
-import velocity from 'velocity-animate';
+let velocity;
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+  velocity = require('velocity-animate');
+}
 
 function animate(node, show, transitionName, done) {
   let ok;
@@ -13,9 +16,9 @@ function animate(node, show, transitionName, done) {
   // Fix safari flash bug
   node.style.display = show ? 'block' : 'none';
   velocity(node, transitionName, {
-    duration: 240,
+    duration: 300,
     complete: complete,
-    easing: 'easeInOutQuad',
+    easing: 'ease',
   });
   return {
     stop() {
