@@ -10,14 +10,14 @@
     "collapse",
     "accordion"
   ],
-  "homepage": "http://github.com/react-component/rc-collapse",
+  "homepage": "http://github.com/react-component/collapse",
   "author": "eward.song@gmail.com",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/rc-collapse.git"
+    "url": "git@github.com:react-component/collapse.git"
   },
   "bugs": {
-    "url": "http://github.com/react-component/rc-collapse/issues"
+    "url": "http://github.com/react-component/collapse/issues"
   },
   "licenses": "MIT",
   "files": [
