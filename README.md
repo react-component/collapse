@@ -33,11 +33,11 @@ http://localhost:8000/examples/
 online example: http://react-component.github.io/collapse/
 
 
-## Feature
+## Features
 
 * support ie8,ie8+,chrome,firefox,safari
 
-## install
+## Install
 
 [![rc-collapse](https://nodei.co/npm/rc-collapse.png)](https://npmjs.org/package/rc-collapse)
 
@@ -100,11 +100,11 @@ ReactDOM.render(collapse, container);
     </tbody>
 </table>
 
-If accordion is null or false, every panel open, will not close other panel.
-`activekey` should be an array. string will work fine, activekey will be an
-array, and the only item is the activeKey string provided;
+If `accordion` is null or false, every panel can open.  Opening another panel will not close any of the other panels
+`activekey` should be an array, a string will work fine, activekey will be an
+array, and the only item is the activeKey string provided.
 
-If accordion is true, only on panel can be active.
+If `accordion` is true, only one panel can be open.  Opening any one panel will cause the previously opened panel to close.
 `activekey` should be an string, but array is support too, just use the first
 item.
 
@@ -133,7 +133,7 @@ item.
 
 #### key
 
-If no key provide, key value will be the panel index.
+If `key` is not provided, the panel's index will be used instead.
 
 ## Test Case
 
