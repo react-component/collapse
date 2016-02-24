@@ -3,11 +3,8 @@ import CollapsePanel from './Panel';
 import openAnimation from './openAnimation';
 
 const Collapse = createClass({
-  statics: {
-    Panel: CollapsePanel,
-  },
-
   propTypes: {
+    children: PropTypes.any,
     prefixCls: PropTypes.string,
     activeKey: PropTypes.oneOfType([
       PropTypes.string,
@@ -20,6 +17,10 @@ const Collapse = createClass({
     openAnimation: PropTypes.object,
     onChange: PropTypes.func,
     accordion: PropTypes.bool,
+  },
+
+  statics: {
+    Panel: CollapsePanel,
   },
 
   getDefaultProps() {
@@ -53,9 +54,9 @@ const Collapse = createClass({
     }
   },
 
-  handleClickItem(key) {
+  onClickItem(key) {
     return () => {
-      const activeKey = this._getActivityKey();
+      const activeKey = this.getActivityKey();
       if (this.props.accordion) {
         this.setState({
           activeKey: key === activeKey ? null : key,
@@ -76,7 +77,7 @@ const Collapse = createClass({
     };
   },
 
-  _getActivityKey() {
+  getActivityKey() {
     let activeKey = this.state.activeKey;
     const { accordion } = this.props;
     if (accordion && Array.isArray(activeKey)) {
@@ -90,7 +91,7 @@ const Collapse = createClass({
   },
 
   getItems() {
-    const activeKey = this._getActivityKey();
+    const activeKey = this.getActivityKey();
     const { prefixCls, accordion } = this.props;
 
     return Children.map(this.props.children, (child, index) => {
@@ -111,7 +112,7 @@ const Collapse = createClass({
         prefixCls,
         openAnimation: this.props.openAnimation,
         children: child.props.children,
-        onItemClick: this.handleClickItem(key).bind(this),
+        onItemClick: this.onClickItem(key).bind(this),
       };
 
       return <CollapsePanel {...props} />;

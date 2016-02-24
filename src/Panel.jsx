@@ -4,6 +4,7 @@ import Animate from 'rc-animate';
 
 const CollapsePanel = createClass({
   propTypes: {
+    children: PropTypes.any,
     openAnimation: PropTypes.object,
     prefixCls: PropTypes.string,
     header: PropTypes.oneOfType([
@@ -15,16 +16,16 @@ const CollapsePanel = createClass({
     onItemClick: PropTypes.func,
   },
 
-  getInitialState() {
-    return {isActive: this.props.isActive};
-  },
-
   getDefaultProps() {
     return {
       isActive: false,
       onItemClick() {
       },
     };
+  },
+
+  getInitialState() {
+    return {isActive: this.props.isActive};
   },
 
   handleItemClick() {

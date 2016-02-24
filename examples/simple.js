@@ -1,34 +1,32 @@
-'use strict';
-
 require('rc-collapse/assets/index.less');
 require('string.prototype.repeat');
-var Collapse = require('rc-collapse');
-var Panel = Collapse.Panel;
-var React = require('react');
-var ReactDOM = require('react-dom');
+const Collapse = require('rc-collapse');
+const Panel = Collapse.Panel;
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var text = `
+const text = `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
   it can be found as a welcome guest in many households across the world.
 `;
 
 function random() {
-  return parseInt(Math.random() * 10) + 1;
+  return parseInt(Math.random() * 10, 10) + 1;
 }
 
-var Test = React.createClass({
+const Test = React.createClass({
   getInitialState() {
     return {
       time: random(),
-      accordion: false
+      accordion: false,
     };
   },
 
   getItems() {
-    var items = [];
-    for (var i = 0, len = 3; i < len; i++) {
-      var key = i + 1;
+    const items = [];
+    for (let i = 0, len = 3; i < len; i++) {
+      const key = i + 1;
       items.push(
         <Panel header={`This is panel header ${key}`} key={key}>
           <p>{text.repeat(this.state.time)}</p>
@@ -48,29 +46,37 @@ var Test = React.createClass({
     return items;
   },
 
-  toggle() {
-    this.setState({ accordion: !this.state.accordion });
+  setActivityKey() {
+    this.setState({
+      activeKey: ['2'],
+    });
   },
 
   reRender() {
-    this.setState({ time: random() });
+    this.setState({
+      time: random(),
+    });
   },
 
-  setActivityKey() {
-    this.setState({ activeKey: ['2'] });
+  toggle() {
+    this.setState({
+      accordion: !this.state.accordion,
+    });
   },
 
   render() {
-    var accordion = this.state.accordion;
-    var btn = accordion ? 'accordion' : 'collapse';
-    var activeKey = this.state.activeKey;
-    return <div style={{margin: 20, width: 400}}>
+    const accordion = this.state.accordion;
+    const btn = accordion ? 'accordion' : 'collapse';
+    const activeKey = this.state.activeKey;
+    return (<div style={{ margin: 20, width: 400 }}>
       <button onClick={this.reRender}>reRender</button>
-      <button onClick={this.toggle}>{btn}</button><br/><br/>
-      <button onClick={this.setActivityKey}>active header 2</button><br/><br/>
+      <button onClick={this.toggle}>{btn}</button>
+      <br/><br/>
+      <button onClick={this.setActivityKey}>active header 2</button>
+      <br/><br/>
       <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['4']}>{this.getItems()}</Collapse>
-    </div>;
-  }
+    </div>);
+  },
 });
 
 ReactDOM.render(<Test/>, document.getElementById('__react-content'));

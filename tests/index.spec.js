@@ -1,18 +1,17 @@
-'use strict';
-
-var jQuery = require('jquery');
+const jQuery = require('jquery');
 window.jQuery = jQuery;
 
-var expect = require('expect.js');
-var Collapse = require('../index');
-var Panel = Collapse.Panel;
-var React = require('react/addons');
-var TestUtils = React.addons.TestUtils;
-var Simulate = TestUtils.Simulate;
-var findDOMNode = TestUtils.scryRenderedDOMComponentsWithClass;
+const expect = require('expect.js');
+const Collapse = require('../index');
+const Panel = Collapse.Panel;
+const React = require('react');
+const ReactDOM = require('react-dom');
+const TestUtils = require('react-addons-test-utils');
+const Simulate = TestUtils.Simulate;
+const findDOMNode = TestUtils.scryRenderedDOMComponentsWithClass;
 
-describe('collapse', function() {
-  var changeHook;
+describe('collapse', () => {
+  let changeHook;
 
   function onChange() {
     if (changeHook) {
@@ -20,122 +19,119 @@ describe('collapse', function() {
     }
   }
 
-  describe('collapse', function() {
+  describe('collapse', () => {
+    let node;
+    let collapse;
 
-    var node;
-    var collapse;
-
-    beforeEach(function(done) {
+    beforeEach((done) => {
       node = document.createElement('div');
       document.body.appendChild(node);
 
-      React.render(<Collapse onChange={onChange}>
+      ReactDOM.render(<Collapse onChange={onChange}>
         <Panel header="collapse 1" key="1">first</Panel>
         <Panel header="collapse 2" key="2">second</Panel>
         <Panel header="collapse 3" key="3">third</Panel>
-      </Collapse>, node, function() {
+      </Collapse>, node, function init() {
         collapse = this;
         done();
       });
     });
 
-    afterEach(function() {
-      React.unmountComponentAtNode(node);
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(node);
       changeHook = null;
     });
 
-    it('create works', function() {
+    it('create works', () => {
       expect(findDOMNode(collapse, 'rc-collapse').length).to.be(1);
     });
 
-    it('panel works', function() {
+    it('panel works', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item').length).to.be(3);
       expect(findDOMNode(collapse, 'rc-collapse-header').length).to.be(3);
       expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(3);
     });
 
-    it('default active works', function() {
+    it('default active works', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
     });
 
-    it('onChange works', function(done) {
-      changeHook = function(d) {
+    it('onChange works', (done) => {
+      changeHook = (d) => {
         expect(d).to.be('2');
         done();
       };
-      var header = findDOMNode(collapse, 'rc-collapse-header')[1];
+      const header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
     });
 
-    it('click should toggle panel state', function(done) {
-      var header = findDOMNode(collapse, 'rc-collapse-header')[1];
+    it('click should toggle panel state', (done) => {
+      const header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
-      setTimeout(function() {
+      setTimeout(() => {
         expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
         Simulate.click(header);
-        setTimeout(function() {
+        setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
           done();
-        }, 30)
+        }, 30);
       }, 30);
     });
-
-
   });
 
-  describe('accordion', function() {
-    var node;
-    var collapse;
-    beforeEach(function(done) {
+  describe('accordion', () => {
+    let node;
+    let collapse;
+    beforeEach((done) => {
       node = document.createElement('div');
       document.body.appendChild(node);
 
-      React.render(<Collapse onChange={onChange} accordion={true} prefixCls="rc-accordion">
+      ReactDOM.render(<Collapse onChange={onChange} accordion prefixCls="rc-accordion">
         <Panel header="collapse 1" key="1">first</Panel>
         <Panel header="collapse 2" key="2">second</Panel>
         <Panel header="collapse 3" key="3">third</Panel>
-      </Collapse>, node, function() {
+      </Collapse>, node, function init() {
         collapse = this;
         done();
       });
     });
 
-    afterEach(function() {
-      React.unmountComponentAtNode(node);
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(node);
       changeHook = null;
     });
 
-    it('accordion item, should default open zero item', function() {
+    it('accordion item, should default open zero item', () => {
       expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
     });
 
-    it('should toggle show on panel', function(done) {
-      var header = findDOMNode(collapse, 'rc-accordion-header')[1];
+    it('should toggle show on panel', (done) => {
+      let header = findDOMNode(collapse, 'rc-accordion-header')[1];
       Simulate.click(header);
-      setTimeout(function() {
+      setTimeout(() => {
         expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
         header = findDOMNode(collapse, 'rc-accordion-header')[1];
         Simulate.click(header);
 
-        setTimeout(function() {
+        setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(0);
           done();
-        }, 20)
+        }, 20);
       }, 30);
     });
 
-    it('should only show on panel', function(done) {
-      var header = findDOMNode(collapse, 'rc-accordion-header')[1];
+    it('should only show on panel', (done) => {
+      let header = findDOMNode(collapse, 'rc-accordion-header')[1];
       Simulate.click(header);
-      setTimeout(function() {
+      setTimeout(() => {
         expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
         header = findDOMNode(collapse, 'rc-accordion-header')[2];
         Simulate.click(header);
 
-        setTimeout(function() {
+        setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
           done();
-        }, 20)
+        }, 20);
       }, 30);
     });
   });
