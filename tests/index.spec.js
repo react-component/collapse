@@ -1,6 +1,6 @@
 const jQuery = require('jquery');
 window.jQuery = jQuery;
-
+import '../assets/index.less';
 const expect = require('expect.js');
 const Collapse = require('../index');
 const Panel = Collapse.Panel;
@@ -74,8 +74,8 @@ describe('collapse', () => {
         setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
           done();
-        }, 30);
-      }, 30);
+        }, 500);
+      }, 500);
     });
   });
 
@@ -116,8 +116,8 @@ describe('collapse', () => {
         setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(0);
           done();
-        }, 20);
-      }, 30);
+        }, 500);
+      }, 500);
     });
 
     it('should only show on panel', (done) => {
@@ -131,8 +131,8 @@ describe('collapse', () => {
         setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
           done();
-        }, 20);
-      }, 30);
+        }, 500);
+      }, 500);
     });
   });
 });
