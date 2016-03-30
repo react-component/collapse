@@ -1,6 +1,6 @@
 import React, { PropTypes, createClass, Children }from 'react';
 import CollapsePanel from './Panel';
-import openAnimation from './openAnimation';
+import openAnimationFactory from './openAnimationFactory';
 
 const Collapse = createClass({
   propTypes: {
@@ -28,7 +28,6 @@ const Collapse = createClass({
       prefixCls: 'rc-collapse',
       onChange: () => {
       },
-      openAnimation: openAnimation,
       accordion: false,
     };
   },
@@ -42,6 +41,7 @@ const Collapse = createClass({
     }
 
     return {
+      openAnimation: this.props.openAnimation || openAnimationFactory(this.props.prefixCls),
       activeKey: activeKey || defaultActiveKey,
     };
   },
@@ -50,6 +50,11 @@ const Collapse = createClass({
     if ('activeKey' in nextProps) {
       this.setState({
         activeKey: nextProps.activeKey,
+      });
+    }
+    if ('openAnimation' in nextProps) {
+      this.setState({
+        openAnimation: nextProps.openAnimation,
       });
     }
   },
@@ -110,7 +115,7 @@ const Collapse = createClass({
         header,
         isActive,
         prefixCls,
-        openAnimation: this.props.openAnimation,
+        openAnimation: this.state.openAnimation,
         children: child.props.children,
         onItemClick: this.onClickItem(key).bind(this),
       };

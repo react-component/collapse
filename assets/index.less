@@ -27,6 +27,10 @@
   border-radius: 3px;
   border: @borderStyle;
 
+  &-anim-active {
+    transition: height .3s ease-out;
+  }
+
   & > &-item {
     border-top: @borderStyle;
     &:first-child {
@@ -51,7 +55,6 @@
   }
 
   &-content {
-    display: none;
     overflow: hidden;
     color: @text-color;
     padding: 0 16px;
@@ -62,8 +65,8 @@
       margin-bottom: 16px;
     }
 
-    &-active {
-      display: block;
+    &-inactive {
+      display: none;
     }
   }
 

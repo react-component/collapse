@@ -1,5 +1,5 @@
 import React, { PropTypes, createClass } from 'react';
-import classnames from 'classnames';
+import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
 const CollapsePanel = createClass({
@@ -25,7 +25,7 @@ const CollapsePanel = createClass({
   },
 
   getInitialState() {
-    return {isActive: this.props.isActive};
+    return { isActive: this.props.isActive };
   },
 
   handleItemClick() {
@@ -35,11 +35,6 @@ const CollapsePanel = createClass({
   render() {
     const { prefixCls, header, children, isActive } = this.props;
     const headerCls = `${prefixCls}-header`;
-    const contentCls = classnames({
-      [`${prefixCls}-content`]: true,
-      [`${prefixCls}-content-active`]: isActive,
-    });
-
     return (
       <div className={`${prefixCls}-item`}>
         <div className={headerCls} onClick={this.handleItemClick}
@@ -47,14 +42,15 @@ const CollapsePanel = createClass({
           <i className="arrow"></i>
           {header}
         </div>
-        <Animate showProp="data-active"
-                 exclusive
-                 animation={this.props.openAnimation}>
-          <div className={contentCls}
-               data-active={isActive}
-               role="tabpanel">
-            <div className={`${prefixCls}-content-box`}>{children}</div>
-          </div>
+        <Animate
+          showProp="isActive"
+          exclusive
+          component=""
+          animation={this.props.openAnimation}
+        >
+          <PanelContent prefixCls={prefixCls} isActive={isActive}>
+            {children}
+          </PanelContent>
         </Animate>
       </div>
     );

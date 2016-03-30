@@ -1,0 +1,28 @@
+import React, { PropTypes } from 'react';
+import classnames from 'classnames';
+
+const PanelContent = React.createClass({
+  propTypes: {
+    prefixCls: PropTypes.string,
+    isActive: PropTypes.bool,
+    children: PropTypes.any,
+  },
+  render() {
+    const { prefixCls, isActive, children } = this.props;
+    const contentCls = classnames({
+      [`${prefixCls}-content`]: true,
+      [`${prefixCls}-content-active`]: isActive,
+      [`${prefixCls}-content-inactive`]: !isActive,
+    });
+    return (
+      <div
+        className={contentCls}
+        role="tabpanel"
+      >
+        <div className={`${prefixCls}-content-box`}>{children}</div>
+      </div>
+    );
+  },
+});
+
+export default PanelContent;
