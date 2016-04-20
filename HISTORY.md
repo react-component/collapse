@@ -1,3 +1,10 @@
+# History
+----
+
+## 1.6.0
+
+- lazy render/controllable
+
 ## 1.4.0
 
 - only support react 0.14+

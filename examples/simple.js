@@ -1,9 +1,8 @@
-require('rc-collapse/assets/index.less');
-require('string.prototype.repeat');
-const Collapse = require('rc-collapse');
-const Panel = Collapse.Panel;
-const React = require('react');
-const ReactDOM = require('react-dom');
+import 'rc-collapse/assets/index.less';
+import 'string.prototype.repeat';
+import Collapse, { Panel } from 'rc-collapse';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const text = `
   A dog is a type of domesticated animal.
@@ -20,7 +19,14 @@ const Test = React.createClass({
     return {
       time: random(),
       accordion: false,
+      activeKey: ['4'],
     };
+  },
+
+  onChange(activeKey) {
+    this.setState({
+      activeKey,
+    });
   },
 
   getItems() {
@@ -74,7 +80,13 @@ const Test = React.createClass({
       <br/><br/>
       <button onClick={this.setActivityKey}>active header 2</button>
       <br/><br/>
-      <Collapse accordion={accordion} activeKey={activeKey} defaultActiveKey={['4']}>{this.getItems()}</Collapse>
+      <Collapse
+        accordion={accordion}
+        onChange={this.onChange}
+        activeKey={activeKey}
+      >
+        {this.getItems()}
+      </Collapse>
     </div>);
   },
 });

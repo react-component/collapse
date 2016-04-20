@@ -1,8 +1,8 @@
-import React, { PropTypes, createClass } from 'react';
+import React, { PropTypes } from 'react';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
-const CollapsePanel = createClass({
+const CollapsePanel = React.createClass({
   propTypes: {
     children: PropTypes.any,
     openAnimation: PropTypes.object,
@@ -24,8 +24,8 @@ const CollapsePanel = createClass({
     };
   },
 
-  getInitialState() {
-    return { isActive: this.props.isActive };
+  shouldComponentUpdate(nextProps) {
+    return this.props.isActive || nextProps.isActive;
   },
 
   handleItemClick() {
@@ -37,8 +37,12 @@ const CollapsePanel = createClass({
     const headerCls = `${prefixCls}-header`;
     return (
       <div className={`${prefixCls}-item`}>
-        <div className={headerCls} onClick={this.handleItemClick}
-             role="tab" aria-expanded={isActive}>
+        <div
+          className={headerCls}
+          onClick={this.handleItemClick}
+          role="tab"
+          aria-expanded={isActive}
+        >
           <i className="arrow"></i>
           {header}
         </div>

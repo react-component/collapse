@@ -27,14 +27,15 @@ describe('collapse', () => {
       node = document.createElement('div');
       document.body.appendChild(node);
 
-      ReactDOM.render(<Collapse onChange={onChange}>
-        <Panel header="collapse 1" key="1">first</Panel>
-        <Panel header="collapse 2" key="2">second</Panel>
-        <Panel header="collapse 3" key="3">third</Panel>
-      </Collapse>, node, function init() {
-        collapse = this;
-        done();
-      });
+      ReactDOM.render(
+        <Collapse onChange={onChange}>
+          <Panel header="collapse 1" key="1">first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+          <Panel header="collapse 3" key="3">third</Panel>
+        </Collapse>, node, function init() {
+          collapse = this;
+          done();
+        });
     });
 
     afterEach(() => {
@@ -48,8 +49,7 @@ describe('collapse', () => {
 
     it('panel works', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item').length).to.be(3);
-      expect(findDOMNode(collapse, 'rc-collapse-header').length).to.be(3);
-      expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(3);
+      expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(0);
     });
 
     it('default active works', () => {
@@ -58,7 +58,7 @@ describe('collapse', () => {
 
     it('onChange works', (done) => {
       changeHook = (d) => {
-        expect(d).to.be('2');
+        expect(d).to.eql(['2']);
         done();
       };
       const header = findDOMNode(collapse, 'rc-collapse-header')[1];
@@ -86,14 +86,15 @@ describe('collapse', () => {
       node = document.createElement('div');
       document.body.appendChild(node);
 
-      ReactDOM.render(<Collapse onChange={onChange} accordion prefixCls="rc-accordion">
-        <Panel header="collapse 1" key="1">first</Panel>
-        <Panel header="collapse 2" key="2">second</Panel>
-        <Panel header="collapse 3" key="3">third</Panel>
-      </Collapse>, node, function init() {
-        collapse = this;
-        done();
-      });
+      ReactDOM.render(
+        <Collapse onChange={onChange} accordion>
+          <Panel header="collapse 1" key="1">first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+          <Panel header="collapse 3" key="3">third</Panel>
+        </Collapse>, node, function init() {
+          collapse = this;
+          done();
+        });
     });
 
     afterEach(() => {
@@ -106,30 +107,29 @@ describe('collapse', () => {
     });
 
     it('should toggle show on panel', (done) => {
-      let header = findDOMNode(collapse, 'rc-accordion-header')[1];
+      let header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
-        expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
-        header = findDOMNode(collapse, 'rc-accordion-header')[1];
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+        header = findDOMNode(collapse, 'rc-collapse-header')[1];
         Simulate.click(header);
-
         setTimeout(() => {
-          expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(0);
+          expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
           done();
         }, 500);
       }, 500);
     });
 
     it('should only show on panel', (done) => {
-      let header = findDOMNode(collapse, 'rc-accordion-header')[1];
+      let header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
-        expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
-        header = findDOMNode(collapse, 'rc-accordion-header')[2];
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+        header = findDOMNode(collapse, 'rc-collapse-header')[2];
         Simulate.click(header);
 
         setTimeout(() => {
-          expect(findDOMNode(collapse, 'rc-accordion-content-active').length).to.be(1);
+          expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
           done();
         }, 500);
       }, 500);

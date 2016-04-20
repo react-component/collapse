@@ -7,8 +7,6 @@ rc-collapse ui component for react
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![npm download][download-image]][download-url]
-[![Sauce Test Status](https://saucelabs.com/buildstatus/rc-collapse)](https://saucelabs.com/u/rc-collapse)
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/rc-collapse.svg)](https://saucelabs.com/u/rc-collapse)
 
 [npm-image]: http://img.shields.io/npm/v/rc-collapse.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-collapse
@@ -137,11 +135,18 @@ If `key` is not provided, the panel's index will be used instead.
 
 ## Test Case
 
-http://localhost:8000/tests/runner.html?coverage
+```
+npm test
+npm run chrome-test
+```
 
 ## Coverage
 
-http://localhost:8000/node_modules/rc-server/node_modules/node-jscover/lib/front-end/jscoverage.html?w=http://localhost:8000/tests/runner.html?coverage
+```
+npm run coverage
+```
+
+open coverage/ dir
 
 ## License
 

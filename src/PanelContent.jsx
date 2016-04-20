@@ -8,6 +8,10 @@ const PanelContent = React.createClass({
     children: PropTypes.any,
   },
   render() {
+    this._isActived = this._isActived || this.props.isActive;
+    if (!this._isActived) {
+      return null;
+    }
     const { prefixCls, isActive, children } = this.props;
     const contentCls = classnames({
       [`${prefixCls}-content`]: true,
