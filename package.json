@@ -19,7 +19,7 @@
   "bugs": {
     "url": "http://github.com/react-component/collapse/issues"
   },
-  "licenses": "MIT",
+  "license": "MIT",
   "files": [
     "lib",
     "assets/*.css"
