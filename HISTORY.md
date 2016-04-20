@@ -5,6 +5,10 @@
 
 - lazy render/controllable
 
+## 1.5.0
+
+- use css animation instead of velocity.js
+
 ## 1.4.0
 
 - only support react 0.14+
