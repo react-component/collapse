@@ -24,10 +24,6 @@ const CollapsePanel = React.createClass({
     };
   },
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.isActive || nextProps.isActive;
-  },
-
   handleItemClick() {
     this.props.onItemClick();
   },

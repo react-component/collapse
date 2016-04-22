@@ -7,6 +7,9 @@ const PanelContent = React.createClass({
     isActive: PropTypes.bool,
     children: PropTypes.any,
   },
+  shouldComponentUpdate(nextProps) {
+    return this.props.isActive || nextProps.isActive;
+  },
   render() {
     this._isActived = this._isActived || this.props.isActive;
     if (!this._isActived) {
