@@ -12,10 +12,7 @@ function animate(node, show, transitionName, done) {
       }
     },
     active() {
-      // use setTimeout for lost animation in Firefox
-      setTimeout(() => {
-        node.style.height = `${show ? height : 0}px`;
-      });
+      node.style.height = `${show ? height : 0}px`;
     },
     end() {
       node.style.height = '';
