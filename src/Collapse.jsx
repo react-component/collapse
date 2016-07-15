@@ -109,7 +109,7 @@ const Collapse = React.createClass({
         onItemClick: this.onClickItem(key).bind(this),
       };
 
-      return <CollapsePanel {...props} />;
+      return React.cloneElement(child, props);
     });
   },
 
