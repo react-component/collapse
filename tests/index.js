@@ -106,15 +106,21 @@ describe('collapse', () => {
       expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
     });
 
+    it('accordion item, should default open zero item', () => {
+      expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
+    });
+
     it('should toggle show on panel', (done) => {
       let header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
         expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+        expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(1);
         header = findDOMNode(collapse, 'rc-collapse-header')[1];
         Simulate.click(header);
         setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+          expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
           done();
         }, 500);
       }, 500);
@@ -125,11 +131,13 @@ describe('collapse', () => {
       Simulate.click(header);
       setTimeout(() => {
         expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+        expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(1);
         header = findDOMNode(collapse, 'rc-collapse-header')[2];
         Simulate.click(header);
 
         setTimeout(() => {
           expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+          expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(1);
           done();
         }, 500);
       }, 500);
