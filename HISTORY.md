@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.6.5
+
+- fix missing rc-collapse-item-active classname on active panel header 
+
 ## 1.6.0
 
 - lazy render/controllable

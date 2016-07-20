@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
@@ -31,8 +32,12 @@ const CollapsePanel = React.createClass({
   render() {
     const { prefixCls, header, children, isActive } = this.props;
     const headerCls = `${prefixCls}-header`;
+    const itemCls = classNames({
+      [`${prefixCls}-item`]: true,
+      [`${prefixCls}-item-active`]: isActive,
+    });
     return (
-      <div className={`${prefixCls}-item`}>
+      <div className={ itemCls }>
         <div
           className={headerCls}
           onClick={this.handleItemClick}
