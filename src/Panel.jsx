@@ -5,6 +5,10 @@ import Animate from 'rc-animate';
 
 const CollapsePanel = React.createClass({
   propTypes: {
+    className: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ]),
     children: PropTypes.any,
     openAnimation: PropTypes.object,
     prefixCls: PropTypes.string,
@@ -30,11 +34,12 @@ const CollapsePanel = React.createClass({
   },
 
   render() {
-    const { prefixCls, header, children, isActive } = this.props;
+    const { className, prefixCls, header, children, isActive } = this.props;
     const headerCls = `${prefixCls}-header`;
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,
       [`${prefixCls}-item-active`]: isActive,
+      [className]: className,
     });
     return (
       <div className={ itemCls }>
