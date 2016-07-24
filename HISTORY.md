@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.6.6
+
+- add className props to Panel
+
 ## 1.6.5
 
 - fix missing rc-collapse-item-active classname on active panel header 

@@ -31,7 +31,7 @@ describe('collapse', () => {
         <Collapse onChange={onChange}>
           <Panel header="collapse 1" key="1">first</Panel>
           <Panel header="collapse 2" key="2">second</Panel>
-          <Panel header="collapse 3" key="3">third</Panel>
+          <Panel header="collapse 3" key="3" className="important">third</Panel>
         </Collapse>, node, function init() {
           collapse = this;
           done();
@@ -41,6 +41,10 @@ describe('collapse', () => {
     afterEach(() => {
       ReactDOM.unmountComponentAtNode(node);
       changeHook = null;
+    });
+    it('add className', () => {
+      const expectedClassName = 'rc-collapse-item important';
+      expect(findDOMNode(collapse, 'rc-collapse-item')[2].className).to.be(expectedClassName);
     });
 
     it('create works', () => {

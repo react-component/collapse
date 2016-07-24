@@ -126,6 +126,12 @@ item.
           <th></th>
           <td>header content of Panel</td>
       </tr>
+       <tr>
+            <td>className</td>
+            <td>String or object</td>
+            <th></th>
+            <td>custom className to apply</td>
+        </tr>
     </tbody>
 </table>
 
