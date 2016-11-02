@@ -1,6 +1,7 @@
 import React, { PropTypes, Children }from 'react';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
+import classNames from 'classnames';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -25,6 +26,8 @@ const Collapse = React.createClass({
     openAnimation: PropTypes.object,
     onChange: PropTypes.func,
     accordion: PropTypes.bool,
+    className: PropTypes.string,
+    style: PropTypes.style,
   },
 
   statics: {
@@ -115,17 +118,19 @@ const Collapse = React.createClass({
 
   setActiveKey(activeKey) {
     if (!('activeKey' in this.props)) {
-      this.setState({
-        activeKey,
-      });
+      this.setState({ activeKey });
     }
     this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
   },
 
   render() {
-    const prefixCls = this.props.prefixCls;
+    const { prefixCls, className, style } = this.props;
+    const collapseClassName = classNames({
+      [prefixCls]: true,
+      [className]: !!className,
+    });
     return (
-      <div className={prefixCls}>
+      <div className={collapseClassName} style={style}>
         {this.getItems()}
       </div>
     );
