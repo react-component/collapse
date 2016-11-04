@@ -27,7 +27,7 @@ const Collapse = React.createClass({
     onChange: PropTypes.func,
     accordion: PropTypes.bool,
     className: PropTypes.string,
-    style: PropTypes.string,
+    style: PropTypes.object,
   },
 
   statics: {
