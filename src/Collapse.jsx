@@ -91,7 +91,10 @@ const Collapse = React.createClass({
   getItems() {
     const activeKey = this.state.activeKey;
     const { prefixCls, accordion } = this.props;
-    return Children.map(this.props.children, (child, index) => {
+    const newChildren = [];
+
+    Children.forEach(this.props.children, (child, index) => {
+      if (!child) return;
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
       const header = child.props.header;
@@ -112,8 +115,10 @@ const Collapse = React.createClass({
         onItemClick: this.onClickItem(key).bind(this),
       };
 
-      return React.cloneElement(child, props);
+      newChildren.push(React.cloneElement(child, props));
     });
+
+    return newChildren;
   },
 
   setActiveKey(activeKey) {
