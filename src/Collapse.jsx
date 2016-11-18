@@ -92,7 +92,7 @@ const Collapse = React.createClass({
     const activeKey = this.state.activeKey;
     const { prefixCls, accordion } = this.props;
     const newChildren = [];
-    
+
     Children.forEach(this.props.children, (child, index) => {
       if (!child) return;
       // If there is no key provide, use the panel order as default key
@@ -117,7 +117,7 @@ const Collapse = React.createClass({
 
       newChildren.push(React.cloneElement(child, props));
     });
-    
+
     return newChildren;
   },
 
