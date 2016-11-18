@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.6.10
+
+- Child item support null [!45](https://github.com/react-component/collapse/pull/45)
+
 ## 1.6.6
 
 - add className props to Panel
