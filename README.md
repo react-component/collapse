@@ -99,11 +99,11 @@ ReactDOM.render(collapse, container);
 </table>
 
 If `accordion` is null or false, every panel can open.  Opening another panel will not close any of the other panels
-`activekey` should be an array, a string will work fine, activekey will be an
+`activeKey` should be an array, a string will work fine, activeKey will be an
 array, and the only item is the activeKey string provided.
 
 If `accordion` is true, only one panel can be open.  Opening any one panel will cause the previously opened panel to close.
-`activekey` should be an string, but array is support too, just use the first
+`activeKey` should be an string, but array is support too, just use the first
 item.
 
 ### Collapse.Panel
