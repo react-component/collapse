@@ -17,12 +17,14 @@ const CollapsePanel = React.createClass({
       PropTypes.number,
       PropTypes.node,
     ]),
+    showArrow: PropTypes.bool,
     isActive: PropTypes.bool,
     onItemClick: PropTypes.func,
   },
 
   getDefaultProps() {
     return {
+      showArrow: true,
       isActive: false,
       onItemClick() {
       },
@@ -34,7 +36,7 @@ const CollapsePanel = React.createClass({
   },
 
   render() {
-    const { className, prefixCls, header, children, isActive } = this.props;
+    const { className, prefixCls, header, children, isActive, showArrow } = this.props;
     const headerCls = `${prefixCls}-header`;
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,
@@ -49,7 +51,7 @@ const CollapsePanel = React.createClass({
           role="tab"
           aria-expanded={isActive}
         >
-          <i className="arrow"></i>
+          {showArrow && <i className="arrow"></i>}
           {header}
         </div>
         <Animate
