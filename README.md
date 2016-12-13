@@ -126,6 +126,12 @@ item.
           <th></th>
           <td>header content of Panel</td>
       </tr>
+      <tr>
+          <td>showArrow</td>
+          <td>boolean</td>
+          <th>true</th>
+          <td>show arrow beside header</td>
+      </tr>
        <tr>
             <td>className</td>
             <td>String or object</td>
