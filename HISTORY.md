@@ -1,5 +1,8 @@
 # History
 ----
+## 1.6.11
+
+- Add 'showArrow' prop to Panel to toggle arrow visibility [!48](https://github.com/react-component/collapse/pull/48)
 
 ## 1.6.10
 
