@@ -1,5 +1,10 @@
 # History
 ----
+
+## 1.6.12
+
+- Fix `style` support for Panel
+
 ## 1.6.11
 
 - Add 'showArrow' prop to Panel to toggle arrow visibility [!48](https://github.com/react-component/collapse/pull/48)
@@ -14,7 +19,7 @@
 
 ## 1.6.5
 
-- fix missing rc-collapse-item-active classname on active panel header 
+- fix missing rc-collapse-item-active classname on active panel header
 
 ## 1.6.0
 

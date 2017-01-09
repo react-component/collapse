@@ -132,12 +132,18 @@ item.
           <th>true</th>
           <td>show arrow beside header</td>
       </tr>
-       <tr>
-            <td>className</td>
-            <td>String or object</td>
-            <th></th>
-            <td>custom className to apply</td>
-        </tr>
+      <tr>
+        <td>className</td>
+        <td>String or object</td>
+        <th></th>
+        <td>custom className to apply</td>
+      </tr>
+      <tr>
+        <td>style</td>
+        <td>object</td>
+        <th></th>
+        <td>custom style</td>
+      </tr>
     </tbody>
 </table>
 
