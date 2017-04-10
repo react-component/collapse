@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-const PanelContent = React.createClass({
+const createReactClass = require('create-react-class');
+const PanelContent = createReactClass({
   propTypes: {
     prefixCls: PropTypes.string,
     isActive: PropTypes.bool,

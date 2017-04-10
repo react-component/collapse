@@ -12,7 +12,8 @@ function toArray(activeKey) {
   return currentActiveKey;
 }
 
-const Collapse = React.createClass({
+const createReactClass = require('create-react-class');
+const Collapse = createReactClass({
   propTypes: {
     children: PropTypes.any,
     prefixCls: PropTypes.string,

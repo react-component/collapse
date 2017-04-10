@@ -4,7 +4,8 @@ import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
-const CollapsePanel = React.createClass({
+const createReactClass = require('create-react-class');
+const CollapsePanel = createReactClass({
   propTypes: {
     className: PropTypes.oneOfType([
       PropTypes.string,
