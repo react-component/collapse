@@ -73,13 +73,13 @@ ReactDOM.render(collapse, container);
     <tbody>
       <tr>
           <td>activeKey</td>
-          <td>Array<String>|String</td>
+          <td>String|Array<String></td>
           <th>The first panel key</th>
           <td>current active Panel key</td>
       </tr>
       <tr>
           <td>defaultActiveKey</td>
-          <td>Array<String>|String</td>
+          <td>String|Array<String></td>
           <th>null</th>
           <td>default active key</td>
       </tr>
@@ -98,13 +98,11 @@ ReactDOM.render(collapse, container);
     </tbody>
 </table>
 
-If `accordion` is null or false, every panel can open.  Opening another panel will not close any of the other panels
-`activeKey` should be an array, a string will work fine, activeKey will be an
-array, and the only item is the activeKey string provided.
+If `accordion` is null or false, every panel can open.  Opening another panel will not close any of the other panels.
+`activeKey` should be an string, if passing an array (the first item in the array will be used).
 
-If `accordion` is true, only one panel can be open.  Opening any one panel will cause the previously opened panel to close.
-`activeKey` should be an string, but array is support too, just use the first
-item.
+If `accordion` is true, only one panel can be open.  Opening another panel will cause the previously opened panel to close.
+`activeKey` should be an string, if passing an array (the first item in the array will be used).
 
 ### Collapse.Panel
 
