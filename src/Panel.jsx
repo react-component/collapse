@@ -1,40 +1,13 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
-const CollapsePanel = React.createClass({
-  propTypes: {
-    className: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.object,
-    ]),
-    children: PropTypes.any,
-    openAnimation: PropTypes.object,
-    prefixCls: PropTypes.string,
-    header: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.node,
-    ]),
-    showArrow: PropTypes.bool,
-    isActive: PropTypes.bool,
-    onItemClick: PropTypes.func,
-    style: PropTypes.object,
-  },
-
-  getDefaultProps() {
-    return {
-      showArrow: true,
-      isActive: false,
-      onItemClick() {
-      },
-    };
-  },
-
+class CollapsePanel extends Component {
   handleItemClick() {
     this.props.onItemClick();
-  },
+  }
 
   render() {
     const { className, style, prefixCls, header, children, isActive, showArrow } = this.props;
@@ -47,7 +20,7 @@ const CollapsePanel = React.createClass({
       <div className={itemCls} style={style}>
         <div
           className={headerCls}
-          onClick={this.handleItemClick}
+          onClick={this.handleItemClick.bind(this)}
           role="tab"
           aria-expanded={isActive}
         >
@@ -66,7 +39,32 @@ const CollapsePanel = React.createClass({
         </Animate>
       </div>
     );
-  },
-});
+  }
+}
+
+CollapsePanel.propTypes = {
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
+  children: PropTypes.any,
+  openAnimation: PropTypes.object,
+  prefixCls: PropTypes.string,
+  header: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.node,
+  ]),
+  showArrow: PropTypes.bool,
+  isActive: PropTypes.bool,
+  onItemClick: PropTypes.func,
+  style: PropTypes.object,
+};
+
+CollapsePanel.defaultProps = {
+  showArrow: true,
+  isActive: false,
+  onItemClick() {},
+};
 
 export default CollapsePanel;

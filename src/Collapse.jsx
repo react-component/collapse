@@ -1,4 +1,5 @@
-import React, { PropTypes, Children }from 'react';
+import React, { Component, Children } from 'react';
+import PropTypes from 'prop-types';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
@@ -11,49 +12,21 @@ function toArray(activeKey) {
   return currentActiveKey;
 }
 
-const Collapse = React.createClass({
-  propTypes: {
-    children: PropTypes.any,
-    prefixCls: PropTypes.string,
-    activeKey: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    defaultActiveKey: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    openAnimation: PropTypes.object,
-    onChange: PropTypes.func,
-    accordion: PropTypes.bool,
-    className: PropTypes.string,
-    style: PropTypes.object,
-  },
+class Collapse extends Component {
+  constructor(props) {
+    super(props);
 
-  statics: {
-    Panel: CollapsePanel,
-  },
-
-  getDefaultProps() {
-    return {
-      prefixCls: 'rc-collapse',
-      onChange() {
-      },
-      accordion: false,
-    };
-  },
-
-  getInitialState() {
     const { activeKey, defaultActiveKey } = this.props;
     let currentActiveKey = defaultActiveKey;
     if ('activeKey' in this.props) {
       currentActiveKey = activeKey;
     }
-    return {
+
+    this.state = {
       openAnimation: this.props.openAnimation || openAnimationFactory(this.props.prefixCls),
       activeKey: toArray(currentActiveKey),
     };
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if ('activeKey' in nextProps) {
@@ -66,7 +39,7 @@ const Collapse = React.createClass({
         openAnimation: nextProps.openAnimation,
       });
     }
-  },
+  }
 
   onClickItem(key) {
     return () => {
@@ -86,7 +59,7 @@ const Collapse = React.createClass({
       }
       this.setActiveKey(activeKey);
     };
-  },
+  }
 
   getItems() {
     const activeKey = this.state.activeKey;
@@ -119,14 +92,14 @@ const Collapse = React.createClass({
     });
 
     return newChildren;
-  },
+  }
 
   setActiveKey(activeKey) {
     if (!('activeKey' in this.props)) {
       this.setState({ activeKey });
     }
     this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
-  },
+  }
 
   render() {
     const { prefixCls, className, style } = this.props;
@@ -139,7 +112,33 @@ const Collapse = React.createClass({
         {this.getItems()}
       </div>
     );
-  },
-});
+  }
+}
+
+Collapse.propTypes = {
+  children: PropTypes.any,
+  prefixCls: PropTypes.string,
+  activeKey: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  defaultActiveKey: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  openAnimation: PropTypes.object,
+  onChange: PropTypes.func,
+  accordion: PropTypes.bool,
+  className: PropTypes.string,
+  style: PropTypes.object,
+};
+
+Collapse.defaultProps = {
+  prefixCls: 'rc-collapse',
+  onChange() {},
+  accordion: false,
+};
+
+Collapse.Panel = CollapsePanel;
 
 export default Collapse;
