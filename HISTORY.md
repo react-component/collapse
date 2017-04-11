@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.7.0
+
+- Change createClass to React.Component [!58](https://github.com/react-component/collapse/pull/58)
+
 ## 1.6.12
 
 - Fix `style` support for Panel
