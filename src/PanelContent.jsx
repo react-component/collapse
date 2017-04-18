@@ -23,7 +23,7 @@ class PanelContent extends Component {
         className={contentCls}
         role="tabpanel"
       >
-        <div className={`${prefixCls}-content-box`}>{children}</div>
+	{isActive?<div className={`${prefixCls}-content-box`}>{children}</div>: null}
       </div>
     );
   }
