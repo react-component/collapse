@@ -10,7 +10,16 @@ class CollapsePanel extends Component {
   }
 
   render() {
-    const { className, style, prefixCls, header, children, isActive, showArrow } = this.props;
+    const {
+      className,
+      style,
+      prefixCls,
+      header,
+      children,
+      isActive,
+      showArrow,
+      destroyInactivePanel,
+    } = this.props;
     const headerCls = `${prefixCls}-header`;
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,
@@ -33,7 +42,11 @@ class CollapsePanel extends Component {
           component=""
           animation={this.props.openAnimation}
         >
-          <PanelContent prefixCls={prefixCls} isActive={isActive}>
+          <PanelContent
+            prefixCls={prefixCls}
+            isActive={isActive}
+            destroyInactivePanel={destroyInactivePanel}
+          >
             {children}
           </PanelContent>
         </Animate>
@@ -59,11 +72,13 @@ CollapsePanel.propTypes = {
   isActive: PropTypes.bool,
   onItemClick: PropTypes.func,
   style: PropTypes.object,
+  destroyInactivePanel: PropTypes.bool,
 };
 
 CollapsePanel.defaultProps = {
   showArrow: true,
   isActive: false,
+  destroyInactivePanel: false,
   onItemClick() {},
 };
 

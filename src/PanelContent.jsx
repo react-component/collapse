@@ -12,19 +12,19 @@ class PanelContent extends Component {
     if (!this._isActived) {
       return null;
     }
-    const { prefixCls, isActive, children } = this.props;
+    const { prefixCls, isActive, children, destroyInactivePanel } = this.props;
     const contentCls = classnames({
       [`${prefixCls}-content`]: true,
       [`${prefixCls}-content-active`]: isActive,
       [`${prefixCls}-content-inactive`]: !isActive,
     });
+    const child = !isActive && destroyInactivePanel ? null :
+      <div className={`${prefixCls}-content-box`}>{children}</div>;
     return (
       <div
         className={contentCls}
         role="tabpanel"
-      >
-	{isActive?<div className={`${prefixCls}-content-box`}>{children}</div>: null}
-      </div>
+      >{child}</div>
     );
   }
 }
@@ -33,6 +33,7 @@ PanelContent.propTypes = {
   prefixCls: PropTypes.string,
   isActive: PropTypes.bool,
   children: PropTypes.any,
+  destroyInactivePanel: PropTypes.bool,
 };
 
 export default PanelContent;

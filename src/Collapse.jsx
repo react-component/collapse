@@ -63,7 +63,7 @@ class Collapse extends Component {
 
   getItems() {
     const activeKey = this.state.activeKey;
-    const { prefixCls, accordion } = this.props;
+    const { prefixCls, accordion, destroyInactivePanel } = this.props;
     const newChildren = [];
 
     Children.forEach(this.props.children, (child, index) => {
@@ -83,6 +83,7 @@ class Collapse extends Component {
         header,
         isActive,
         prefixCls,
+        destroyInactivePanel,
         openAnimation: this.state.openAnimation,
         children: child.props.children,
         onItemClick: this.onClickItem(key).bind(this),
@@ -131,12 +132,14 @@ Collapse.propTypes = {
   accordion: PropTypes.bool,
   className: PropTypes.string,
   style: PropTypes.object,
+  destroyInactivePanel: PropTypes.bool,
 };
 
 Collapse.defaultProps = {
   prefixCls: 'rc-collapse',
   onChange() {},
   accordion: false,
+  destroyInactivePanel: false,
 };
 
 Collapse.Panel = CollapsePanel;

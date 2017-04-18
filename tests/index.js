@@ -76,7 +76,48 @@ describe('collapse', () => {
         expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
         Simulate.click(header);
         setTimeout(() => {
+          expect(findDOMNode(collapse, 'rc-collapse-content-inactive')[0].innerHTML).
+            to.eql('<div class="rc-collapse-content-box">second</div>');
           expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+          done();
+        }, 500);
+      }, 500);
+    });
+  });
+
+  describe('destroyInactivePanel', () => {
+    let node;
+    let collapse;
+    const destroyInactivePanel = true;
+
+    beforeEach((done) => {
+      node = document.createElement('div');
+      document.body.appendChild(node);
+
+      ReactDOM.render(
+        <Collapse onChange={onChange} destroyInactivePanel={destroyInactivePanel}>
+          <Panel header="collapse 1" key="1">first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+          <Panel header="collapse 3" key="3" className="important">third</Panel>
+        </Collapse>, node, function init() {
+          collapse = this;
+          done();
+        });
+    });
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(node);
+      changeHook = null;
+    });
+
+    it('click should toggle panel state', (done) => {
+      const header = findDOMNode(collapse, 'rc-collapse-header')[1];
+      Simulate.click(header);
+      setTimeout(() => {
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+        Simulate.click(header);
+        setTimeout(() => {
+          expect(findDOMNode(collapse, 'rc-collapse-content-inactive')[0].innerHTML).to.eql('');
           done();
         }, 500);
       }, 500);
