@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.7.1 2017-04-19
+
+- Add prop destroyInactivePanel [!61](https://github.com/react-component/collapse/pull/61)
+
 ## 1.7.0
 
 - Change createClass to React.Component [!58](https://github.com/react-component/collapse/pull/58)
