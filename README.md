@@ -78,6 +78,12 @@ ReactDOM.render(collapse, container);
           <td>current active Panel key</td>
       </tr>
       <tr>
+        <td>className</td>
+        <td>String or object</td>
+        <th></th>
+        <td>custom className to apply</td>
+      </tr>
+      <tr>
           <td>defaultActiveKey</td>
           <td>String|Array<String></td>
           <th>null</th>
