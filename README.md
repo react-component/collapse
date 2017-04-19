@@ -84,6 +84,12 @@ ReactDOM.render(collapse, container);
           <td>default active key</td>
       </tr>
       <tr>
+          <td>destroyInactivePanel</td>
+          <td>Boolean</td>
+          <th>false</th>
+          <td>If destroy the panel which not active, default false. </td>
+      </tr>
+      <tr>
           <td>accordion</td>
           <td>Boolean</td>
           <th>false</th>

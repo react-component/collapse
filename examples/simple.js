@@ -14,20 +14,26 @@ function random() {
   return parseInt(Math.random() * 10, 10) + 1;
 }
 
-const Test = React.createClass({
+class Test extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+    ['onChange', 'setActivityKey', 'reRender', 'toggle'].map(fn => this[fn] = this[fn].bind(this));
+  }
+
   getInitialState() {
     return {
       time: random(),
       accordion: false,
       activeKey: ['4'],
     };
-  },
+  }
 
   onChange(activeKey) {
     this.setState({
       activeKey,
     });
-  },
+  }
 
   getItems() {
     const items = [];
@@ -50,25 +56,25 @@ const Test = React.createClass({
     );
 
     return items;
-  },
+  }
 
   setActivityKey() {
     this.setState({
       activeKey: ['2'],
     });
-  },
+  }
 
   reRender() {
     this.setState({
       time: random(),
     });
-  },
+  }
 
   toggle() {
     this.setState({
       accordion: !this.state.accordion,
     });
-  },
+  }
 
   render() {
     const accordion = this.state.accordion;
@@ -88,7 +94,7 @@ const Test = React.createClass({
         {this.getItems()}
       </Collapse>
     </div>);
-  },
-});
+  }
+}
 
 ReactDOM.render(<Test/>, document.getElementById('__react-content'));
