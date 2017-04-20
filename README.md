@@ -46,6 +46,8 @@ var Collapse = require('rc-collapse');
 var Panel = Collapse.Panel;
 var React = require('react');
 var ReactDOM = require('react-dom');
+require('rc-collapse/assets/index.css');
+
 var collapse = (
   <Collapse accordion={true}>
     <Panel header="hello">this is panel content</Panel>
