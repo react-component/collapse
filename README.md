@@ -50,7 +50,7 @@ require('rc-collapse/assets/index.css');
 
 var collapse = (
   <Collapse accordion={true}>
-    <Panel header="hello">this is panel content</Panel>
+    <Panel header="hello" headerClass="my-header-class">this is panel content</Panel>
     <Panel header="title2">this is panel content2 or other</Panel>
   </Collapse>
 );
@@ -137,6 +137,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
           <td>String or node</td>
           <th></th>
           <td>header content of Panel</td>
+      </tr>
+      <tr>
+          <td>headerClass</td>
+          <td>String</td>
+          <th>' '</th>
+          <td>custom className to apply to header</td>
       </tr>
       <tr>
           <td>showArrow</td>

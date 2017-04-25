@@ -71,6 +71,7 @@ class Collapse extends Component {
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
       const header = child.props.header;
+      const headerClass = child.props.headerClass;
       let isActive = false;
       if (accordion) {
         isActive = activeKey[0] === key;
@@ -81,6 +82,7 @@ class Collapse extends Component {
       const props = {
         key,
         header,
+        headerClass,
         isActive,
         prefixCls,
         destroyInactivePanel,
