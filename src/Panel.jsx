@@ -15,12 +15,13 @@ class CollapsePanel extends Component {
       style,
       prefixCls,
       header,
+      headerClass,
       children,
       isActive,
       showArrow,
       destroyInactivePanel,
     } = this.props;
-    const headerCls = `${prefixCls}-header`;
+    const headerCls = `${prefixCls}-header ${headerClass}`;
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,
       [`${prefixCls}-item-active`]: isActive,
@@ -68,6 +69,7 @@ CollapsePanel.propTypes = {
     PropTypes.number,
     PropTypes.node,
   ]),
+  headerClass: PropTypes.string,
   showArrow: PropTypes.bool,
   isActive: PropTypes.bool,
   onItemClick: PropTypes.func,
@@ -80,6 +82,7 @@ CollapsePanel.defaultProps = {
   isActive: false,
   destroyInactivePanel: false,
   onItemClick() {},
+  headerClass: '',
 };
 
 export default CollapsePanel;
