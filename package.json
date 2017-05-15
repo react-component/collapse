@@ -1,6 +1,6 @@
 {
   "name": "rc-collapse",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "rc-collapse ui component for react",
   "keywords": [
     "react",
@@ -22,9 +22,11 @@
   "license": "MIT",
   "files": [
     "lib",
+    "es",
     "assets/*.css"
   ],
   "main": "./lib/index",
+  "module": "./es/index",
   "config": {
     "port": 8002
   },
@@ -32,19 +34,19 @@
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
+    "compile": "rc-tools run compile --babel-runtime",
     "pub": "npm version patch && rc-tools run pub",
     "lint": "rc-tools run lint",
-    "karma": "rc-tools run karma",
-    "saucelabs": "rc-tools run saucelabs",
-    "test": "rc-tools run test",
-    "chrome-test": "rc-tools run chrome-test",
-    "coverage": "rc-tools run coverage"
+    "test": "jest",
+    "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "expect.js": "0.3.x",
+    "jest": "^20.0.1",
     "jquery": "1.x",
     "pre-commit": "1.x",
-    "rc-tools": "5.x",
+    "rc-tools": "6.x",
     "react": "15.x",
     "react-dom": "15.x",
     "string.prototype.repeat": "^0.2.0"
@@ -52,6 +54,15 @@
   "pre-commit": [
     "lint"
   ],
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*"
+    ],
+    "transform": {
+      "\\.tsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js",
+      "\\.jsx?$": "./node_modules/rc-tools/scripts/jestPreprocessor.js"
+    }
+  },
   "dependencies": {
     "classnames": "2.x",
     "css-animation": "1.x",
