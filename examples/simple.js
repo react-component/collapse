@@ -40,7 +40,7 @@ class Test extends React.Component {
     for (let i = 0, len = 3; i < len; i++) {
       const key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${key}`} key={key}>
+        <Panel header={`This is panel header ${key}`} key={key} disabled>
           <p>{text.repeat(this.state.time)}</p>
         </Panel>
       );

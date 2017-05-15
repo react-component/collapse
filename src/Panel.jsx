@@ -6,7 +6,9 @@ import Animate from 'rc-animate';
 
 class CollapsePanel extends Component {
   handleItemClick() {
-    this.props.onItemClick();
+    if (this.props.onItemClick) {
+      this.props.onItemClick();
+    }
   }
 
   render() {
@@ -20,6 +22,7 @@ class CollapsePanel extends Component {
       isActive,
       showArrow,
       destroyInactivePanel,
+      disabled,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
@@ -27,6 +30,7 @@ class CollapsePanel extends Component {
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,
       [`${prefixCls}-item-active`]: isActive,
+      [`${prefixCls}-item-disabled`]: disabled,
     }, className);
     return (
       <div className={itemCls} style={style}>
@@ -77,6 +81,7 @@ CollapsePanel.propTypes = {
   onItemClick: PropTypes.func,
   style: PropTypes.object,
   destroyInactivePanel: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 CollapsePanel.defaultProps = {
