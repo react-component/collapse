@@ -23,7 +23,7 @@
 }
 
 .@{prefixCls} {
-  background-color: #f4f4f4;
+  background-color: #f7f7f7;
   border-radius: 3px;
   border: @borderStyle;
 
@@ -52,6 +52,12 @@
         margin-right: 8px;
       }
     }
+  }
+
+  & > &-item-disabled > .@{prefixCls}-header {
+    cursor: not-allowed;
+    color: #999;
+    background-color: #f3f3f3;
   }
 
   &-content {
@@ -86,4 +92,3 @@
     }
   }
 }
-

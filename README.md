@@ -162,6 +162,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <th></th>
         <td>custom style</td>
       </tr>
+      <tr>
+        <td>disabled</td>
+        <td>boolean</td>
+        <th>false</th>
+        <td>whether the panel is collapsible</td>
+      </tr>
     </tbody>
 </table>
 

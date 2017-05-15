@@ -42,23 +42,21 @@ class Collapse extends Component {
   }
 
   onClickItem(key) {
-    return () => {
-      let activeKey = this.state.activeKey;
-      if (this.props.accordion) {
-        activeKey = activeKey[0] === key ? [] : [key];
+    let activeKey = this.state.activeKey;
+    if (this.props.accordion) {
+      activeKey = activeKey[0] === key ? [] : [key];
+    } else {
+      activeKey = [...activeKey];
+      const index = activeKey.indexOf(key);
+      const isActive = index > -1;
+      if (isActive) {
+        // remove active state
+        activeKey.splice(index, 1);
       } else {
-        activeKey = [...activeKey];
-        const index = activeKey.indexOf(key);
-        const isActive = index > -1;
-        if (isActive) {
-          // remove active state
-          activeKey.splice(index, 1);
-        } else {
-          activeKey.push(key);
-        }
+        activeKey.push(key);
       }
-      this.setActiveKey(activeKey);
-    };
+    }
+    this.setActiveKey(activeKey);
   }
 
   getItems() {
@@ -70,8 +68,7 @@ class Collapse extends Component {
       if (!child) return;
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
-      const header = child.props.header;
-      const headerClass = child.props.headerClass;
+      const { header, headerClass, disabled } = child.props;
       let isActive = false;
       if (accordion) {
         isActive = activeKey[0] === key;
@@ -88,7 +85,7 @@ class Collapse extends Component {
         destroyInactivePanel,
         openAnimation: this.state.openAnimation,
         children: child.props.children,
-        onItemClick: this.onClickItem(key).bind(this),
+        onItemClick: disabled ? null : () => this.onClickItem(key),
       };
 
       newChildren.push(React.cloneElement(child, props));
