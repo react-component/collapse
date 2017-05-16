@@ -35,7 +35,7 @@
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
     "compile": "rc-tools run compile --babel-runtime",
-    "pub": "npm version patch && rc-tools run pub",
+    "pub": "rc-tools run pub",
     "lint": "rc-tools run lint",
     "test": "jest",
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
