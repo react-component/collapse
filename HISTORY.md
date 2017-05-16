@@ -1,6 +1,11 @@
 # History
 ----
 
+## 1.7.4 2017-05-16
+
+- Add prop disabled [!71](https://github.com/react-component/collapse/pull/71)
+- Add es module export [!70](https://github.com/react-component/collapse/pull/70)
+
 ## 1.7.2 2017-04-25
 
 - Allow user to add custom header classe [!66](https://github.com/react-component/collapse/pull/66)
