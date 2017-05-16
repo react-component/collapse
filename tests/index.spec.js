@@ -1,12 +1,11 @@
-const jQuery = require('jquery');
-window.jQuery = jQuery;
-import '../assets/index.less';
-const expect = require('expect.js');
-const Collapse = require('../index');
-const Panel = Collapse.Panel;
-const React = require('react');
-const ReactDOM = require('react-dom');
-const TestUtils = require('react-dom/test-utils');
+// import '../assets/index.less';
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import TestUtils from 'react-dom/test-utils';
+
+import expect from 'expect.js';
+import Collapse, { Panel } from '../index';
 const Simulate = TestUtils.Simulate;
 const findDOMNode = TestUtils.scryRenderedDOMComponentsWithClass;
 
