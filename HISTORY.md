@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.7.6 2017-06-06
+
+- Add prop id for Panel [#69](https://github.com/react-component/collapse/issues/69)
+
 ## 1.7.4 2017-05-16
 
 - Add prop disabled [!71](https://github.com/react-component/collapse/pull/71)
