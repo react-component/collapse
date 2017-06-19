@@ -14,6 +14,7 @@ class CollapsePanel extends Component {
   render() {
     const {
       className,
+      id,
       style,
       prefixCls,
       header,
@@ -33,7 +34,7 @@ class CollapsePanel extends Component {
       [`${prefixCls}-item-disabled`]: disabled,
     }, className);
     return (
-      <div className={itemCls} style={style}>
+      <div className={itemCls} style={style} id={id}>
         <div
           className={headerCls}
           onClick={this.handleItemClick.bind(this)}
@@ -67,6 +68,7 @@ CollapsePanel.propTypes = {
     PropTypes.string,
     PropTypes.object,
   ]),
+  id: PropTypes.string,
   children: PropTypes.any,
   openAnimation: PropTypes.object,
   prefixCls: PropTypes.string,
