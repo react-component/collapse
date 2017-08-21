@@ -163,6 +163,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <td>custom style</td>
       </tr>
       <tr>
+        <td>openAnimation</td>
+        <td>object</td>
+        <th></th>
+        <td>set the animation of open behavior, [more](https://github.com/react-component/animate#animation-format)</td>
+      </tr>
+      <tr>
         <td>disabled</td>
         <td>boolean</td>
         <th>false</th>
