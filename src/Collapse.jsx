@@ -96,9 +96,12 @@ class Collapse extends Component {
 
   setActiveKey(activeKey) {
     if (!('activeKey' in this.props)) {
-      this.setState({ activeKey });
+      this.setState({ activeKey }, () => {
+        this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
+      });
+    } else {
+      this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
     }
-    this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
   }
 
   render() {
