@@ -34,7 +34,7 @@ class CollapsePanel extends Component {
       [`${prefixCls}-item-disabled`]: disabled,
     }, className);
     return (
-      <div className={itemCls} style={style} id={id}>
+      <div className={itemCls} style={style} id={id} role="tablist">
         <div
           className={headerCls}
           onClick={this.handleItemClick.bind(this)}
