@@ -1,6 +1,6 @@
 {
   "name": "rc-collapse",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "rc-collapse ui component for react",
   "keywords": [
     "react",
@@ -55,7 +55,9 @@
     "lint"
   ],
   "jest": {
-    "setupFiles": ["./tests/setup.js"],
+    "setupFiles": [
+      "./tests/setup.js"
+    ],
     "collectCoverageFrom": [
       "src/*"
     ],
