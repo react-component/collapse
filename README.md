@@ -174,6 +174,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <th>false</th>
         <td>whether the panel is collapsible</td>
       </tr>
+      <tr>
+        <td>forceRender</td>
+        <td>boolean</td>
+        <th>false</th>
+        <td>forced render of content in panel, not lazy render after clicking on header</td>
+      </tr>
     </tbody>
 </table>
 

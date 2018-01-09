@@ -24,6 +24,7 @@ class CollapsePanel extends Component {
       showArrow,
       destroyInactivePanel,
       disabled,
+      forceRender,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
@@ -54,6 +55,7 @@ class CollapsePanel extends Component {
             prefixCls={prefixCls}
             isActive={isActive}
             destroyInactivePanel={destroyInactivePanel}
+            forceRender={forceRender}
           >
             {children}
           </PanelContent>
@@ -84,6 +86,7 @@ CollapsePanel.propTypes = {
   style: PropTypes.object,
   destroyInactivePanel: PropTypes.bool,
   disabled: PropTypes.bool,
+  forceRender: PropTypes.bool,
 };
 
 CollapsePanel.defaultProps = {
@@ -92,6 +95,7 @@ CollapsePanel.defaultProps = {
   destroyInactivePanel: false,
   onItemClick() {},
   headerClass: '',
+  forceRender: false,
 };
 
 export default CollapsePanel;

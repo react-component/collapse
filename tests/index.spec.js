@@ -196,4 +196,56 @@ describe('collapse', () => {
       }, 500);
     });
   });
+
+  describe('forceRender', () => {
+    let node;
+    let collapse;
+
+    beforeEach(() => {
+      node = document.createElement('div');
+      document.body.appendChild(node);
+    });
+
+    const renderCollapse = (element) => {
+      ReactDOM.render(element, node, function init() {
+        collapse = this;
+      });
+    };
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(node);
+      changeHook = null;
+    });
+
+    it('when forceRender is not supplied it should lazy render the panel content', () => {
+      renderCollapse(
+        <Collapse>
+          <Panel header="collapse 1" key="1" disabled>first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+        </Collapse>
+      );
+      expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(0);
+    });
+
+    it('when forceRender is FALSE it should lazy render the panel content', () => {
+      renderCollapse(
+        <Collapse>
+          <Panel header="collapse 1" key="1" forceRender={false} disabled>first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+        </Collapse>
+      );
+      expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(0);
+    });
+
+    it('when forceRender is TRUE then it should render all the panel content to the DOM', () => {
+      renderCollapse(
+        <Collapse>
+          <Panel header="collapse 1" key="1" forceRender disabled>first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+        </Collapse>
+      );
+      expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(1);
+      expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+    });
+  });
 });
