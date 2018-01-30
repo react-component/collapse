@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.8.0 2018-01-30
+
+- Add prop forceRender to Panel [#82](https://github.com/react-component/collapse/pull/82)
+
 ## 1.7.6 2017-06-06
 
 - Add prop id for Panel [#69](https://github.com/react-component/collapse/issues/69)
