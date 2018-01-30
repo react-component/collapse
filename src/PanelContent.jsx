@@ -8,17 +8,17 @@ class PanelContent extends Component {
   }
 
   render() {
-    this._isActived = this._isActived || this.props.isActive;
+    this._isActived = this.props.forceRender || this._isActived || this.props.isActive;
     if (!this._isActived) {
       return null;
     }
-    const { prefixCls, isActive, children, destroyInactivePanel } = this.props;
+    const { prefixCls, isActive, children, destroyInactivePanel, forceRender } = this.props;
     const contentCls = classnames({
       [`${prefixCls}-content`]: true,
       [`${prefixCls}-content-active`]: isActive,
       [`${prefixCls}-content-inactive`]: !isActive,
     });
-    const child = !isActive && destroyInactivePanel ? null :
+    const child = !forceRender && !isActive && destroyInactivePanel ? null :
       <div className={`${prefixCls}-content-box`}>{children}</div>;
     return (
       <div
@@ -34,6 +34,7 @@ PanelContent.propTypes = {
   isActive: PropTypes.bool,
   children: PropTypes.any,
   destroyInactivePanel: PropTypes.bool,
+  forceRender: PropTypes.bool,
 };
 
 export default PanelContent;
