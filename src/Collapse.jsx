@@ -84,6 +84,7 @@ class Collapse extends Component {
         prefixCls,
         destroyInactivePanel,
         openAnimation: this.state.openAnimation,
+        accordion,
         children: child.props.children,
         onItemClick: disabled ? null : () => this.onClickItem(key),
       };
@@ -102,13 +103,13 @@ class Collapse extends Component {
   }
 
   render() {
-    const { prefixCls, className, style } = this.props;
+    const { prefixCls, className, style, accordion } = this.props;
     const collapseClassName = classNames({
       [prefixCls]: true,
       [className]: !!className,
     });
     return (
-      <div className={collapseClassName} style={style}>
+      <div className={collapseClassName} style={style} role={accordion ? 'tablist' : null}>
         {this.getItems()}
       </div>
     );

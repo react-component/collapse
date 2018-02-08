@@ -91,6 +91,16 @@ describe('collapse', () => {
         done();
       }, 500);
     });
+
+    it('should not have role', () => {
+      const item = findDOMNode(collapse, 'rc-collapse')[0];
+      expect(item.getAttribute('role')).to.eql(null);
+    });
+
+    it('should set button role on panel title', () => {
+      const item = findDOMNode(collapse, 'rc-collapse-header')[0];
+      expect(item.getAttribute('role')).to.eql('button');
+    });
   });
 
   describe('destroyInactivePanel', () => {
@@ -193,6 +203,26 @@ describe('collapse', () => {
           expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(1);
           done();
         }, 500);
+      }, 500);
+    });
+
+    it('should add tab role on panel title', () => {
+      const item = findDOMNode(collapse, 'rc-collapse-header')[0];
+      expect(item.getAttribute('role')).to.eql('tab');
+    });
+
+    it('should add tablist role on accordion', () => {
+      const item = findDOMNode(collapse, 'rc-collapse')[0];
+      expect(item.getAttribute('role')).to.eql('tablist');
+    });
+
+    it('should add tablist role on PanelContent', (done) => {
+      const header = findDOMNode(collapse, 'rc-collapse-header')[0];
+      Simulate.click(header);
+      setTimeout(() => {
+        const item = findDOMNode(collapse, 'rc-collapse-content')[0];
+        expect(item.getAttribute('role')).to.eql('tabpanel');
+        done();
       }, 500);
     });
   });
