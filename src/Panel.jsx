@@ -5,19 +5,13 @@ import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
 class CollapsePanel extends Component {
-  constructor(props) {
-    super(props);
-    this.handleItemClick = this.handleItemClick.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-  }
-
-  handleItemClick() {
+  handleItemClick = () => {
     if (this.props.onItemClick) {
       this.props.onItemClick();
     }
   }
 
-  handleKeyPress(e) {
+  handleKeyPress = (e) => {
     e.preventDefault();
     if (e.charCode === 13 || e.charCode === 32) {
       this.handleItemClick();

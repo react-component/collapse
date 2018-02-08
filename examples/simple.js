@@ -15,21 +15,13 @@ function random() {
 }
 
 class Test extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-    ['onChange', 'setActivityKey', 'reRender', 'toggle'].map(fn => this[fn] = this[fn].bind(this));
+  state = {
+    time: random(),
+    accordion: false,
+    activeKey: ['4'],
   }
 
-  getInitialState() {
-    return {
-      time: random(),
-      accordion: false,
-      activeKey: ['4'],
-    };
-  }
-
-  onChange(activeKey) {
+  onChange = (activeKey) => {
     this.setState({
       activeKey,
     });
@@ -71,19 +63,19 @@ class Test extends React.Component {
     return items;
   }
 
-  setActivityKey() {
+  setActivityKey = () => {
     this.setState({
       activeKey: ['2'],
     });
   }
 
-  reRender() {
+  reRender = () => {
     this.setState({
       time: random(),
     });
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({
       accordion: !this.state.accordion,
     });
