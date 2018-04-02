@@ -41,6 +41,7 @@ describe('collapse', () => {
       ReactDOM.unmountComponentAtNode(node);
       changeHook = null;
     });
+
     it('add className', () => {
       const expectedClassName = 'rc-collapse-item important';
       expect(findDOMNode(collapse, 'rc-collapse-item')[2].className).to.be(expectedClassName);
@@ -276,6 +277,56 @@ describe('collapse', () => {
       );
       expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(1);
       expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+    });
+  });
+
+  describe.only('keyboard support', () => {
+    let node;
+    let collapse;
+
+    beforeEach(() => {
+      node = document.createElement('div');
+      document.body.appendChild(node);
+    });
+
+    const renderCollapse = (element) => {
+      ReactDOM.render(element, node, function init() {
+        collapse = this;
+      });
+    };
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(node);
+      changeHook = null;
+    });
+
+    it('should toggle panel when press enter', (done) => {
+      renderCollapse(
+        <Collapse>
+          <Panel header="collapse 1" key="1">first</Panel>
+          <Panel header="collapse 2" key="2">second</Panel>
+          <Panel header="collapse 3" key="3" disabled>second</Panel>
+        </Collapse>
+      );
+      Simulate.keyPress(findDOMNode(collapse, 'rc-collapse-header')[2], {
+        key: 'Enter', keyCode: 13, which: 13,
+      });
+      expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+      Simulate.keyPress(findDOMNode(collapse, 'rc-collapse-header')[0], {
+        key: 'Enter', keyCode: 13, which: 13,
+      });
+      expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+      expect(findDOMNode(collapse, 'rc-collapse-content')[0].className)
+        .to.contain('rc-collapse-content-active');
+      Simulate.keyPress(findDOMNode(collapse, 'rc-collapse-header')[0], {
+        key: 'Enter', keyCode: 13, which: 13,
+      });
+      setTimeout(() => {
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+        expect(findDOMNode(collapse, 'rc-collapse-content')[0].className)
+          .not.to.contain('rc-collapse-content-active');
+        done();
+      }, 500);
     });
   });
 });
