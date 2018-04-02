@@ -15,21 +15,13 @@ function random() {
 }
 
 class Test extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getInitialState();
-    ['onChange', 'setActivityKey', 'reRender', 'toggle'].map(fn => this[fn] = this[fn].bind(this));
+  state = {
+    time: random(),
+    accordion: false,
+    activeKey: ['4'],
   }
 
-  getInitialState() {
-    return {
-      time: random(),
-      accordion: false,
-      activeKey: ['4'],
-    };
-  }
-
-  onChange(activeKey) {
+  onChange = (activeKey) => {
     this.setState({
       activeKey,
     });
@@ -40,7 +32,7 @@ class Test extends React.Component {
     for (let i = 0, len = 3; i < len; i++) {
       const key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${key}`} key={key} disabled>
+        <Panel header={`This is panel header ${key}`} key={key} disabled={i === 0}>
           <p>{text.repeat(this.state.time)}</p>
         </Panel>
       );
@@ -55,22 +47,35 @@ class Test extends React.Component {
       </Panel>
     );
 
+    items.push(
+      <Panel header={`This is panel header 5`} key="5">
+        <Collapse defaultActiveKey="1">
+          <Panel header={`This is panel nest panel`} key="1" id="another-test">
+            <form>
+              <label htmlFor="test">Name:&nbsp;</label>
+              <input type="text" id="test"/>
+            </form>
+          </Panel>
+        </Collapse>
+      </Panel>
+    );
+
     return items;
   }
 
-  setActivityKey() {
+  setActivityKey = () => {
     this.setState({
       activeKey: ['2'],
     });
   }
 
-  reRender() {
+  reRender = () => {
     this.setState({
       time: random(),
     });
   }
 
-  toggle() {
+  toggle = () => {
     this.setState({
       accordion: !this.state.accordion,
     });
@@ -78,7 +83,7 @@ class Test extends React.Component {
 
   render() {
     const accordion = this.state.accordion;
-    const btn = accordion ? 'accordion' : 'collapse';
+    const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
     const activeKey = this.state.activeKey;
     return (<div style={{ margin: 20, width: 400 }}>
       <button onClick={this.reRender}>reRender</button>

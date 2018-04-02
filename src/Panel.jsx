@@ -5,9 +5,16 @@ import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
 class CollapsePanel extends Component {
-  handleItemClick() {
+  handleItemClick = () => {
     if (this.props.onItemClick) {
       this.props.onItemClick();
+    }
+  }
+
+  handleKeyPress = (e) => {
+    e.preventDefault();
+    if (e.charCode === 13 || e.charCode === 32) {
+      this.handleItemClick();
     }
   }
 
@@ -24,6 +31,7 @@ class CollapsePanel extends Component {
       showArrow,
       destroyInactivePanel,
       disabled,
+      accordion,
       forceRender,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
@@ -35,12 +43,14 @@ class CollapsePanel extends Component {
       [`${prefixCls}-item-disabled`]: disabled,
     }, className);
     return (
-      <div className={itemCls} style={style} id={id} role="tablist">
+      <div className={itemCls} style={style} id={id}>
         <div
           className={headerCls}
-          onClick={this.handleItemClick.bind(this)}
-          role="tab"
+          onClick={this.handleItemClick}
+          role={accordion ? 'tab' : 'button'}
+          tabIndex={disabled ? -1 : 0}
           aria-expanded={isActive}
+          onKeyPress={this.handleKeyPress}
         >
           {showArrow && <i className="arrow" />}
           {header}
@@ -56,6 +66,7 @@ class CollapsePanel extends Component {
             isActive={isActive}
             destroyInactivePanel={destroyInactivePanel}
             forceRender={forceRender}
+            role={accordion ? 'tabpanel' : null}
           >
             {children}
           </PanelContent>
@@ -86,6 +97,7 @@ CollapsePanel.propTypes = {
   style: PropTypes.object,
   destroyInactivePanel: PropTypes.bool,
   disabled: PropTypes.bool,
+  accordion: PropTypes.bool,
   forceRender: PropTypes.bool,
 };
 
