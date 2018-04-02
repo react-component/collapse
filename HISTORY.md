@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.9.0 2018-04-02
+
+- Add keyboard support [#84](https://github.com/react-component/collapse/pull/84)
+
 ## 1.8.0 2018-01-30
 
 - Add prop forceRender to Panel [#82](https://github.com/react-component/collapse/pull/82)
