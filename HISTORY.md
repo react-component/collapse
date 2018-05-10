@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.9.1 2018-05-10
+
+- Fix invalid aria-expanded prop in preact
+
 ## 1.9.0 2018-04-02
 
 - Add keyboard support [#84](https://github.com/react-component/collapse/pull/84)

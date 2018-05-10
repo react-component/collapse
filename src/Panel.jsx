@@ -49,7 +49,7 @@ class CollapsePanel extends Component {
           onClick={this.handleItemClick}
           role={accordion ? 'tab' : 'button'}
           tabIndex={disabled ? -1 : 0}
-          aria-expanded={isActive}
+          aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
           {showArrow && <i className="arrow" />}
