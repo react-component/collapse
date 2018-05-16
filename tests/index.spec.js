@@ -280,7 +280,7 @@ describe('collapse', () => {
     });
   });
 
-  describe.only('keyboard support', () => {
+  describe('keyboard support', () => {
     let node;
     let collapse;
 
