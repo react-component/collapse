@@ -12,7 +12,6 @@ class CollapsePanel extends Component {
   }
 
   handleKeyPress = (e) => {
-    e.preventDefault();
     if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
       this.handleItemClick();
     }
