@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 class PanelContent extends Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.isActive || nextProps.isActive;
+    return this.props.forceRender || this.props.isActive || nextProps.isActive;
   }
 
   render() {
