@@ -142,7 +142,6 @@ Collapse.defaultProps = {
   onChange() {},
   accordion: false,
   destroyInactivePanel: false,
-  arrowIcon: '',
 };
 
 Collapse.Panel = CollapsePanel;

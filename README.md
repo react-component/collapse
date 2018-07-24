@@ -112,7 +112,7 @@ ReactDOM.render(collapse, container);
       <tr>
           <td>arrowIcon</td>
           <td>React.Node</td>
-          <th>''</th>
+          <th></th>
           <td>specific the custom arrow icon.</td>
       </tr>
     </tbody>
