@@ -76,10 +76,18 @@ class Test extends React.Component {
     });
   }
 
-  reRender = () => {
-    this.setState({
-      time: random(),
-    });
+  getSvgIcon = (path) => {
+    return (
+      <svg
+        viewBox="0 0 1024 1024"
+        width="1em"
+        height="1em"
+        fill="currentColor"
+        style={{ verticalAlign: '-.125em' }}
+      >
+        <path d={path} p-id="5827"></path>
+      </svg>
+    );
   }
 
   toggle = () => {
@@ -94,18 +102,10 @@ class Test extends React.Component {
     });
   }
 
-  getSvgIcon = (path) => {
-    return (
-      <svg 
-        viewBox="0 0 1024 1024"
-        width="1em"
-        height="1em"
-        fill="currentColor"
-        style={{ verticalAlign: '-.125em' }}
-      >
-        <path d={path} p-id="5827"></path>
-      </svg>
-    );
+  reRender = () => {
+    this.setState({
+      time: random(),
+    });
   }
 
   render() {
