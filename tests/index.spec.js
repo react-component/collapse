@@ -27,7 +27,7 @@ describe('collapse', () => {
       document.body.appendChild(node);
 
       ReactDOM.render(
-        <Collapse onChange={onChange}>
+        <Collapse onChange={onChange} arrowIcon={<span>test></span>}>
           <Panel header="collapse 1" key="1" disabled>first</Panel>
           <Panel header="collapse 2" key="2">second</Panel>
           <Panel header="collapse 3" key="3" className="important">third</Panel>
@@ -54,6 +54,10 @@ describe('collapse', () => {
     it('panel works', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item').length).to.be(3);
       expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(0);
+    });
+
+    it('should render custom arrow icon corrctly', () => {
+      expect(findDOMNode(collapse, 'rc-collapse-header')[0].textContent.includes('test>'));
     });
 
     it('default active works', () => {
