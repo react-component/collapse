@@ -52,7 +52,7 @@ class CollapsePanel extends Component {
           aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
-          {showArrow && <i className="arrow" >{arrowIcon}</i>}
+          {showArrow && (arrowIcon || <i className="arrow" />)}
           {header}
         </div>
         <Animate
