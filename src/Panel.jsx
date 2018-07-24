@@ -32,6 +32,7 @@ class CollapsePanel extends Component {
       disabled,
       accordion,
       forceRender,
+      arrowIcon,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
@@ -51,7 +52,7 @@ class CollapsePanel extends Component {
           aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
-          {showArrow && <i className="arrow" />}
+          {showArrow && <i className="arrow" >{arrowIcon}</i>}
           {header}
         </div>
         <Animate
@@ -98,6 +99,7 @@ CollapsePanel.propTypes = {
   disabled: PropTypes.bool,
   accordion: PropTypes.bool,
   forceRender: PropTypes.bool,
+  arrowIcon: PropTypes.node,
 };
 
 CollapsePanel.defaultProps = {

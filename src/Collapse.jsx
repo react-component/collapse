@@ -61,7 +61,7 @@ class Collapse extends Component {
 
   getItems() {
     const activeKey = this.state.activeKey;
-    const { prefixCls, accordion, destroyInactivePanel } = this.props;
+    const { prefixCls, accordion, destroyInactivePanel, arrowIcon } = this.props;
     const newChildren = [];
 
     Children.forEach(this.props.children, (child, index) => {
@@ -87,6 +87,7 @@ class Collapse extends Component {
         accordion,
         children: child.props.children,
         onItemClick: disabled ? null : () => this.onClickItem(key),
+        arrowIcon,
       };
 
       newChildren.push(React.cloneElement(child, props));
@@ -133,6 +134,7 @@ Collapse.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   destroyInactivePanel: PropTypes.bool,
+  arrowIcon: PropTypes.node,
 };
 
 Collapse.defaultProps = {
@@ -140,6 +142,7 @@ Collapse.defaultProps = {
   onChange() {},
   accordion: false,
   destroyInactivePanel: false,
+  arrowIcon: '',
 };
 
 Collapse.Panel = CollapsePanel;
