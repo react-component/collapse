@@ -121,8 +121,6 @@ class Test extends React.Component {
       <br/><br/>
       <button onClick={this.setActivityKey}>active header 2</button>
       <br/><br/>
-      {/* <button onClick={this.toggleCustomIcon}>toggle custom icon</button> */}
-      <br/><br/>
       <Collapse
         accordion={accordion}
         onChange={this.onChange}

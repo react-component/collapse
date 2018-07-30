@@ -2,26 +2,6 @@
 @text-color: #666;
 @borderStyle: 1px solid #d9d9d9;
 
-#arrow {
-  .common(){
-    width: 0;
-    height: 0;
-    font-size: 0;
-    line-height: 0;
-  }
-  .right(@w, @h, @color) {
-    border-top: @w solid transparent;
-    border-bottom: @w solid transparent;
-    border-left: @h solid @color;
-  }
-
-  .bottom(@w, @h, @color) {
-    border-left: @w solid transparent;
-    border-right: @w solid transparent;
-    border-top: @h solid @color;
-  }
-}
-
 .@{prefixCls} {
   background-color: #f7f7f7;
   border-radius: 3px;
