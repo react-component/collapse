@@ -1,4 +1,4 @@
-import 'rc-collapse/assets/custom-icon.less';
+import 'rc-collapse/assets/index.less';
 import 'string.prototype.repeat';
 import Collapse, { Panel } from 'rc-collapse';
 import React from 'react';
@@ -19,12 +19,31 @@ const arrowPath = 'M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88' +
   '6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5.' +
   '2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z';
 
+function expandIcon({ isActive }) {
+  return (
+    <i style={{ marginRight: '.5rem' }}>
+      <svg
+        viewBox="0 0 1024 1024"
+        width="1em"
+        height="1em"
+        fill="currentColor"
+        style={{
+          verticalAlign: '-.125em',
+          transition: 'transform .2s',
+          transform: `rotate(${isActive ? 90 : 0}deg)`,
+        }}
+      >
+        <path d={arrowPath} p-id="5827"></path>
+      </svg>
+    </i>
+  );
+}
+
 class Test extends React.Component {
   state = {
     time: random(),
     accordion: false,
     activeKey: ['4'],
-    useIcon: true,
   }
 
   onChange = (activeKey) => {
@@ -35,7 +54,6 @@ class Test extends React.Component {
 
   getItems() {
     const items = [];
-    const icon = this.state.useIcon ? this.getSvgIcon(arrowPath) : undefined;
     for (let i = 0, len = 3; i < len; i++) {
       const key = i + 1;
       items.push(
@@ -46,7 +64,7 @@ class Test extends React.Component {
     }
     items.push(
       <Panel header={`This is panel header 4`} key="4">
-        <Collapse defaultActiveKey="1" arrowIcon={icon}>
+        <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
           <Panel header={`This is panel nest panel`} key="1" id="header-test">
             <p>{text}</p>
           </Panel>
@@ -60,7 +78,7 @@ class Test extends React.Component {
           <Panel header={`This is panel nest panel`} key="1" id="another-test">
             <form>
               <label htmlFor="test">Name:&nbsp;</label>
-              <input type="text" id="test"/>
+              <input type="text" id="test" />
             </form>
           </Panel>
         </Collapse>
@@ -76,31 +94,9 @@ class Test extends React.Component {
     });
   }
 
-  getSvgIcon = (path) => {
-    return (
-      <i className="arrow">
-        <svg
-          viewBox="0 0 1024 1024"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-          style={{ verticalAlign: '-.125em' }}
-        >
-          <path d={path} p-id="5827"></path>
-        </svg>
-      </i>
-    );
-  }
-
   toggle = () => {
     this.setState({
       accordion: !this.state.accordion,
-    });
-  }
-
-  toggleCustomIcon = () => {
-    this.setState({
-      useIcon: !this.state.useIcon,
     });
   }
 
@@ -114,18 +110,17 @@ class Test extends React.Component {
     const accordion = this.state.accordion;
     const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
     const activeKey = this.state.activeKey;
-    const icon = this.state.useIcon ? this.getSvgIcon(arrowPath) : undefined;
     return (<div style={{ margin: 20, width: 400 }}>
       <button onClick={this.reRender}>reRender</button>
       <button onClick={this.toggle}>{btn}</button>
-      <br/><br/>
+      <br /><br />
       <button onClick={this.setActivityKey}>active header 2</button>
-      <br/><br/>
+      <br /><br />
       <Collapse
         accordion={accordion}
         onChange={this.onChange}
         activeKey={activeKey}
-        arrowIcon={icon}
+        expandIcon={expandIcon}
       >
         {this.getItems()}
       </Collapse>
@@ -133,4 +128,4 @@ class Test extends React.Component {
   }
 }
 
-ReactDOM.render(<Test/>, document.getElementById('__react-content'));
+ReactDOM.render(<Test />, document.getElementById('__react-content'));

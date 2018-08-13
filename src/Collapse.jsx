@@ -61,7 +61,7 @@ class Collapse extends Component {
 
   getItems() {
     const activeKey = this.state.activeKey;
-    const { prefixCls, accordion, destroyInactivePanel, arrowIcon } = this.props;
+    const { prefixCls, accordion, destroyInactivePanel, expandIcon } = this.props;
     const newChildren = [];
 
     Children.forEach(this.props.children, (child, index) => {
@@ -87,7 +87,7 @@ class Collapse extends Component {
         accordion,
         children: child.props.children,
         onItemClick: disabled ? null : () => this.onClickItem(key),
-        arrowIcon,
+        expandIcon,
       };
 
       newChildren.push(React.cloneElement(child, props));
@@ -134,7 +134,7 @@ Collapse.propTypes = {
   className: PropTypes.string,
   style: PropTypes.object,
   destroyInactivePanel: PropTypes.bool,
-  arrowIcon: PropTypes.node,
+  expandIcon: PropTypes.func,
 };
 
 Collapse.defaultProps = {

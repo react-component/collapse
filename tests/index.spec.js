@@ -25,9 +25,10 @@ describe('collapse', () => {
     beforeEach((done) => {
       node = document.createElement('div');
       document.body.appendChild(node);
+      const expandIcon = () => <span>test></span>;
 
       ReactDOM.render(
-        <Collapse onChange={onChange} arrowIcon={<span>test></span>}>
+        <Collapse onChange={onChange} expandIcon={expandIcon}>
           <Panel header="collapse 1" key="1" disabled>first</Panel>
           <Panel header="collapse 2" key="2">second</Panel>
           <Panel header="collapse 3" key="3" className="important">third</Panel>

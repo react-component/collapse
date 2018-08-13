@@ -32,7 +32,7 @@ class CollapsePanel extends Component {
       disabled,
       accordion,
       forceRender,
-      arrowIcon,
+      expandIcon,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
@@ -42,6 +42,11 @@ class CollapsePanel extends Component {
       [`${prefixCls}-item-active`]: isActive,
       [`${prefixCls}-item-disabled`]: disabled,
     }, className);
+
+    let icon = null;
+    if (showArrow && typeof expandIcon === 'function') {
+      icon = React.createElement(expandIcon, { ...this.props });
+    }
     return (
       <div className={itemCls} style={style} id={id}>
         <div
@@ -52,7 +57,7 @@ class CollapsePanel extends Component {
           aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
-          {showArrow && (arrowIcon || <i className="arrow" />)}
+          {showArrow && (icon || <i className="arrow" />)}
           {header}
         </div>
         <Animate
@@ -99,14 +104,14 @@ CollapsePanel.propTypes = {
   disabled: PropTypes.bool,
   accordion: PropTypes.bool,
   forceRender: PropTypes.bool,
-  arrowIcon: PropTypes.node,
+  expandIcon: PropTypes.func,
 };
 
 CollapsePanel.defaultProps = {
   showArrow: true,
   isActive: false,
   destroyInactivePanel: false,
-  onItemClick() {},
+  onItemClick() { },
   headerClass: '',
   forceRender: false,
 };

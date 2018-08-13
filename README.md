@@ -110,10 +110,10 @@ ReactDOM.render(collapse, container);
           <td>called when collapse Panel is changed</td>
       </tr>
       <tr>
-          <td>arrowIcon</td>
-          <td>ReactNode</td>
+          <td>expandIcon</td>
+          <td>(props: PanelProps) => ReactNode</td>
           <th></th>
-          <td>specific the custom arrow icon.</td>
+          <td>specific the custom expand icon.</td>
       </tr>
     </tbody>
 </table>
