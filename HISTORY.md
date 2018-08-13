@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.10.0 2018-08-13
+
+- Add `expandIcon`.
+
 ## 1.9.1 2018-05-10
 
 - Fix invalid aria-expanded prop in preact
