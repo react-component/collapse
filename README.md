@@ -109,6 +109,12 @@ ReactDOM.render(collapse, container);
           <th>noop</th>
           <td>called when collapse Panel is changed</td>
       </tr>
+      <tr>
+          <td>expandIcon</td>
+          <td>(props: PanelProps) => ReactNode</td>
+          <th></th>
+          <td>specific the custom expand icon.</td>
+      </tr>
     </tbody>
 </table>
 
