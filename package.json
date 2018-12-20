@@ -41,7 +41,7 @@
     "coverage": "jest --coverage && cat ./coverage/lcov.info | coveralls"
   },
   "devDependencies": {
-    "coveralls": "^2.13.1",
+    "coveralls": "^3.0.2",
     "expect.js": "0.3.x",
     "jest": "^20.0.1",
     "jquery": "^3.3.1",
