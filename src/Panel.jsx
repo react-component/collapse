@@ -33,6 +33,7 @@ class CollapsePanel extends Component {
       accordion,
       forceRender,
       expandIcon,
+      extra,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
@@ -59,6 +60,7 @@ class CollapsePanel extends Component {
         >
           {showArrow && (icon || <i className="arrow" />)}
           {header}
+          {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
         </div>
         <Animate
           showProp="isActive"
@@ -105,6 +107,7 @@ CollapsePanel.propTypes = {
   accordion: PropTypes.bool,
   forceRender: PropTypes.bool,
   expandIcon: PropTypes.func,
+  extra: PropTypes.node,
 };
 
 CollapsePanel.defaultProps = {

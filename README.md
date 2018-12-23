@@ -188,6 +188,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <th>false</th>
         <td>forced render of content in panel, not lazy render after clicking on header</td>
       </tr>
+      <tr>
+          <td>extra</td>
+          <td>String | ReactNode</td>
+          <th></th>
+          <td>Content to render in the right of the panel header</td>
+      </tr>
     </tbody>
 </table>
 

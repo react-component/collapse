@@ -30,7 +30,7 @@ describe('collapse', () => {
       ReactDOM.render(
         <Collapse onChange={onChange} expandIcon={expandIcon}>
           <Panel header="collapse 1" key="1" disabled>first</Panel>
-          <Panel header="collapse 2" key="2">second</Panel>
+          <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>second</Panel>
           <Panel header="collapse 3" key="3" className="important">third</Panel>
         </Collapse>, node, function init() {
           collapse = this;
@@ -63,6 +63,12 @@ describe('collapse', () => {
 
     it('default active works', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
+    });
+
+    it('extra works', () => {
+      const extraNodes = findDOMNode(collapse, 'rc-collapse-extra');
+      expect(extraNodes.length).to.be(1);
+      expect(extraNodes[0].innerHTML).to.equal('<span>ExtraSpan</span>');
     });
 
     it('onChange works', (done) => {
