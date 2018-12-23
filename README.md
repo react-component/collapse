@@ -7,6 +7,8 @@ rc-collapse ui component for react
 [![build status][travis-image]][travis-url]
 [![Test coverage][coveralls-image]][coveralls-url]
 [![npm download][download-image]][download-url]
+[![Dependencies](https://img.shields.io/david/react-component/collapse.svg?style=flat-square)](https://david-dm.org/react-component/collapse)
+[![DevDependencies](https://img.shields.io/david/dev/react-component/collapse.svg?style=flat-square)](https://david-dm.org/react-component/collapse?type=dev)
 
 [npm-image]: http://img.shields.io/npm/v/rc-collapse.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-collapse
