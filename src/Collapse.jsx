@@ -94,7 +94,7 @@ class Collapse extends Component {
 
       newChildren.push(React.cloneElement(child, props));
     });
-
+    //  ref: https://github.com/ant-design/ant-design/issues/13884
     if (isFragment(children)) {
       return (
         <React.Fragment>
