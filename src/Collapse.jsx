@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
+import { isFragment } from 'react-is';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -61,10 +62,11 @@ class Collapse extends Component {
 
   getItems() {
     const activeKey = this.state.activeKey;
-    const { prefixCls, accordion, destroyInactivePanel, expandIcon } = this.props;
+    const { prefixCls, accordion, destroyInactivePanel, expandIcon, children } = this.props;
     const newChildren = [];
+    const childList = isFragment(children) ? children.props.children : children;
 
-    Children.forEach(this.props.children, (child, index) => {
+    Children.forEach(childList, (child, index) => {
       if (!child) return;
       // If there is no key provide, use the panel order as default key
       const key = child.key || String(index);
@@ -92,6 +94,14 @@ class Collapse extends Component {
 
       newChildren.push(React.cloneElement(child, props));
     });
+
+    if (isFragment(children)) {
+      return (
+        <React.Fragment>
+          {newChildren}
+        </React.Fragment>
+      );
+    }
 
     return newChildren;
   }
