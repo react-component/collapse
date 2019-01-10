@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
 
-class CollapsePanel extends Component {
+class CollapsePanel extends PureComponent {
   handleItemClick = () => {
-    if (this.props.onItemClick) {
-      this.props.onItemClick();
+    const { onItemClick, panelKey } = this.props;
+
+    if (typeof onItemClick === 'function') {
+      onItemClick(panelKey);
     }
   }
 

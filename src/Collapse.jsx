@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react';
+import React, { PureComponent, Children } from 'react';
 import PropTypes from 'prop-types';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
@@ -13,7 +13,7 @@ function toArray(activeKey) {
   return currentActiveKey;
 }
 
-class Collapse extends Component {
+class Collapse extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -27,6 +27,9 @@ class Collapse extends Component {
       openAnimation: this.props.openAnimation || openAnimationFactory(this.props.prefixCls),
       activeKey: toArray(currentActiveKey),
     };
+
+    this.getNewChild = this.getNewChild.bind(this);
+    this.onClickItem = this.onClickItem.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,6 +80,7 @@ class Collapse extends Component {
 
     const props = {
       key,
+      panelKey: key,
       header,
       headerClass,
       isActive,
@@ -85,7 +89,7 @@ class Collapse extends Component {
       openAnimation: this.state.openAnimation,
       accordion,
       children: child.props.children,
-      onItemClick: disabled ? null : this.onClickItem.bind(this, key),
+      onItemClick: disabled ? null : this.onClickItem,
       expandIcon,
     };
 
@@ -96,7 +100,7 @@ class Collapse extends Component {
     const { children } = this.props;
     const childList = isFragment(children) ? children.props.children : children;
 
-    const newChildren = Children.map(childList, this.getNewChild.bind(this));
+    const newChildren = Children.map(childList, this.getNewChild);
 
     //  ref: https://github.com/ant-design/ant-design/issues/13884
     if (isFragment(children)) {
