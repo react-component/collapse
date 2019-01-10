@@ -104,7 +104,6 @@ class Collapse extends Component {
   getItems() {
     const { children } = this.props;
     const childList = isFragment(children) ? children.props.children : children;
-
     const newChildren = Children.map(childList, this.getNewChild);
 
     //  ref: https://github.com/ant-design/ant-design/issues/13884
