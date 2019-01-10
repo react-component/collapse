@@ -1,9 +1,10 @@
-import React, { PureComponent, Children } from 'react';
+import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
 import { isFragment } from 'react-is';
+import shallowEqual from 'shallowequal';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -13,7 +14,7 @@ function toArray(activeKey) {
   return currentActiveKey;
 }
 
-class Collapse extends PureComponent {
+class Collapse extends Component {
   constructor(props) {
     super(props);
 
@@ -43,6 +44,10 @@ class Collapse extends PureComponent {
         openAnimation: nextProps.openAnimation,
       });
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
   }
 
   onClickItem(key) {
@@ -137,7 +142,7 @@ class Collapse extends PureComponent {
 
 Collapse.propTypes = {
   children: PropTypes.any,
-  prefixCls: PropTypes.string,
+  prefixCls: PropTypes.number,
   activeKey: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),

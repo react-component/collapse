@@ -1,10 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
+import shallowEqual from 'shallowequal';
 
-class CollapsePanel extends PureComponent {
+class CollapsePanel extends Component {
+  shouldComponentUpdate(nextProps) {
+    return !shallowEqual(this.props, nextProps);
+  }
+
   handleItemClick = () => {
     const { onItemClick, panelKey } = this.props;
 
@@ -107,6 +112,7 @@ CollapsePanel.propTypes = {
   accordion: PropTypes.bool,
   forceRender: PropTypes.bool,
   expandIcon: PropTypes.func,
+  panelKey: PropTypes.any,
 };
 
 CollapsePanel.defaultProps = {
