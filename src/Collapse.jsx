@@ -141,7 +141,7 @@ class Collapse extends Component {
 
 Collapse.propTypes = {
   children: PropTypes.any,
-  prefixCls: PropTypes.number,
+  prefixCls: PropTypes.string,
   activeKey: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
