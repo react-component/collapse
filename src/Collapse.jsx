@@ -28,9 +28,6 @@ class Collapse extends Component {
       openAnimation: this.props.openAnimation || openAnimationFactory(this.props.prefixCls),
       activeKey: toArray(currentActiveKey),
     };
-
-    this.getNewChild = this.getNewChild.bind(this);
-    this.onClickItem = this.onClickItem.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,7 +47,7 @@ class Collapse extends Component {
     return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
   }
 
-  onClickItem(key) {
+  onClickItem = key => {
     let activeKey = this.state.activeKey;
     if (this.props.accordion) {
       activeKey = activeKey[0] === key ? [] : [key];
@@ -68,7 +65,7 @@ class Collapse extends Component {
     this.setActiveKey(activeKey);
   }
 
-  getNewChild(child, index) {
+  getNewChild = (child, index) => {
     if (!child) return null;
 
     const activeKey = this.state.activeKey;
@@ -101,7 +98,7 @@ class Collapse extends Component {
     return React.cloneElement(child, props);
   }
 
-  getItems() {
+  getItems = () => {
     const { children } = this.props;
     const childList = isFragment(children) ? children.props.children : children;
     const newChildren = Children.map(childList, this.getNewChild);
@@ -118,7 +115,7 @@ class Collapse extends Component {
     return newChildren;
   }
 
-  setActiveKey(activeKey) {
+  setActiveKey = activeKey => {
     if (!('activeKey' in this.props)) {
       this.setState({ activeKey });
     }
