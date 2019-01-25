@@ -17,14 +17,14 @@ class Collapse extends Component {
   constructor(props) {
     super(props);
 
-    const { activeKey, defaultActiveKey } = this.props;
+    const { activeKey, defaultActiveKey } = props;
     let currentActiveKey = defaultActiveKey;
-    if ('activeKey' in this.props) {
+    if ('activeKey' in props) {
       currentActiveKey = activeKey;
     }
 
     this.state = {
-      openAnimation: this.props.openAnimation || openAnimationFactory(this.props.prefixCls),
+      openAnimation: props.openAnimation || openAnimationFactory(props.prefixCls),
       activeKey: toArray(currentActiveKey),
     };
   }
