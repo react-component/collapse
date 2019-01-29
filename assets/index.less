@@ -38,6 +38,8 @@
     }
 
     > .@{prefixCls}-header {
+      display: flex;
+      align-items: center;
       line-height: 22px;
       padding: 10px 16px;
       color: #666;
@@ -49,6 +51,10 @@
         #arrow > .right(3px, 4px, #666);
         vertical-align: middle;
         margin-right: 8px;
+      }
+
+      .@{prefixCls}-extra {
+        margin: 0 16px 0 auto;
       }
     }
   }
@@ -85,6 +91,8 @@
     > .@{prefixCls}-header {
 
       .arrow {
+        position: relative;
+        top: 2px;
         #arrow > .bottom(3px, 4px, #666);
         margin-right: 6px;
       }
