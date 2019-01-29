@@ -3,11 +3,18 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
+import shallowEqual from 'shallowequal';
 
 class CollapsePanel extends Component {
+  shouldComponentUpdate(nextProps) {
+    return !shallowEqual(this.props, nextProps);
+  }
+
   handleItemClick = () => {
-    if (this.props.onItemClick) {
-      this.props.onItemClick();
+    const { onItemClick, panelKey } = this.props;
+
+    if (typeof onItemClick === 'function') {
+      onItemClick(panelKey);
     }
   }
 
@@ -108,6 +115,7 @@ CollapsePanel.propTypes = {
   forceRender: PropTypes.bool,
   expandIcon: PropTypes.func,
   extra: PropTypes.node,
+  panelKey: PropTypes.any,
 };
 
 CollapsePanel.defaultProps = {
