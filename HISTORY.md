@@ -1,6 +1,10 @@
 # History
 ----
 
+## 1.11.0
+
+- Add `extra`.
+
 ## 1.10.0 2018-08-13
 
 - Add `expandIcon`.
