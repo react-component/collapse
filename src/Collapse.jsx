@@ -4,6 +4,7 @@ import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
 import { isFragment } from 'react-is';
+import shallowEqual from 'shallowequal';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -42,7 +43,11 @@ class Collapse extends Component {
     }
   }
 
-  onClickItem(key) {
+  shouldComponentUpdate(nextProps, nextState) {
+    return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
+  }
+
+  onClickItem = key => {
     let activeKey = this.state.activeKey;
     if (this.props.accordion) {
       activeKey = activeKey[0] === key ? [] : [key];
@@ -60,7 +65,7 @@ class Collapse extends Component {
     this.setActiveKey(activeKey);
   }
 
-  getNewChild(child, index) {
+  getNewChild = (child, index) => {
     if (!child) return null;
 
     const activeKey = this.state.activeKey;
@@ -77,6 +82,7 @@ class Collapse extends Component {
 
     const props = {
       key,
+      panelKey: key,
       header,
       headerClass,
       isActive,
@@ -85,18 +91,17 @@ class Collapse extends Component {
       openAnimation: this.state.openAnimation,
       accordion,
       children: child.props.children,
-      onItemClick: disabled ? null : this.onClickItem.bind(this, key),
+      onItemClick: disabled ? null : this.onClickItem,
       expandIcon,
     };
 
     return React.cloneElement(child, props);
   }
 
-  getItems() {
+  getItems = () => {
     const { children } = this.props;
     const childList = isFragment(children) ? children.props.children : children;
-
-    const newChildren = Children.map(childList, this.getNewChild.bind(this));
+    const newChildren = Children.map(childList, this.getNewChild);
 
     //  ref: https://github.com/ant-design/ant-design/issues/13884
     if (isFragment(children)) {
@@ -110,7 +115,7 @@ class Collapse extends Component {
     return newChildren;
   }
 
-  setActiveKey(activeKey) {
+  setActiveKey = activeKey => {
     if (!('activeKey' in this.props)) {
       this.setState({ activeKey });
     }
