@@ -60,6 +60,12 @@ class Test extends React.Component {
       </Panel>
     );
 
+    items.push(
+      <Panel header={`This is panel header 6`} key="6" extra={<span>Extra Node</span>}>
+        <p>Panel with extra</p>
+      </Panel>
+    );
+
     return items;
   }
 
