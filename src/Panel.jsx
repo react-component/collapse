@@ -51,7 +51,7 @@ class CollapsePanel extends Component {
       [`${prefixCls}-item-disabled`]: disabled,
     }, className);
 
-    let icon = null;
+    let icon = <i className="arrow" />;
     if (showArrow && typeof expandIcon === 'function') {
       icon = expandIcon(this.props);
     }
@@ -65,7 +65,7 @@ class CollapsePanel extends Component {
           aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
-          {showArrow && (icon || <i className="arrow" />)}
+          {showArrow && icon}
           {header}
           {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
         </div>
