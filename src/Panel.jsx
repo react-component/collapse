@@ -53,7 +53,7 @@ class CollapsePanel extends Component {
 
     let icon = null;
     if (showArrow && typeof expandIcon === 'function') {
-      icon = React.createElement(expandIcon, { ...this.props });
+      icon = expandIcon(this.props);
     }
     return (
       <div className={itemCls} style={style} id={id}>
