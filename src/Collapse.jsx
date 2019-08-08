@@ -141,11 +141,19 @@ Collapse.propTypes = {
   prefixCls: PropTypes.string,
   activeKey: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ])),
   ]),
   defaultActiveKey: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.number,
+    PropTypes.arrayOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ])),
   ]),
   openAnimation: PropTypes.object,
   onChange: PropTypes.func,
