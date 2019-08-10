@@ -11,7 +11,7 @@ function toArray(activeKey) {
   if (!Array.isArray(currentActiveKey)) {
     currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
   }
-  return currentActiveKey;
+  return currentActiveKey.map(key => key.toString());
 }
 
 class Collapse extends Component {
