@@ -125,6 +125,113 @@ describe('collapse', () => {
     });
   });
 
+  describe('it should support number key', () => {
+    let node;
+    let collapse;
+
+    beforeEach((done) => {
+      node = document.createElement('div');
+      document.body.appendChild(node);
+      const expandIcon = () => <span>test></span>;
+
+      ReactDOM.render(
+        <Collapse onChange={onChange} expandIcon={expandIcon}>
+          <Panel header="collapse 1" key={1} disabled>
+            first
+          </Panel>
+          <Panel header="collapse 2" key={2} extra={<span>ExtraSpan</span>}>
+            second
+          </Panel>
+          <Panel header="collapse 3" key={3} className="important">
+            third
+          </Panel>
+        </Collapse>,
+        node,
+        function init() {
+          collapse = this;
+          done();
+        },
+      );
+    });
+
+    afterEach(() => {
+      ReactDOM.unmountComponentAtNode(node);
+      changeHook = null;
+    });
+
+    it('add className', () => {
+      const expectedClassName = 'rc-collapse-item important';
+      expect(findDOMNode(collapse, 'rc-collapse-item')[2].className).to.be(expectedClassName);
+    });
+
+    it('create works', () => {
+      expect(findDOMNode(collapse, 'rc-collapse').length).to.be(1);
+    });
+
+    it('panel works', () => {
+      expect(findDOMNode(collapse, 'rc-collapse-item').length).to.be(3);
+      expect(findDOMNode(collapse, 'rc-collapse-content').length).to.be(0);
+    });
+
+    it('should render custom arrow icon corrctly', () => {
+      expect(findDOMNode(collapse, 'rc-collapse-header')[0].textContent.includes('test>'));
+    });
+
+    it('default active works', () => {
+      expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
+    });
+
+    it('extra works', () => {
+      const extraNodes = findDOMNode(collapse, 'rc-collapse-extra');
+      expect(extraNodes.length).to.be(1);
+      expect(extraNodes[0].innerHTML).to.equal('<span>ExtraSpan</span>');
+    });
+
+    it('onChange works', (done) => {
+      changeHook = (d) => {
+        expect(d).to.eql(['2']);
+        done();
+      };
+      const header = findDOMNode(collapse, 'rc-collapse-header')[1];
+      Simulate.click(header);
+    });
+
+    it('click should toggle panel state', (done) => {
+      const header = findDOMNode(collapse, 'rc-collapse-header')[1];
+      Simulate.click(header);
+      setTimeout(() => {
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(1);
+        Simulate.click(header);
+        setTimeout(() => {
+          expect(findDOMNode(collapse, 'rc-collapse-content-inactive')[0].innerHTML).to.eql(
+            '<div class="rc-collapse-content-box">second</div>',
+          );
+          expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+          done();
+        }, 500);
+      }, 500);
+    });
+
+    it('click should not toggle disabled panel state', (done) => {
+      const header = findDOMNode(collapse, 'rc-collapse-header')[0];
+      Simulate.click(header);
+      setTimeout(() => {
+        expect(findDOMNode(collapse, 'rc-collapse-content-active').length).to.be(0);
+        done();
+      }, 500);
+    });
+
+    it('should not have role', () => {
+      const item = findDOMNode(collapse, 'rc-collapse')[0];
+      expect(item.getAttribute('role')).to.eql(null);
+    });
+
+    it('should set button role on panel title', () => {
+      const item = findDOMNode(collapse, 'rc-collapse-header')[0];
+      expect(item.getAttribute('role')).to.eql('button');
+    });
+  });
+
   describe('destroyInactivePanel', () => {
     let node;
     let collapse;
