@@ -30,21 +30,21 @@ class Collapse extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if ('activeKey' in nextProps) {
-      this.setState({
-        activeKey: toArray(nextProps.activeKey),
-      });
-    }
-    if ('openAnimation' in nextProps) {
-      this.setState({
-        openAnimation: nextProps.openAnimation,
-      });
-    }
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
+  }
+
+  componentDidUpdate() {
+    if ('activeKey' in this.props) {
+      this.setState({
+        activeKey: toArray(this.props.activeKey),
+      });
+    }
+    if ('openAnimation' in this.props) {
+      this.setState({
+        openAnimation: this.props.openAnimation,
+      });
+    }
   }
 
   onClickItem = key => {
