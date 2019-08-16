@@ -5,6 +5,7 @@ import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
 import { isFragment } from 'react-is';
 import shallowEqual from 'shallowequal';
+import { polyfill } from 'react-lifecycles-compat';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -34,19 +35,6 @@ class Collapse extends Component {
     return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
   }
 
-  componentDidUpdate() {
-    if ('activeKey' in this.props) {
-      this.setState({
-        activeKey: toArray(this.props.activeKey),
-      });
-    }
-    if ('openAnimation' in this.props) {
-      this.setState({
-        openAnimation: this.props.openAnimation,
-      });
-    }
-  }
-
   onClickItem = key => {
     let activeKey = this.state.activeKey;
     if (this.props.accordion) {
@@ -63,6 +51,17 @@ class Collapse extends Component {
       }
     }
     this.setActiveKey(activeKey);
+  }
+
+  static getDerivedStateFromProps(nextProps) {
+    const newState = {};
+    if ('activeKey' in nextProps) {
+      newState.activeKey = toArray(nextProps.activeKey);
+    }
+    if ('openAnimation' in nextProps) {
+      newState.openAnimation = nextProps.openAnimation;
+    }
+    return (newState.activeKey || newState.openAnimation) ? newState : null;
   }
 
   getNewChild = (child, index) => {
@@ -172,5 +171,7 @@ Collapse.defaultProps = {
 };
 
 Collapse.Panel = CollapsePanel;
+
+polyfill(Collapse);
 
 export default Collapse;
