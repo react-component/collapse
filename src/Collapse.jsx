@@ -12,7 +12,7 @@ function toArray(activeKey) {
   if (!Array.isArray(currentActiveKey)) {
     currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
   }
-  return currentActiveKey.map(key => key.toString());
+  return currentActiveKey.map(key => String(key));
 }
 
 class Collapse extends Component {
@@ -51,7 +51,7 @@ class Collapse extends Component {
       }
     }
     this.setActiveKey(activeKey);
-  }
+  };
 
   static getDerivedStateFromProps(nextProps) {
     const newState = {};
@@ -61,7 +61,7 @@ class Collapse extends Component {
     if ('openAnimation' in nextProps) {
       newState.openAnimation = nextProps.openAnimation;
     }
-    return (newState.activeKey || newState.openAnimation) ? newState : null;
+    return newState.activeKey || newState.openAnimation ? newState : null;
   }
 
   getNewChild = (child, index) => {
@@ -95,7 +95,7 @@ class Collapse extends Component {
     };
 
     return React.cloneElement(child, props);
-  }
+  };
 
   getItems = () => {
     const { children } = this.props;
@@ -104,22 +104,18 @@ class Collapse extends Component {
 
     //  ref: https://github.com/ant-design/ant-design/issues/13884
     if (isFragment(children)) {
-      return (
-        <React.Fragment>
-          {newChildren}
-        </React.Fragment>
-      );
+      return <React.Fragment>{newChildren}</React.Fragment>;
     }
 
     return newChildren;
-  }
+  };
 
   setActiveKey = activeKey => {
     if (!('activeKey' in this.props)) {
       this.setState({ activeKey });
     }
     this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
-  }
+  };
 
   render() {
     const { prefixCls, className, style, accordion } = this.props;
@@ -141,18 +137,12 @@ Collapse.propTypes = {
   activeKey: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   ]),
   defaultActiveKey: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.arrayOf(PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ])),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
   ]),
   openAnimation: PropTypes.object,
   onChange: PropTypes.func,
