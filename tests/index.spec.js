@@ -22,7 +22,7 @@ describe('collapse', () => {
     let node;
     let collapse;
 
-    beforeEach((done) => {
+    beforeEach(done => {
       node = document.createElement('div');
       document.body.appendChild(node);
       const expandIcon = () => <span>test></span>;
@@ -80,8 +80,8 @@ describe('collapse', () => {
       expect(extraNodes[0].innerHTML).to.equal('<span>ExtraSpan</span>');
     });
 
-    it('onChange works', (done) => {
-      changeHook = (d) => {
+    it('onChange works', done => {
+      changeHook = d => {
         expect(d).to.eql(['2']);
         done();
       };
@@ -89,7 +89,7 @@ describe('collapse', () => {
       Simulate.click(header);
     });
 
-    it('click should toggle panel state', (done) => {
+    it('click should toggle panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
@@ -105,7 +105,7 @@ describe('collapse', () => {
       }, 500);
     });
 
-    it('click should not toggle disabled panel state', (done) => {
+    it('click should not toggle disabled panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[0];
       Simulate.click(header);
       setTimeout(() => {
@@ -129,7 +129,7 @@ describe('collapse', () => {
     let node;
     let collapse;
 
-    beforeEach((done) => {
+    beforeEach(done => {
       node = document.createElement('div');
       document.body.appendChild(node);
       const expandIcon = () => <span>test></span>;
@@ -187,8 +187,8 @@ describe('collapse', () => {
       expect(extraNodes[0].innerHTML).to.equal('<span>ExtraSpan</span>');
     });
 
-    it('onChange works', (done) => {
-      changeHook = (d) => {
+    it('onChange works', done => {
+      changeHook = d => {
         expect(d).to.eql(['2']);
         done();
       };
@@ -196,7 +196,7 @@ describe('collapse', () => {
       Simulate.click(header);
     });
 
-    it('click should toggle panel state', (done) => {
+    it('click should toggle panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
@@ -212,7 +212,7 @@ describe('collapse', () => {
       }, 500);
     });
 
-    it('click should not toggle disabled panel state', (done) => {
+    it('click should not toggle disabled panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[0];
       Simulate.click(header);
       setTimeout(() => {
@@ -237,7 +237,7 @@ describe('collapse', () => {
     let collapse;
     const destroyInactivePanel = true;
 
-    beforeEach((done) => {
+    beforeEach(done => {
       node = document.createElement('div');
       document.body.appendChild(node);
 
@@ -266,7 +266,7 @@ describe('collapse', () => {
       changeHook = null;
     });
 
-    it('click should toggle panel state', (done) => {
+    it('click should toggle panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
@@ -283,7 +283,7 @@ describe('collapse', () => {
   describe('accordion', () => {
     let node;
     let collapse;
-    beforeEach((done) => {
+    beforeEach(done => {
       node = document.createElement('div');
       document.body.appendChild(node);
 
@@ -320,7 +320,7 @@ describe('collapse', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
     });
 
-    it('should toggle show on panel', (done) => {
+    it('should toggle show on panel', done => {
       let header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
@@ -336,7 +336,7 @@ describe('collapse', () => {
       }, 500);
     });
 
-    it('should only show on panel', (done) => {
+    it('should only show on panel', done => {
       let header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
@@ -363,7 +363,7 @@ describe('collapse', () => {
       expect(item.getAttribute('role')).to.eql('tablist');
     });
 
-    it('should add tablist role on PanelContent', (done) => {
+    it('should add tablist role on PanelContent', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[0];
       Simulate.click(header);
       setTimeout(() => {
@@ -383,7 +383,7 @@ describe('collapse', () => {
       document.body.appendChild(node);
     });
 
-    const renderCollapse = (element) => {
+    const renderCollapse = element => {
       ReactDOM.render(element, node, function init() {
         collapse = this;
       });
@@ -447,7 +447,7 @@ describe('collapse', () => {
       document.body.appendChild(node);
     });
 
-    const renderCollapse = (element) => {
+    const renderCollapse = element => {
       ReactDOM.render(element, node, function init() {
         collapse = this;
       });
@@ -458,7 +458,7 @@ describe('collapse', () => {
       changeHook = null;
     });
 
-    it('should toggle panel when press enter', (done) => {
+    it('should toggle panel when press enter', done => {
       renderCollapse(
         <Collapse>
           <Panel header="collapse 1" key="1">
@@ -506,7 +506,7 @@ describe('collapse', () => {
     let node;
     let collapse;
 
-    beforeEach((done) => {
+    beforeEach(done => {
       node = document.createElement('div');
       document.body.appendChild(node);
       const expandIcon = () => <span>test></span>;
@@ -560,8 +560,8 @@ describe('collapse', () => {
       expect(findDOMNode(collapse, 'rc-collapse-item-active').length).to.be(0);
     });
 
-    it('onChange works', (done) => {
-      changeHook = (d) => {
+    it('onChange works', done => {
+      changeHook = d => {
         expect(d).to.eql(['2']);
         done();
       };
@@ -569,7 +569,7 @@ describe('collapse', () => {
       Simulate.click(header);
     });
 
-    it('click should toggle panel state', (done) => {
+    it('click should toggle panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[1];
       Simulate.click(header);
       setTimeout(() => {
@@ -585,7 +585,7 @@ describe('collapse', () => {
       }, 500);
     });
 
-    it('click should not toggle disabled panel state', (done) => {
+    it('click should not toggle disabled panel state', done => {
       const header = findDOMNode(collapse, 'rc-collapse-header')[0];
       Simulate.click(header);
       setTimeout(() => {
@@ -605,7 +605,7 @@ describe('collapse', () => {
     });
   });
 
-  it('should support return null icon', (done) => {
+  it('should support return null icon', done => {
     const node = document.createElement('div');
     document.body.appendChild(node);
 
@@ -618,6 +618,25 @@ describe('collapse', () => {
       node,
       function init() {
         expect(findDOMNode(this, 'rc-collapse-header')[0].childNodes.length === 1);
+        done();
+      },
+    );
+
+    ReactDOM.unmountComponentAtNode(node);
+  });
+
+  it('not throw if default keys is undefined', done => {
+    const node = document.createElement('div');
+    document.body.appendChild(node);
+
+    ReactDOM.render(
+      <Collapse defaultKeys={[undefined]}>
+        <Panel header="title" key="1">
+          first
+        </Panel>
+      </Collapse>,
+      node,
+      () => {
         done();
       },
     );
