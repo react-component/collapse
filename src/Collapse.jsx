@@ -94,6 +94,11 @@ class Collapse extends Component {
       expandIcon,
     };
 
+    // https://github.com/ant-design/ant-design/issues/20479
+    if (typeof child.type === 'string') {
+      return child;
+    }
+
     return React.cloneElement(child, props);
   };
 
