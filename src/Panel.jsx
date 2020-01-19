@@ -41,6 +41,7 @@ class CollapsePanel extends Component {
       forceRender,
       expandIcon,
       extra,
+      wrappedComponentRef,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
@@ -55,8 +56,16 @@ class CollapsePanel extends Component {
     if (showArrow && typeof expandIcon === 'function') {
       icon = expandIcon(this.props);
     }
+    const panelProps = {
+      id,
+      style,
+      className: itemCls,
+    };
+    if (wrappedComponentRef) {
+      panelProps.ref = wrappedComponentRef;
+    }
     return (
-      <div className={itemCls} style={style} id={id}>
+      <div {...panelProps}>
         <div
           className={headerCls}
           onClick={this.handleItemClick}
@@ -67,7 +76,7 @@ class CollapsePanel extends Component {
         >
           {showArrow && icon}
           {header}
-          {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
+          {extra && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
         <Animate
           showProp="isActive"
@@ -116,6 +125,7 @@ CollapsePanel.propTypes = {
   expandIcon: PropTypes.func,
   extra: PropTypes.node,
   panelKey: PropTypes.any,
+  wrappedComponentRef: PropTypes.func,
 };
 
 CollapsePanel.defaultProps = {

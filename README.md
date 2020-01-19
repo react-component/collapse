@@ -194,6 +194,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
           <th></th>
           <td>Content to render in the right of the panel header</td>
       </tr>
+      <tr>
+        <td>wrappedComponentRef</td>
+        <td>inst => this.ref = inst</td>
+        <th>null</th>
+        <td>get panel dom ref</td>
+      </tr>
     </tbody>
 </table>
 
