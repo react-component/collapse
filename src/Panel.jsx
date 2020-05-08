@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import PanelContent from './PanelContent';
 import Animate from 'rc-animate';
@@ -89,34 +89,6 @@ class CollapsePanel extends Component {
     );
   }
 }
-
-CollapsePanel.propTypes = {
-  className: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-  ]),
-  id: PropTypes.string,
-  children: PropTypes.any,
-  openAnimation: PropTypes.object,
-  prefixCls: PropTypes.string,
-  header: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.node,
-  ]),
-  headerClass: PropTypes.string,
-  showArrow: PropTypes.bool,
-  isActive: PropTypes.bool,
-  onItemClick: PropTypes.func,
-  style: PropTypes.object,
-  destroyInactivePanel: PropTypes.bool,
-  disabled: PropTypes.bool,
-  accordion: PropTypes.bool,
-  forceRender: PropTypes.bool,
-  expandIcon: PropTypes.func,
-  extra: PropTypes.node,
-  panelKey: PropTypes.any,
-};
 
 CollapsePanel.defaultProps = {
   showArrow: true,

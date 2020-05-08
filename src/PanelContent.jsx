@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import shallowEqual from 'shallowequal';
 
@@ -14,8 +14,7 @@ class PanelContent extends Component {
       return null;
     }
     const { prefixCls, isActive, children, destroyInactivePanel, forceRender, role } = this.props;
-    const contentCls = classnames({
-      [`${prefixCls}-content`]: true,
+    const contentCls = classnames(`${prefixCls}-content`, {
       [`${prefixCls}-content-active`]: isActive,
       [`${prefixCls}-content-inactive`]: !isActive,
     });
@@ -25,18 +24,11 @@ class PanelContent extends Component {
       <div
         className={contentCls}
         role={role}
-      >{child}</div>
+      >
+        {child}
+      </div>
     );
   }
 }
-
-PanelContent.propTypes = {
-  prefixCls: PropTypes.string,
-  isActive: PropTypes.bool,
-  children: PropTypes.any,
-  destroyInactivePanel: PropTypes.bool,
-  forceRender: PropTypes.bool,
-  role: PropTypes.string,
-};
 
 export default PanelContent;

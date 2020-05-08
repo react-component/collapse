@@ -1,6 +1,12 @@
 # History
 ----
 
+## 2.0.0 `2020-05-08`
+
+- Remove `react-lifecycles-compat` and `prop-types`.
+- Upgrade `rc-animate` to `3.x`.
+- Use `@ant-design/css-animation`.
+
 ## 1.11.0
 
 - Add `extra`.

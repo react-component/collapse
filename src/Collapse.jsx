@@ -1,11 +1,10 @@
+/* eslint-disable react/prop-types */
 import React, { Component, Children } from 'react';
-import PropTypes from 'prop-types';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import classNames from 'classnames';
 import { isFragment } from 'react-is';
 import shallowEqual from 'shallowequal';
-import { polyfill } from 'react-lifecycles-compat';
 
 function toArray(activeKey) {
   let currentActiveKey = activeKey;
@@ -136,28 +135,6 @@ class Collapse extends Component {
   }
 }
 
-Collapse.propTypes = {
-  children: PropTypes.any,
-  prefixCls: PropTypes.string,
-  activeKey: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  ]),
-  defaultActiveKey: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
-  ]),
-  openAnimation: PropTypes.object,
-  onChange: PropTypes.func,
-  accordion: PropTypes.bool,
-  className: PropTypes.string,
-  style: PropTypes.object,
-  destroyInactivePanel: PropTypes.bool,
-  expandIcon: PropTypes.func,
-};
-
 Collapse.defaultProps = {
   prefixCls: 'rc-collapse',
   onChange() {},
@@ -166,7 +143,5 @@ Collapse.defaultProps = {
 };
 
 Collapse.Panel = CollapsePanel;
-
-polyfill(Collapse);
 
 export default Collapse;
