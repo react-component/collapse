@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "classnames": "2.x",
-    "css-animation": "1.x",
+    "css-animation": "2.x",
     "prop-types": "^15.5.6",
     "rc-animate": "3.x",
     "react-is": "^16.7.0",
