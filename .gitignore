@@ -26,3 +26,7 @@ build
 lib
 coverage
 es
+yarn.lock
+package-lock.json
+.storybook
+.doc

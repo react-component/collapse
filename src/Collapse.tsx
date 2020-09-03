@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, { Component, Children } from 'react';
-import CollapsePanel from './Panel';
-import openAnimationFactory from './openAnimationFactory';
+import * as React from 'react';
 import classNames from 'classnames';
 import { isFragment } from 'react-is';
 import shallowEqual from 'shallowequal';
+import CollapsePanel from './Panel';
+import openAnimationFactory from './openAnimationFactory';
+import { CollapseProps } from './interface';
 
-function toArray(activeKey) {
+function toArray(activeKey: string | string[]) {
   let currentActiveKey = activeKey;
   if (!Array.isArray(currentActiveKey)) {
     currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
@@ -14,7 +15,16 @@ function toArray(activeKey) {
   return currentActiveKey.map(key => String(key));
 }
 
-class Collapse extends Component {
+class Collapse extends React.Component<CollapseProps, any> {
+  static defaultProps = {
+    prefixCls: 'rc-collapse',
+    onChange() {},
+    accordion: false,
+    destroyInactivePanel: false,
+  };
+
+  static Panel = CollapsePanel;
+
   constructor(props) {
     super(props);
 
@@ -35,7 +45,7 @@ class Collapse extends Component {
   }
 
   onClickItem = key => {
-    let activeKey = this.state.activeKey;
+    let { activeKey } = this.state;
     if (this.props.accordion) {
       activeKey = activeKey[0] === key ? [] : [key];
     } else {
@@ -53,7 +63,10 @@ class Collapse extends Component {
   };
 
   static getDerivedStateFromProps(nextProps) {
-    const newState = {};
+    const newState = {
+      activeKey: [],
+      openAnimation: {},
+    };
     if ('activeKey' in nextProps) {
       newState.activeKey = toArray(nextProps.activeKey);
     }
@@ -66,7 +79,7 @@ class Collapse extends Component {
   getNewChild = (child, index) => {
     if (!child) return null;
 
-    const activeKey = this.state.activeKey;
+    const { activeKey } = this.state;
     const { prefixCls, accordion, destroyInactivePanel, expandIcon } = this.props;
     // If there is no key provide, use the panel order as default key
     const key = child.key || String(index);
@@ -103,8 +116,10 @@ class Collapse extends Component {
 
   getItems = () => {
     const { children } = this.props;
-    const childList = isFragment(children) ? children.props.children : children;
-    const newChildren = Children.map(childList, this.getNewChild);
+    const childList = isFragment(children)
+      ? (children as React.ReactElement).props.children
+      : children;
+    const newChildren = React.Children.map(childList, this.getNewChild);
 
     //  ref: https://github.com/ant-design/ant-design/issues/13884
     if (isFragment(children)) {
@@ -134,14 +149,5 @@ class Collapse extends Component {
     );
   }
 }
-
-Collapse.defaultProps = {
-  prefixCls: 'rc-collapse',
-  onChange() {},
-  accordion: false,
-  destroyInactivePanel: false,
-};
-
-Collapse.Panel = CollapsePanel;
 
 export default Collapse;
