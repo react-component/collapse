@@ -41,9 +41,11 @@ class CollapsePanel extends Component {
       forceRender,
       expandIcon,
       extra,
+      headerCollapsibleOnly,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
+      [`${prefixCls}-header-collapsible-only`]: headerCollapsibleOnly,
     });
     const itemCls = classNames({
       [`${prefixCls}-item`]: true,
@@ -59,14 +61,19 @@ class CollapsePanel extends Component {
       <div className={itemCls} style={style} id={id}>
         <div
           className={headerCls}
-          onClick={this.handleItemClick}
+          onClick={!headerCollapsibleOnly && this.handleItemClick}
           role={accordion ? 'tab' : 'button'}
           tabIndex={disabled ? -1 : 0}
           aria-expanded={`${isActive}`}
           onKeyPress={this.handleKeyPress}
         >
           {showArrow && icon}
-          {header}
+          <span
+            onClick={headerCollapsibleOnly && this.handleItemClick}
+            className={`${prefixCls}-header-text`}
+          >
+            {header}
+          </span>
           {extra && (<div className={`${prefixCls}-extra`}>{extra}</div>)}
         </div>
         <Animate
@@ -97,6 +104,7 @@ CollapsePanel.defaultProps = {
   onItemClick() { },
   headerClass: '',
   forceRender: false,
+  headerCollapsibleOnly: false,
 };
 
 export default CollapsePanel;

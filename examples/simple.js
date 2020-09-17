@@ -38,7 +38,7 @@ class Test extends React.Component {
       );
     }
     items.push(
-      <Panel header={`This is panel header 4`} key="4">
+      <Panel headerCollapsibleOnly header={`This is panel header 4`} key="4">
         <Collapse defaultActiveKey="1">
           <Panel header={`This is panel nest panel`} key="1" id="header-test">
             <p>{text}</p>
