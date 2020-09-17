@@ -61,7 +61,7 @@ class CollapsePanel extends Component {
       <div className={itemCls} style={style} id={id}>
         <div
           className={headerCls}
-          onClick={!headerCollapsibleOnly && this.handleItemClick}
+          onClick={() => !headerCollapsibleOnly && this.handleItemClick()}
           role={accordion ? 'tab' : 'button'}
           tabIndex={disabled ? -1 : 0}
           aria-expanded={`${isActive}`}
@@ -69,7 +69,7 @@ class CollapsePanel extends Component {
         >
           {showArrow && icon}
           <span
-            onClick={headerCollapsibleOnly && this.handleItemClick}
+            onClick={() => headerCollapsibleOnly && this.handleItemClick()}
             className={`${prefixCls}-header-text`}
           >
             {header}
