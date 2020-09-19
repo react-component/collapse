@@ -67,10 +67,10 @@
     }
   },
   "dependencies": {
-    "classnames": "2.x",
     "@ant-design/css-animation": "^1.7.2",
+    "classnames": "2.x",
     "rc-animate": "3.x",
-    "react-is": "^16.7.0",
+    "rc-util": "^5.2.1",
     "shallowequal": "^1.1.0"
   }
 }

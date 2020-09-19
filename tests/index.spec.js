@@ -1,11 +1,9 @@
-// import '../assets/index.less';
-
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-dom/test-utils';
-
 import expect from 'expect.js';
-import Collapse, { Panel } from '../index';
+import Collapse, { Panel } from '..';
+
 const Simulate = TestUtils.Simulate;
 const findDOMNode = TestUtils.scryRenderedDOMComponentsWithClass;
 
@@ -513,17 +511,19 @@ describe('collapse', () => {
 
       ReactDOM.render(
         <Collapse onChange={onChange} expandIcon={expandIcon}>
-          <React.Fragment>
+          <Fragment>
             <Panel header="collapse 1" key="1" disabled>
               first
             </Panel>
             <Panel header="collapse 2" key="2">
               second
             </Panel>
-            <Panel header="collapse 3" key="3" className="important">
-              third
-            </Panel>
-          </React.Fragment>
+            <Fragment>
+              <Panel header="collapse 3" key="3" className="important">
+                third
+              </Panel>
+            </Fragment>
+          </Fragment>
         </Collapse>,
         node,
         function init() {
@@ -545,6 +545,10 @@ describe('collapse', () => {
 
     it('create works', () => {
       expect(findDOMNode(collapse, 'rc-collapse').length).to.be(1);
+    });
+
+    it('header works', () => {
+      expect(findDOMNode(collapse, 'rc-collapse-header').length).to.be(3);
     });
 
     it('panel works', () => {
