@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 
 import KeyCode from 'rc-util/lib/KeyCode';
@@ -46,6 +46,10 @@ describe('collapse', () => {
 
     it('create works', () => {
       expect(collapse.find('.rc-collapse').length).toBe(1);
+    });
+
+    it('header works', () => {
+      expect(collapse.find('.rc-collapse-header').length).toBe(3);
     });
 
     it('panel works', () => {
@@ -436,17 +440,19 @@ describe('collapse', () => {
     const expandIcon = () => <span>test{'>'}</span>;
     const element = (
       <Collapse onChange={onChange} expandIcon={expandIcon}>
-        <React.Fragment>
+        <Fragment>
           <Panel header="collapse 1" key="1" disabled>
             first
           </Panel>
           <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
             second
           </Panel>
-          <Panel header="collapse 3" key="3" className="important">
-            third
-          </Panel>
-        </React.Fragment>
+          <Fragment>
+            <Panel header="collapse 3" key="3" className="important">
+              third
+            </Panel>
+          </Fragment>
+        </Fragment>
       </Collapse>
     );
 
