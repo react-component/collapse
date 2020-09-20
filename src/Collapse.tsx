@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import classNames from 'classnames';
-import { isFragment } from 'react-is';
 import shallowEqual from 'shallowequal';
+import toArray from 'rc-util/lib/Children/toArray';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
 import { CollapseProps, CollapseState } from './interface';
 
-function toArray(activeKey: React.Key | React.Key[]) {
+function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
   if (!Array.isArray(currentActiveKey)) {
     currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
@@ -36,7 +36,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
 
     this.state = {
       openAnimation: props.openAnimation || openAnimationFactory(props.prefixCls),
-      activeKey: toArray(currentActiveKey),
+      activeKey: getActiveKeysArray(currentActiveKey),
     };
   }
 
@@ -65,7 +65,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
   static getDerivedStateFromProps(nextProps: CollapseProps) {
     const newState: Partial<CollapseState> = {};
     if ('activeKey' in nextProps) {
-      newState.activeKey = toArray(nextProps.activeKey);
+      newState.activeKey = getActiveKeysArray(nextProps.activeKey);
     }
     if ('openAnimation' in nextProps) {
       newState.openAnimation = nextProps.openAnimation;
@@ -113,17 +113,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
 
   getItems = () => {
     const { children } = this.props;
-    const childList = isFragment(children)
-      ? (children as React.ReactElement).props.children
-      : children;
-    const newChildren = React.Children.map(childList, this.getNewChild);
-
-    //  ref: https://github.com/ant-design/ant-design/issues/13884
-    if (isFragment(children)) {
-      return <React.Fragment>{newChildren}</React.Fragment>;
-    }
-
-    return newChildren;
+    return toArray(children).map(this.getNewChild);
   };
 
   setActiveKey = (activeKey: React.Key[]) => {
