@@ -5,9 +5,9 @@ import { isFragment } from 'react-is';
 import shallowEqual from 'shallowequal';
 import CollapsePanel from './Panel';
 import openAnimationFactory from './openAnimationFactory';
-import { CollapseProps } from './interface';
+import { CollapseProps, CollapseState } from './interface';
 
-function toArray(activeKey: string | string[]) {
+function toArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
   if (!Array.isArray(currentActiveKey)) {
     currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
@@ -15,7 +15,7 @@ function toArray(activeKey: string | string[]) {
   return currentActiveKey.map(key => String(key));
 }
 
-class Collapse extends React.Component<CollapseProps, any> {
+class Collapse extends React.Component<CollapseProps, CollapseState> {
   static defaultProps = {
     prefixCls: 'rc-collapse',
     onChange() {},
@@ -25,7 +25,7 @@ class Collapse extends React.Component<CollapseProps, any> {
 
   static Panel = CollapsePanel;
 
-  constructor(props) {
+  constructor(props: CollapseProps) {
     super(props);
 
     const { activeKey, defaultActiveKey } = props;
@@ -40,11 +40,11 @@ class Collapse extends React.Component<CollapseProps, any> {
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: CollapseProps, nextState: CollapseState) {
     return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
   }
 
-  onClickItem = key => {
+  onClickItem = (key: React.Key) => {
     let { activeKey } = this.state;
     if (this.props.accordion) {
       activeKey = activeKey[0] === key ? [] : [key];
@@ -62,11 +62,8 @@ class Collapse extends React.Component<CollapseProps, any> {
     this.setActiveKey(activeKey);
   };
 
-  static getDerivedStateFromProps(nextProps) {
-    const newState = {
-      activeKey: [],
-      openAnimation: {},
-    };
+  static getDerivedStateFromProps(nextProps: CollapseProps) {
+    const newState: Partial<CollapseState> = {};
     if ('activeKey' in nextProps) {
       newState.activeKey = toArray(nextProps.activeKey);
     }
@@ -76,7 +73,7 @@ class Collapse extends React.Component<CollapseProps, any> {
     return newState.activeKey || newState.openAnimation ? newState : null;
   }
 
-  getNewChild = (child, index) => {
+  getNewChild = (child: React.ReactElement, index: number) => {
     if (!child) return null;
 
     const { activeKey } = this.state;
@@ -129,7 +126,7 @@ class Collapse extends React.Component<CollapseProps, any> {
     return newChildren;
   };
 
-  setActiveKey = activeKey => {
+  setActiveKey = (activeKey: React.Key[]) => {
     if (!('activeKey' in this.props)) {
       this.setState({ activeKey });
     }

@@ -1,17 +1,21 @@
 import * as React from 'react';
 
 export interface CollapseProps {
-  children?: React.ReactChild;
   prefixCls?: string;
-  activeKey?: string | string[];
-  defaultActiveKey?: string | string[];
+  activeKey?: React.Key | React.Key[];
+  defaultActiveKey?: React.Key | React.Key[];
   openAnimation?: object;
-  onChange?: (key: any) => void;
+  onChange?: (key: React.Key | React.Key[]) => void;
   accordion?: boolean;
   className?: string;
   style?: object;
   destroyInactivePanel?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
+}
+
+export interface CollapseState {
+  openAnimation: object;
+  activeKey: React.Key[];
 }
 
 export interface CollapsePanelProps {

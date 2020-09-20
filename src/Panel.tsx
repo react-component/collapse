@@ -16,7 +16,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     forceRender: false,
   };
 
-  shouldComponentUpdate(nextProps) {
+  shouldComponentUpdate(nextProps: CollapsePanelProps) {
     return !shallowEqual(this.props, nextProps);
   }
 
