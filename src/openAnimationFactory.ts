@@ -1,14 +1,19 @@
+/* eslint-disable no-param-reassign */
 import cssAnimation from '@ant-design/css-animation';
 
-function animate(node, show, transitionName, done) {
-  let height;
+function animate(
+  node: HTMLElement,
+  show: boolean,
+  transitionName: string | object,
+  done: Function,
+) {
+  const height = show ? node.offsetHeight : 0;
   return cssAnimation(node, transitionName, {
     start() {
       if (!show) {
         node.style.height = `${node.offsetHeight}px`;
       } else {
-        height = node.offsetHeight;
-        node.style.height = 0;
+        node.style.height = `0`;
       }
     },
     active() {
@@ -21,12 +26,12 @@ function animate(node, show, transitionName, done) {
   });
 }
 
-function animation(prefixCls) {
+function animation(prefixCls: string) {
   return {
-    enter(node, done) {
+    enter(node: HTMLElement, done: Function) {
       return animate(node, true, `${prefixCls}-anim`, done);
     },
-    leave(node, done) {
+    leave(node: HTMLElement, done: Function) {
       return animate(node, false, `${prefixCls}-anim`, done);
     },
   };

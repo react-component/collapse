@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
-import ReactDOM from 'react-dom';
-import 'rc-collapse/assets/index.less';
-import Collapse, { Panel } from 'rc-collapse';
+import * as React from 'react';
+import { Fragment } from 'react';
+import '../assets/index.less';
+import Collapse, { Panel } from '../src';
 
-const App = () => (
+const Test = () => (
   <Collapse>
     <Panel header="title">content</Panel>
     <Panel header="title">content</Panel>
@@ -20,4 +20,4 @@ const App = () => (
   </Collapse>
 );
 
-ReactDOM.render(<App />, document.getElementById('__react-content'));
+export default Test;
