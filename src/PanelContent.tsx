@@ -18,11 +18,20 @@ class PanelContent extends React.Component<CollapsePanelProps, any> {
     if (!this._isActived) {
       return null;
     }
-    const { prefixCls, isActive, children, destroyInactivePanel, forceRender, role } = this.props;
+    const {
+      prefixCls,
+      contentClass,
+      isActive,
+      children,
+      destroyInactivePanel,
+      forceRender,
+      role,
+    } = this.props;
 
     const contentCls = classnames(`${prefixCls}-content`, {
       [`${prefixCls}-content-active`]: isActive,
       [`${prefixCls}-content-inactive`]: !isActive,
+      [contentClass]: contentClass,
     });
 
     const child =

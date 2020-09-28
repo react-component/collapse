@@ -153,6 +153,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
           <td>custom className to apply to header</td>
       </tr>
       <tr>
+          <td>contentClass</td>
+          <td>String</td>
+          <th>' '</th>
+          <td>custom className to apply to content</td>
+      </tr>
+      <tr>
           <td>showArrow</td>
           <td>boolean</td>
           <th>true</th>

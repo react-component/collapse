@@ -23,6 +23,7 @@ export interface CollapsePanelProps {
   header?: string | React.ReactNode;
   prefixCls?: string;
   headerClass?: string;
+  contentClass?: string;
   showArrow?: boolean;
   className?: string;
   style?: object;
