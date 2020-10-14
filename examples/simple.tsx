@@ -105,7 +105,12 @@ class Test extends React.Component {
         </button>
         <br />
         <br />
-        <Collapse accordion={accordion} onChange={this.onChange} activeKey={activeKey}>
+        <Collapse
+          headerCollapsableOnly
+          accordion={accordion}
+          onChange={this.onChange}
+          activeKey={activeKey}
+        >
           {this.getItems()}
         </Collapse>
       </div>

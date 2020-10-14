@@ -11,6 +11,7 @@ export interface CollapseProps {
   style?: object;
   destroyInactivePanel?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
+  headerCollapsableOnly?: boolean;
 }
 
 export interface CollapseState {
@@ -37,4 +38,5 @@ export interface CollapsePanelProps {
   expandIcon?: (props: object) => React.ReactNode;
   panelKey?: string | number;
   role?: string;
+  headerCollapsableOnly?: boolean;
 }

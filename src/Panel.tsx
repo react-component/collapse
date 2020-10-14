@@ -51,9 +51,11 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       forceRender,
       expandIcon,
       extra,
+      headerCollapsableOnly,
     } = this.props;
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
+      [`${prefixCls}-header-collapsable-only`]: headerCollapsableOnly,
     });
     const itemCls = classNames(
       {
@@ -73,14 +75,20 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       <div className={itemCls} style={style} id={id}>
         <div
           className={headerCls}
-          onClick={this.handleItemClick}
+          onClick={() => !headerCollapsableOnly && this.handleItemClick()}
           role={accordion ? 'tab' : 'button'}
           tabIndex={disabled ? -1 : 0}
           aria-expanded={isActive}
           onKeyPress={this.handleKeyPress}
         >
           {showArrow && icon}
-          {header}
+          {headerCollapsableOnly ? (
+            <span onClick={this.handleItemClick} className={`${prefixCls}-header-text`}>
+              {header}
+            </span>
+          ) : (
+            header
+          )}
           {extra && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
         <Animate showProp="isActive" exclusive component="" animation={this.props.openAnimation}>
