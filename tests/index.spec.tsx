@@ -486,4 +486,41 @@ describe('collapse', () => {
     );
     expect(collapse.find('.custom-child').getDOMNode().innerHTML).toBe('custom-child');
   });
+
+  describe('headerCollapsableOnly', () => {
+    it('default', () => {
+      const collapse = mount(
+        <Collapse>
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+    });
+    it('should work', () => {
+      const collapse = mount(
+        <Collapse headerCollapsableOnly>
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
+      collapse.find('.rc-collapse-header').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      collapse.find('.rc-collapse-header-text').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+    });
+    it('should read value of panel preferentially', () => {
+      const collapse = mount(
+        <Collapse headerCollapsableOnly>
+          <Panel headerCollapsableOnly={false} header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+    });
+  });
 });
