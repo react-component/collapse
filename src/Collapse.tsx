@@ -83,16 +83,11 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       accordion,
       destroyInactivePanel,
       expandIcon,
-      headerCollapsableOnly: headerCollapsableOnlyProp,
+      headerCollapsableOnly,
     } = this.props;
     // If there is no key provide, use the panel order as default key
     const key = child.key || String(index);
-    const {
-      header,
-      headerClass,
-      disabled,
-      headerCollapsableOnly: childHeaderCollapsableOnly,
-    } = child.props;
+    const { header, headerClass, disabled } = child.props;
     let isActive = false;
     if (accordion) {
       isActive = activeKey[0] === key;
@@ -113,10 +108,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       children: child.props.children,
       onItemClick: disabled ? null : this.onClickItem,
       expandIcon,
-      headerCollapsableOnly:
-        typeof childHeaderCollapsableOnly === 'boolean'
-          ? childHeaderCollapsableOnly
-          : headerCollapsableOnlyProp,
+      headerCollapsableOnly,
     };
 
     // https://github.com/ant-design/ant-design/issues/20479
