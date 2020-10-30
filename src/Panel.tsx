@@ -13,6 +13,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     destroyInactivePanel: false,
     onItemClick() {},
     headerClass: '',
+    contentClass: '',
     forceRender: false,
   };
 
@@ -42,6 +43,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       prefixCls,
       header,
       headerClass,
+      contentClass,
       children,
       isActive,
       showArrow,
@@ -93,6 +95,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
         </div>
         <Animate showProp="isActive" exclusive component="" animation={this.props.openAnimation}>
           <PanelContent
+            contentClass={contentClass}
             prefixCls={prefixCls}
             isActive={isActive}
             destroyInactivePanel={destroyInactivePanel}
