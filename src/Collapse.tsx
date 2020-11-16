@@ -4,15 +4,18 @@ import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import toArray from 'rc-util/lib/Children/toArray';
 import CollapsePanel from './Panel';
-import openAnimationFactory from './openAnimationFactory';
-import { CollapseProps, CollapseState } from './interface';
+import { CollapseProps } from './interface';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
   if (!Array.isArray(currentActiveKey)) {
     currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
   }
-  return currentActiveKey.map(key => String(key));
+  return currentActiveKey.map((key) => String(key));
+}
+
+export interface CollapseState {
+  activeKey: React.Key[];
 }
 
 class Collapse extends React.Component<CollapseProps, CollapseState> {
@@ -36,7 +39,6 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
     }
 
     this.state = {
-      openAnimation: props.openAnimation || openAnimationFactory(props.prefixCls),
       activeKey: getActiveKeysArray(currentActiveKey),
     };
   }
@@ -68,10 +70,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
     if ('activeKey' in nextProps) {
       newState.activeKey = getActiveKeysArray(nextProps.activeKey);
     }
-    if ('openAnimation' in nextProps) {
-      newState.openAnimation = nextProps.openAnimation;
-    }
-    return newState.activeKey || newState.openAnimation ? newState : null;
+    return newState;
   }
 
   getNewChild = (child: React.ReactElement, index: number) => {
@@ -80,6 +79,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
     const { activeKey } = this.state;
     const {
       prefixCls,
+      openMotion,
       accordion,
       destroyInactivePanel,
       expandIcon,
@@ -103,7 +103,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       isActive,
       prefixCls,
       destroyInactivePanel,
-      openAnimation: this.state.openAnimation,
+      openMotion,
       accordion,
       children: child.props.children,
       onItemClick: disabled ? null : this.onClickItem,

@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { CSSMotionProps } from 'rc-motion';
 
 export interface CollapseProps {
   prefixCls?: string;
   activeKey?: React.Key | React.Key[];
   defaultActiveKey?: React.Key | React.Key[];
-  openAnimation?: object;
+  openMotion?: CSSMotionProps;
   onChange?: (key: React.Key | React.Key[]) => void;
   accordion?: boolean;
   className?: string;
@@ -12,11 +13,6 @@ export interface CollapseProps {
   destroyInactivePanel?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
   headerCollapsableOnly?: boolean;
-}
-
-export interface CollapseState {
-  openAnimation: object;
-  activeKey: React.Key[];
 }
 
 export interface CollapsePanelProps {
@@ -28,7 +24,7 @@ export interface CollapsePanelProps {
   className?: string;
   style?: object;
   isActive?: boolean;
-  openAnimation?: object;
+  openMotion?: CSSMotionProps;
   disabled?: boolean;
   destroyInactivePanel?: boolean;
   accordion?: boolean;
