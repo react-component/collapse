@@ -18,7 +18,7 @@ class Test extends React.Component {
     time: random(),
     accordion: false,
     activeKey: ['4'],
-    collapsable: true,
+    collapsible: true,
   };
 
   onChange = (activeKey: string) => {
@@ -33,7 +33,11 @@ class Test extends React.Component {
     for (let i = 0, len = 3; i < len; i++) {
       const key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${key}`} key={key} disabled={i === 0}>
+        <Panel
+          header={`This is panel header ${key}`}
+          key={key}
+          collapsible={i === 0 ? false : undefined}
+        >
           <p>{text.repeat(this.state.time)}</p>
         </Panel>,
       );
@@ -89,15 +93,15 @@ class Test extends React.Component {
     });
   };
 
-  handleCollapsableChange = (e: any) => {
+  handleCollapsibleChange = (e: any) => {
     const values = [true, 'header', false];
     this.setState({
-      collapsable: values[e.target.value],
+      collapsible: values[e.target.value],
     });
   };
 
   render() {
-    const { accordion, activeKey, collapsable } = this.state;
+    const { accordion, activeKey, collapsible } = this.state;
     const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
     return (
       <div style={{ margin: 20, width: 400 }}>
@@ -108,8 +112,8 @@ class Test extends React.Component {
           {btn}
         </button>
         <p>
-          collapsable:
-          <select onChange={this.handleCollapsableChange}>
+          collapsible:
+          <select onChange={this.handleCollapsibleChange}>
             <option value={0}>true</option>
             <option value={1}>header</option>
             <option value={2}>false</option>
@@ -123,7 +127,7 @@ class Test extends React.Component {
         <br />
         <br />
         <Collapse
-          collapsable={collapsable}
+          collapsible={collapsible}
           accordion={accordion}
           onChange={this.onChange}
           activeKey={activeKey}

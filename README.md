@@ -118,10 +118,10 @@ ReactDOM.render(collapse, container);
           <td>specific the custom expand icon.</td>
       </tr>
       <tr>
-          <td>collapsable</td>
+          <td>collapsible</td>
           <td>Boolean | 'header'</td>
           <th>true</th>
-          <td>specify whether the panel of children is collapsable or the area of collapsable.</td>
+          <td>specify whether the panel of children is collapsible or the area of collapsible.</td>
       </tr>
     </tbody>
 </table>
@@ -186,7 +186,7 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <td>disabled</td>
         <td>boolean</td>
         <th>false</th>
-        <td>whether the panel is collapsable</td>
+        <td>whether the panel is collapsible</td>
       </tr>
       <tr>
         <td>forceRender</td>
@@ -201,15 +201,15 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
           <td>Content to render in the right of the panel header</td>
       </tr>
       <tr>
-          <td>collapsable</td>
+          <td>collapsible</td>
           <td>Boolean | 'header'</td>
           <th>true</th>
-          <td>specify whether the panel be collapsable or the area of collapsable.</td>
+          <td>specify whether the panel be collapsible or the area of collapsible.</td>
       </tr>
     </tbody>
 </table>
 
-> `disabled` is removed since 3.0.0, please use `collapsable=false` replace it.
+> `disabled` is removed since 3.0.0, please use `collapsible=false` replace it.
 
 #### key
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CSSMotionProps } from 'rc-motion';
 
-type CollapsableType = boolean | 'header';
+type CollapsibleType = boolean | 'header';
 
 export interface CollapseProps {
   prefixCls?: string;
@@ -14,7 +14,7 @@ export interface CollapseProps {
   style?: object;
   destroyInactivePanel?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
-  collapsable?: CollapsableType;
+  collapsible?: CollapsibleType;
 }
 
 export interface CollapsePanelProps {
@@ -35,5 +35,5 @@ export interface CollapsePanelProps {
   expandIcon?: (props: object) => React.ReactNode;
   panelKey?: string | number;
   role?: string;
-  collapsable?: CollapsableType;
+  collapsible?: CollapsibleType;
 }
