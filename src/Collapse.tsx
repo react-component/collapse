@@ -79,7 +79,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
     const { prefixCls, openMotion, accordion, destroyInactivePanel: rootDestroyInactivePanel, expandIcon, collapsible } = this.props;
     // If there is no key provide, use the panel order as default key
     const key = child.key || String(index);
-    const { header, headerClass, destroyInactivePanel, collapsable: childCollapsible } = child.props;
+    const { header, headerClass, destroyInactivePanel, collapsible: childCollapsible } = child.props;
     let isActive = false;
     if (accordion) {
       isActive = activeKey[0] === key;
@@ -87,7 +87,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       isActive = activeKey.indexOf(key) > -1;
     }
 
-    const mergeCollapsible = childCollapsible === undefined ? collapsible : childCollapsible;
+    const mergeCollapsible = childCollapsible ?? collapsible;
 
     const props = {
       key,
