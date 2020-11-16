@@ -18,7 +18,7 @@ class Test extends React.Component {
     time: random(),
     accordion: false,
     activeKey: ['4'],
-    headerCollapsableOnly: false,
+    collapsible: true,
   };
 
   onChange = (activeKey: string) => {
@@ -33,7 +33,11 @@ class Test extends React.Component {
     for (let i = 0, len = 3; i < len; i++) {
       const key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${key}`} key={key} disabled={i === 0}>
+        <Panel
+          header={`This is panel header ${key}`}
+          key={key}
+          collapsible={i === 0 ? false : undefined}
+        >
           <p>{text.repeat(this.state.time)}</p>
         </Panel>,
       );
@@ -89,19 +93,16 @@ class Test extends React.Component {
     });
   };
 
-  toggleHeaderCollapsableOnly = () => {
-    const { headerCollapsableOnly } = this.state;
+  handleCollapsibleChange = (e: any) => {
+    const values = [true, 'header', false];
     this.setState({
-      headerCollapsableOnly: !headerCollapsableOnly,
+      collapsible: values[e.target.value],
     });
   };
 
   render() {
-    const { accordion, activeKey, headerCollapsableOnly } = this.state;
+    const { accordion, activeKey, collapsible } = this.state;
     const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
-    const headerCollapsableOnlyBtn = headerCollapsableOnly
-      ? 'headerCollapsableOnly: true'
-      : 'headerCollapsableOnly: false';
     return (
       <div style={{ margin: 20, width: 400 }}>
         <button type="button" onClick={this.reRender}>
@@ -110,9 +111,14 @@ class Test extends React.Component {
         <button type="button" onClick={this.toggle}>
           {btn}
         </button>
-        <button type="button" onClick={this.toggleHeaderCollapsableOnly}>
-          {headerCollapsableOnlyBtn}
-        </button>
+        <p>
+          collapsible:
+          <select onChange={this.handleCollapsibleChange}>
+            <option value={0}>true</option>
+            <option value={1}>header</option>
+            <option value={2}>false</option>
+          </select>
+        </p>
         <br />
         <br />
         <button type="button" onClick={this.setActivityKey}>
@@ -121,7 +127,7 @@ class Test extends React.Component {
         <br />
         <br />
         <Collapse
-          headerCollapsableOnly={headerCollapsableOnly}
+          collapsible={collapsible}
           accordion={accordion}
           onChange={this.onChange}
           activeKey={activeKey}

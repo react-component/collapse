@@ -127,7 +127,7 @@ describe('collapse', () => {
 
     const element = (
       <Collapse onChange={onChange} expandIcon={expandIcon}>
-        <Panel header="collapse 1" key="1" disabled>
+        <Panel header="collapse 1" key="1" collapsible={false}>
           first
         </Panel>
         <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
@@ -197,7 +197,7 @@ describe('collapse', () => {
     const expandIcon = () => <span>test{'>'}</span>;
     const element = (
       <Collapse onChange={onChange} expandIcon={expandIcon}>
-        <Panel header="collapse 1" key={1} disabled>
+        <Panel header="collapse 1" key={1} collapsible={false}>
           first
         </Panel>
         <Panel header="collapse 2" key={2} extra={<span>ExtraSpan</span>}>
@@ -320,7 +320,7 @@ describe('collapse', () => {
     it('when forceRender is not supplied it should lazy render the panel content', () => {
       renderCollapse(
         <Collapse>
-          <Panel header="collapse 1" key="1" disabled>
+          <Panel header="collapse 1" key="1" collapsible={false}>
             first
           </Panel>
           <Panel header="collapse 2" key="2">
@@ -334,7 +334,7 @@ describe('collapse', () => {
     it('when forceRender is FALSE it should lazy render the panel content', () => {
       renderCollapse(
         <Collapse>
-          <Panel header="collapse 1" key="1" forceRender={false} disabled>
+          <Panel header="collapse 1" key="1" forceRender={false} collapsible={false}>
             first
           </Panel>
           <Panel header="collapse 2" key="2">
@@ -348,7 +348,7 @@ describe('collapse', () => {
     it('when forceRender is TRUE then it should render all the panel content to the DOM', () => {
       renderCollapse(
         <Collapse>
-          <Panel header="collapse 1" key="1" forceRender disabled>
+          <Panel header="collapse 1" key="1" forceRender collapsible={false}>
             first
           </Panel>
           <Panel header="collapse 2" key="2">
@@ -377,7 +377,7 @@ describe('collapse', () => {
           <Panel header="collapse 2" key="2">
             second
           </Panel>
-          <Panel header="collapse 3" key="3" disabled>
+          <Panel header="collapse 3" key="3" collapsible={false}>
             second
           </Panel>
         </Collapse>,
@@ -429,7 +429,7 @@ describe('collapse', () => {
     const element = (
       <Collapse onChange={onChange} expandIcon={expandIcon}>
         <Fragment>
-          <Panel header="collapse 1" key="1" disabled>
+          <Panel header="collapse 1" key="1" collapsible={false}>
             first
           </Panel>
           <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
@@ -475,7 +475,7 @@ describe('collapse', () => {
     expect(collapse.find('.custom-child').getDOMNode().innerHTML).toBe('custom-child');
   });
 
-  describe('headerCollapsableOnly', () => {
+  describe('collapsible', () => {
     it('default', () => {
       const collapse = mount(
         <Collapse>
@@ -485,10 +485,12 @@ describe('collapse', () => {
         </Collapse>,
       );
       expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      collapse.find('.rc-collapse-header').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
-    it('should work', () => {
+    it('should work when value is header', () => {
       const collapse = mount(
-        <Collapse headerCollapsableOnly>
+        <Collapse collapsible="header">
           <Panel header="collapse 1" key="1">
             first
           </Panel>
@@ -499,6 +501,38 @@ describe('collapse', () => {
       expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
       collapse.find('.rc-collapse-header-text').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+    });
+
+    it('should disabled when value is false', () => {
+      const collapse = mount(
+        <Collapse collapsible={false}>
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+
+      expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
+
+      collapse.find('.rc-collapse-header').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+    });
+
+    it('the value of panel should be read first', () => {
+      const collapse = mount(
+        <Collapse collapsible="header">
+          <Panel collapsible={false} header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+
+      expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
+
+      collapse.find('.rc-collapse-header').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
   });
 });
