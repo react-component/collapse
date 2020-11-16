@@ -18,7 +18,7 @@ class Test extends React.Component {
     time: random(),
     accordion: false,
     activeKey: ['4'],
-    headerCollapsableOnly: false,
+    collapsable: true,
   };
 
   onChange = (activeKey: string) => {
@@ -89,19 +89,16 @@ class Test extends React.Component {
     });
   };
 
-  toggleHeaderCollapsableOnly = () => {
-    const { headerCollapsableOnly } = this.state;
+  handleCollapsableChange = (e: any) => {
+    const values = [true, 'header', false];
     this.setState({
-      headerCollapsableOnly: !headerCollapsableOnly,
+      collapsable: values[e.target.value],
     });
   };
 
   render() {
-    const { accordion, activeKey, headerCollapsableOnly } = this.state;
+    const { accordion, activeKey, collapsable } = this.state;
     const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
-    const headerCollapsableOnlyBtn = headerCollapsableOnly
-      ? 'headerCollapsableOnly: true'
-      : 'headerCollapsableOnly: false';
     return (
       <div style={{ margin: 20, width: 400 }}>
         <button type="button" onClick={this.reRender}>
@@ -110,9 +107,14 @@ class Test extends React.Component {
         <button type="button" onClick={this.toggle}>
           {btn}
         </button>
-        <button type="button" onClick={this.toggleHeaderCollapsableOnly}>
-          {headerCollapsableOnlyBtn}
-        </button>
+        <p>
+          collapsable:
+          <select onChange={this.handleCollapsableChange}>
+            <option value={0}>true</option>
+            <option value={1}>header</option>
+            <option value={2}>false</option>
+          </select>
+        </p>
         <br />
         <br />
         <button type="button" onClick={this.setActivityKey}>
@@ -121,7 +123,7 @@ class Test extends React.Component {
         <br />
         <br />
         <Collapse
-          headerCollapsableOnly={headerCollapsableOnly}
+          collapsable={collapsable}
           accordion={accordion}
           onChange={this.onChange}
           activeKey={activeKey}
