@@ -209,7 +209,7 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
     </tbody>
 </table>
 
-> `disabled` is removed since 3.0.0, please use `collapsable` replace it.
+> `disabled` is removed since 3.0.0, please use `collapsable=false` replace it.
 
 #### key
 
