@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import classNames from 'classnames';
-import Animate from 'rc-animate';
+import CSSMotion from 'rc-motion';
 import shallowEqual from 'shallowequal';
 import PanelContent from './PanelContent';
 import { CollapsePanelProps } from './interface';
@@ -10,7 +10,6 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
   static defaultProps = {
     showArrow: true,
     isActive: false,
-    destroyInactivePanel: false,
     onItemClick() {},
     headerClass: '',
     forceRender: false,
@@ -49,6 +48,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       disabled,
       accordion,
       forceRender,
+      openMotion,
       expandIcon,
       extra,
       headerCollapsableOnly,
@@ -91,17 +91,28 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
           )}
           {extra && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
-        <Animate showProp="isActive" exclusive component="" animation={this.props.openAnimation}>
-          <PanelContent
-            prefixCls={prefixCls}
-            isActive={isActive}
-            destroyInactivePanel={destroyInactivePanel}
-            forceRender={forceRender}
-            role={accordion ? 'tabpanel' : null}
-          >
-            {children}
-          </PanelContent>
-        </Animate>
+        <CSSMotion
+          visible={isActive}
+          {...openMotion}
+          forceRender={forceRender}
+          removeOnLeave={destroyInactivePanel}
+        >
+          {({ className: motionClassName, style: motionStyle }, ref) => {
+            return (
+              <PanelContent
+                ref={ref}
+                prefixCls={prefixCls}
+                className={motionClassName}
+                style={motionStyle}
+                isActive={isActive}
+                forceRender={forceRender}
+                role={accordion ? 'tabpanel' : null}
+              >
+                {children}
+              </PanelContent>
+            );
+          }}
+        </CSSMotion>
       </div>
     );
   }

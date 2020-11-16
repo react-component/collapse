@@ -2,40 +2,45 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import classnames from 'classnames';
-import shallowEqual from 'shallowequal';
 import { CollapsePanelProps } from './interface';
 
-class PanelContent extends React.Component<CollapsePanelProps, any> {
-  private _isActived: boolean;
+const PanelContent = React.forwardRef<
+  HTMLDivElement,
+  CollapsePanelProps & { children: React.ReactNode }
+>((props, ref) => {
+  const { prefixCls, forceRender, className, style, children, isActive, role } = props;
 
-  shouldComponentUpdate(nextProps: CollapsePanelProps) {
-    return this.props.forceRender || !shallowEqual(this.props, nextProps);
-  }
+  const [rendered, setRendered] = React.useState(isActive || forceRender);
 
-  render() {
-    this._isActived = this.props.forceRender || this._isActived || this.props.isActive;
-
-    if (!this._isActived) {
-      return null;
+  React.useEffect(() => {
+    if (forceRender || isActive) {
+      setRendered(true);
     }
-    const { prefixCls, isActive, children, destroyInactivePanel, forceRender, role } = this.props;
+  }, [forceRender, isActive]);
 
-    const contentCls = classnames(`${prefixCls}-content`, {
-      [`${prefixCls}-content-active`]: isActive,
-      [`${prefixCls}-content-inactive`]: !isActive,
-    });
-
-    const child =
-      !forceRender && !isActive && destroyInactivePanel ? null : (
-        <div className={`${prefixCls}-content-box`}>{children}</div>
-      );
-
-    return (
-      <div className={contentCls} role={role}>
-        {child}
-      </div>
-    );
+  if (!rendered) {
+    return null;
   }
-}
+
+  return (
+    <div
+      ref={ref}
+      className={classnames(
+        `${prefixCls}-content`,
+        {
+          [`${prefixCls}-content-active`]: isActive,
+          [`${prefixCls}-content-inactive`]: !isActive,
+        },
+        className,
+      )}
+      style={style}
+      role={role}
+    >
+      <div className={`${prefixCls}-content-box`}>{children}</div>
+    </div>
+  );
+});
+
+PanelContent.displayName = 'PanelContent';
 
 export default PanelContent;

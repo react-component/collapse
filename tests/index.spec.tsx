@@ -145,10 +145,8 @@ describe('collapse', () => {
       class ControlledCollapse extends React.Component {
         state: {
           activeKey: string[];
-          openAnimation: object;
         } = {
           activeKey: ['2'],
-          openAnimation: undefined,
         };
 
         constructor(props: any) {
@@ -165,9 +163,9 @@ describe('collapse', () => {
         };
 
         render() {
-          const { activeKey, openAnimation } = this.state;
+          const { activeKey } = this.state;
           return (
-            <Collapse onChange={this.onChange} activeKey={activeKey} openAnimation={openAnimation}>
+            <Collapse onChange={this.onChange} activeKey={activeKey}>
               <Panel header="collapse 1" key="1">
                 first
               </Panel>
@@ -186,22 +184,12 @@ describe('collapse', () => {
 
       expect(collapse.find(Collapse).state('activeKey')).toEqual(['2']);
       expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      expect(collapse.find(Collapse).state('openAnimation')).toEqual(undefined);
       const header = collapse.find('.rc-collapse-header').at(0);
       header.simulate('click');
       jest.runAllTimers();
       collapse.update();
       expect(collapse.state('activeKey')).toEqual(['2', '1']);
       expect(collapse.find('.rc-collapse-content-active').length).toBe(2);
-
-      const customOpenAnimation = {
-        transitionName: 'customOpenAnimation',
-      };
-      collapse.setState({
-        openAnimation: customOpenAnimation,
-      });
-      jest.runAllTimers();
-      expect(collapse.find(Collapse).state('openAnimation')).toEqual(customOpenAnimation);
     });
   });
 

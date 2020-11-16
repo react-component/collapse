@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Collapse, { Panel } from '../src';
+import motion from './_util/motionUtil';
 import '../assets/index.less';
 
 const text = `
@@ -124,6 +125,7 @@ class Test extends React.Component {
           accordion={accordion}
           onChange={this.onChange}
           activeKey={activeKey}
+          openMotion={motion}
         >
           {this.getItems()}
         </Collapse>

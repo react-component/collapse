@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Collapse, { Panel } from '../src';
+import motion from './_util/motionUtil';
 import '../assets/index.less';
 
 const text = `
@@ -32,7 +33,7 @@ function expandIcon({ isActive }) {
           transform: `rotate(${isActive ? 90 : 0}deg)`,
         }}
       >
-        <path d={arrowPath} p-id="5827"></path>
+        <path d={arrowPath} p-id="5827" />
       </svg>
     </i>
   );
@@ -54,10 +55,14 @@ class Test extends React.Component {
   getItems() {
     const items = [];
     // eslint-disable-next-line no-plusplus
-    for (let i = 0, len = 3; i < len; i++) {
+    for (let i = 0, len = 3; i < len; i += 1) {
       const key = i + 1;
       items.push(
-        <Panel header={`This is panel header ${key}`} key={key} disabled={i === 0}>
+        <Panel
+          header={`This is panel header ${key}`}
+          key={key}
+          // disabled={i === 0}
+        >
           <p>{text.repeat(this.state.time)}</p>
         </Panel>,
       );
@@ -130,6 +135,7 @@ class Test extends React.Component {
           onChange={this.onChange}
           activeKey={activeKey}
           expandIcon={expandIcon}
+          openMotion={motion}
         >
           {this.getItems()}
         </Collapse>

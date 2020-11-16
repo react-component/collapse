@@ -2,8 +2,10 @@
 @text-color: #666;
 @borderStyle: 1px solid #d9d9d9;
 
+@import './motion.less';
+
 #arrow {
-  .common(){
+  .common() {
     width: 0;
     height: 0;
     font-size: 0;
@@ -27,9 +29,9 @@
   border-radius: 3px;
   border: @borderStyle;
 
-  &-anim-active {
-    transition: height .2s ease-out;
-  }
+  // &-anim-active {
+  //   transition: height 0.2s ease-out;
+  // }
 
   & > &-item {
     border-top: @borderStyle;
@@ -82,9 +84,9 @@
       margin-bottom: 16px;
     }
 
-    &-inactive {
-      display: none;
-    }
+    // &-inactive {
+    //   display: none;
+    // }
   }
 
   &-item:last-child {
@@ -95,7 +97,6 @@
 
   & > &-item-active {
     > .@{prefixCls}-header {
-
       .arrow {
         position: relative;
         top: 2px;
