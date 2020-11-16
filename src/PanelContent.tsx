@@ -8,7 +8,19 @@ const PanelContent = React.forwardRef<
   HTMLDivElement,
   CollapsePanelProps & { children: React.ReactNode }
 >((props, ref) => {
-  const { prefixCls, className, style, children, isActive, role } = props;
+  const { prefixCls, forceRender, className, style, children, isActive, role } = props;
+
+  const [rendered, setRendered] = React.useState(isActive || forceRender);
+
+  React.useEffect(() => {
+    if (forceRender || isActive) {
+      setRendered(true);
+    }
+  }, [forceRender, isActive]);
+
+  if (!rendered) {
+    return null;
+  }
 
   return (
     <div

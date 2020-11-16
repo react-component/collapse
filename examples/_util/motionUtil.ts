@@ -15,6 +15,7 @@ const collapseMotion: CSSMotionProps = {
   onEnterEnd: skipOpacityTransition,
   onLeaveEnd: skipOpacityTransition,
   motionDeadline: 500,
+  leavedClassName: 'rc-collapse-content-hidden',
 };
 
 export default collapseMotion;

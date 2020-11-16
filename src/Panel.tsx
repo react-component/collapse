@@ -10,7 +10,6 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
   static defaultProps = {
     showArrow: true,
     isActive: false,
-    destroyInactivePanel: false,
     onItemClick() {},
     headerClass: '',
     forceRender: false,
@@ -92,7 +91,12 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
           )}
           {extra && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
-        <CSSMotion visible={isActive} {...openMotion} forceRender={forceRender}>
+        <CSSMotion
+          visible={isActive}
+          {...openMotion}
+          forceRender={forceRender}
+          removeOnLeave={destroyInactivePanel}
+        >
           {({ className: motionClassName, style: motionStyle }, ref) => {
             return (
               <PanelContent
@@ -101,7 +105,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
                 className={motionClassName}
                 style={motionStyle}
                 isActive={isActive}
-                destroyInactivePanel={destroyInactivePanel}
+                forceRender={forceRender}
                 role={accordion ? 'tabpanel' : null}
               >
                 {children}
