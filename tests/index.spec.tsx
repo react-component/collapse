@@ -358,6 +358,7 @@ describe('collapse', () => {
       );
       expect(collapse.find('.rc-collapse-content').length).toBe(1);
       expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
+      expect(collapse.find('div.rc-collapse-content-hidden').length).toBe(1);
     });
   });
 
