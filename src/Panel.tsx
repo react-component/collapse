@@ -95,6 +95,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
         </div>
         <CSSMotion
           visible={isActive}
+          leavedClassName={`${prefixCls}-content-hidden`}
           {...openMotion}
           forceRender={forceRender}
           removeOnLeave={destroyInactivePanel}

@@ -180,7 +180,7 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <td>openMotion</td>
         <td>object</td>
         <th></th>
-        <td>set the animation of open behavior, [more](https://github.com/react-component/motion)</td>
+        <td>set the animation of open behavior, [more](https://github.com/react-component/motion). Different with v2, closed pane use a `rc-collapse-content-hidden` class to set `display: none` for hidden.</td>
       </tr>
       <tr>
         <td>disabled</td>
