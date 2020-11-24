@@ -53,7 +53,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       collapsible,
     } = this.props;
 
-    const disabled = collapsible === false;
+    const disabled = collapsible === 'disabled';
 
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,

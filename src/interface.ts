@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { CSSMotionProps } from 'rc-motion';
 
-type CollapsibleType = boolean | 'header';
+export type CollapsibleType = 'header' | 'disabled';
 
 export interface CollapseProps {
   prefixCls?: string;

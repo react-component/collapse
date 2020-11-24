@@ -18,7 +18,7 @@ class Test extends React.Component {
     time: random(),
     accordion: false,
     activeKey: ['4'],
-    collapsible: true,
+    collapsible: undefined,
   };
 
   onChange = (activeKey: string) => {
@@ -36,7 +36,7 @@ class Test extends React.Component {
         <Panel
           header={`This is panel header ${key}`}
           key={key}
-          collapsible={i === 0 ? false : undefined}
+          collapsible={i === 0 ? 'disabled' : undefined}
         >
           <p>{text.repeat(this.state.time)}</p>
         </Panel>,
@@ -94,7 +94,7 @@ class Test extends React.Component {
   };
 
   handleCollapsibleChange = (e: any) => {
-    const values = [true, 'header', false];
+    const values = [undefined, 'header', 'disabled'];
     this.setState({
       collapsible: values[e.target.value],
     });
@@ -114,9 +114,9 @@ class Test extends React.Component {
         <p>
           collapsible:
           <select onChange={this.handleCollapsibleChange}>
-            <option value={0}>true</option>
+            <option value={0}>default</option>
             <option value={1}>header</option>
-            <option value={2}>false</option>
+            <option value={2}>disabled</option>
           </select>
         </p>
         <br />

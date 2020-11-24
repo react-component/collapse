@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import toArray from 'rc-util/lib/Children/toArray';
 import CollapsePanel from './Panel';
-import { CollapseProps } from './interface';
+import { CollapseProps, CollapsibleType } from './interface';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
@@ -87,7 +87,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       isActive = activeKey.indexOf(key) > -1;
     }
 
-    const mergeCollapsible = childCollapsible ?? collapsible;
+    const mergeCollapsible: CollapsibleType  = childCollapsible ?? collapsible;
 
     const props = {
       key,
@@ -100,7 +100,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       openMotion,
       accordion,
       children: child.props.children,
-      onItemClick: mergeCollapsible === false ? null : this.onClickItem,
+      onItemClick: mergeCollapsible === 'disabled' ? null : this.onClickItem,
       expandIcon,
       collapsible: mergeCollapsible,
     };

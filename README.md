@@ -119,8 +119,8 @@ ReactDOM.render(collapse, container);
       </tr>
       <tr>
           <td>collapsible</td>
-          <td>Boolean | 'header'</td>
-          <th>true</th>
+          <td>'header' | 'disabled'</td>
+          <th>-</th>
           <td>specify whether the panel of children is collapsible or the area of collapsible.</td>
       </tr>
     </tbody>
@@ -183,12 +183,6 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <td>set the animation of open behavior, [more](https://github.com/react-component/motion). Different with v2, closed pane use a `rc-collapse-content-hidden` class to set `display: none` for hidden.</td>
       </tr>
       <tr>
-        <td>disabled</td>
-        <td>boolean</td>
-        <th>false</th>
-        <td>whether the panel is collapsible</td>
-      </tr>
-      <tr>
         <td>forceRender</td>
         <td>boolean</td>
         <th>false</th>
@@ -202,14 +196,14 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
       </tr>
       <tr>
           <td>collapsible</td>
-          <td>Boolean | 'header'</td>
-          <th>true</th>
+          <td>'header' | 'disabled'</td>
+          <th>-</th>
           <td>specify whether the panel be collapsible or the area of collapsible.</td>
       </tr>
     </tbody>
 </table>
 
-> `disabled` is removed since 3.0.0, please use `collapsible=false` replace it.
+> `disabled` is removed since 3.0.0, please use `collapsible=disabled` replace it.
 
 #### key
 
