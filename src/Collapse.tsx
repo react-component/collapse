@@ -34,7 +34,9 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
     const { activeKey, defaultActiveKey } = props;
     let currentActiveKey = defaultActiveKey;
     if ('activeKey' in props) {
-      currentActiveKey = activeKey;
+      activeKey === 'unset' 
+        ? currentActiveKey = defaultActiveKey
+        : currentActiveKey = activeKey;
     }
 
     this.state = {
