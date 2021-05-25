@@ -9,7 +9,9 @@ import { CollapseProps, CollapsibleType } from './interface';
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
   if (!Array.isArray(currentActiveKey)) {
-    currentActiveKey = currentActiveKey ? [currentActiveKey] : [];
+    const activeKeyType = typeof currentActiveKey;
+    currentActiveKey =
+      activeKeyType === 'number' || activeKeyType === 'string' ? [currentActiveKey] : [];
   }
   return currentActiveKey.map((key) => String(key));
 }
