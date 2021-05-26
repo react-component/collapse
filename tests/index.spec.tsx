@@ -211,6 +211,26 @@ describe('collapse', () => {
 
     runNormalTest(element);
   });
+  describe('it should support activeKey number 0', () => {
+    const collapse = mount(
+      <Collapse onChange={onChange} activeKey={0}>
+        <Panel header="collapse 0" key={0}>
+        zero
+        </Panel>
+        <Panel header="collapse 1" key={1}>
+        first
+        </Panel>
+        <Panel header="collapse 2" key={2}>
+        second
+        </Panel>
+      </Collapse>,
+    );;
+
+    it('activeKey number 0, should open one item', () => {
+      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
+    });
+
+  });
 
   describe('destroyInactivePanel', () => {
     const collapse = mount(
