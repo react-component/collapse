@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { mount, ReactWrapper } from 'enzyme';
+import type { ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 
 import KeyCode from 'rc-util/lib/KeyCode';
 
@@ -19,6 +20,7 @@ describe('collapse', () => {
 
   function onChange(...args: any[]) {
     if (changeHook) {
+      // eslint-disable-next-line @typescript-eslint/no-invalid-this
       changeHook.apply(this, args);
     }
   }
@@ -36,12 +38,9 @@ describe('collapse', () => {
 
     it('add className', () => {
       const expectedClassName = 'rc-collapse-item important';
-      expect(
-        collapse
-          .find('.rc-collapse-item')
-          .at(2)
-          .getDOMNode().className,
-      ).toBe(expectedClassName);
+      expect(collapse.find('.rc-collapse-item').at(2).getDOMNode().className).toBe(
+        expectedClassName,
+      );
     });
 
     it('create works', () => {
@@ -58,12 +57,9 @@ describe('collapse', () => {
     });
 
     it('should render custom arrow icon corrctly', () => {
-      expect(
-        collapse
-          .find('.rc-collapse-header')
-          .at(0)
-          .getDOMNode().textContent,
-      ).toContain('test>');
+      expect(collapse.find('.rc-collapse-header').at(0).getDOMNode().textContent).toContain(
+        'test>',
+      );
     });
 
     it('default active works', () => {
@@ -78,10 +74,7 @@ describe('collapse', () => {
 
     it('onChange works', () => {
       changeHook = jest.fn();
-      collapse
-        .find('.rc-collapse-header')
-        .at(1)
-        .simulate('click');
+      collapse.find('.rc-collapse-header').at(1).simulate('click');
       expect(changeHook.mock.calls[0][0]).toEqual(['2']);
     });
 
@@ -94,12 +87,9 @@ describe('collapse', () => {
       header.simulate('click');
       jest.runAllTimers();
       collapse.update();
-      expect(
-        collapse
-          .find('.rc-collapse-content-inactive')
-          .at(0)
-          .getDOMNode().innerHTML,
-      ).toBe('<div class="rc-collapse-content-box">second</div>');
+      expect(collapse.find('.rc-collapse-content-inactive').at(0).getDOMNode().innerHTML).toBe(
+        '<div class="rc-collapse-content-box">second</div>',
+      );
       expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
     });
 
@@ -210,6 +200,25 @@ describe('collapse', () => {
     );
 
     runNormalTest(element);
+  });
+  describe('it should support activeKey number 0', () => {
+    const collapse = mount(
+      <Collapse onChange={onChange} activeKey={0}>
+        <Panel header="collapse 0" key={0}>
+          zero
+        </Panel>
+        <Panel header="collapse 1" key={1}>
+          first
+        </Panel>
+        <Panel header="collapse 2" key={2}>
+          second
+        </Panel>
+      </Collapse>,
+    );
+
+    it('activeKey number 0, should open one item', () => {
+      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
+    });
   });
 
   describe('destroyInactivePanel', () => {
@@ -356,9 +365,15 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
+
+      jest.runAllTimers();
+      collapse.update();
+
       expect(collapse.find('.rc-collapse-content').length).toBe(1);
       expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
-      expect(collapse.find('div.rc-collapse-content-hidden').length).toBe(1);
+      expect(collapse.find('div.rc-collapse-content-inactive').props().style).toEqual({
+        display: 'none',
+      });
     });
   });
 
@@ -383,44 +398,29 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      collapse
-        .find('.rc-collapse-header')
-        .at(2)
-        .simulate('keyPress', {
-          keyCode: KeyCode.ENTER,
-        });
+      collapse.find('.rc-collapse-header').at(2).simulate('keyPress', {
+        keyCode: KeyCode.ENTER,
+      });
       jest.runAllTimers();
       collapse.update();
       expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
-      collapse
-        .find('.rc-collapse-header')
-        .at(0)
-        .simulate('keyPress', {
-          keyCode: KeyCode.ENTER,
-        });
+      collapse.find('.rc-collapse-header').at(0).simulate('keyPress', {
+        keyCode: KeyCode.ENTER,
+      });
       jest.runAllTimers();
       collapse.update();
       expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
       expect(
-        collapse
-          .find('.rc-collapse-content')
-          .at(0)
-          .hasClass('rc-collapse-content-active'),
+        collapse.find('.rc-collapse-content').at(0).hasClass('rc-collapse-content-active'),
       ).toBeTruthy();
-      collapse
-        .find('.rc-collapse-header')
-        .at(0)
-        .simulate('keyPress', {
-          keyCode: KeyCode.ENTER,
-        });
+      collapse.find('.rc-collapse-header').at(0).simulate('keyPress', {
+        keyCode: KeyCode.ENTER,
+      });
       jest.runAllTimers();
       collapse.update();
       expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
       expect(
-        collapse
-          .find('.rc-collapse-content')
-          .at(0)
-          .hasClass('rc-collapse-content-active'),
+        collapse.find('.rc-collapse-content').at(0).hasClass('rc-collapse-content-active'),
       ).toBeFalsy();
     });
   });
@@ -456,12 +456,7 @@ describe('collapse', () => {
         </Panel>
       </Collapse>,
     );
-    expect(
-      wrapper
-        .find('.rc-collapse-header')
-        .at(0)
-        .getDOMNode().childNodes.length,
-    ).toBe(1);
+    expect(wrapper.find('.rc-collapse-header').at(0).getDOMNode().childNodes.length).toBe(1);
   });
 
   it('should support custom child', () => {
