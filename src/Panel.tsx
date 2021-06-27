@@ -70,6 +70,14 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     );
 
     let icon: any = <i className="arrow" />;
+
+    /** header 节点属性 */
+    const headerProps: React.HTMLAttributes<HTMLDivElement> = {
+      className: headerCls,
+      'aria-expanded': isActive,
+      onKeyPress: this.handleKeyPress,
+    };
+
     if (showArrow && typeof expandIcon === 'function') {
       icon = expandIcon(this.props);
     }
@@ -79,18 +87,15 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
           {icon}
         </span>
       );
+    } else {
+      headerProps.onClick = this.handleItemClick;
+      headerProps.role = accordion ? 'tab' : 'button';
+      headerProps.tabIndex = disabled ? -1 : 0;
     }
 
     return (
       <div className={itemCls} style={style} id={id}>
-        <div
-          className={headerCls}
-          onClick={() => !collapsibleHeader && this.handleItemClick()}
-          role={accordion ? 'tab' : 'button'}
-          tabIndex={disabled ? -1 : 0}
-          aria-expanded={isActive}
-          onKeyPress={this.handleKeyPress}
-        >
+        <div {...headerProps}>
           {showArrow && icon}
           {collapsibleHeader ? (
             <span onClick={this.handleItemClick} className={`${prefixCls}-header-text`}>
