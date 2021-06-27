@@ -530,5 +530,18 @@ describe('collapse', () => {
       collapse.find('.rc-collapse-header').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
+
+    it('icon trigger when collapsible equal header', () => {
+      const collapse = mount(
+        <Collapse collapsible="header">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+
+      collapse.find('.rc-collapse-header .arrow').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+    });
   });
 });
