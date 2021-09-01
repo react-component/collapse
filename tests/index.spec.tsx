@@ -201,6 +201,21 @@ describe('collapse', () => {
 
     runNormalTest(element);
   });
+
+  describe('it shoule support extra whit number 0', () => {
+    const collapse = mount(
+      <Collapse onChange={onChange} activeKey={0}>
+        <Panel header="collapse 0" key={0} extra={0}>
+          zero
+        </Panel>
+      </Collapse>,
+    );
+
+    const extraNodes = collapse.find('.rc-collapse-extra');
+    expect(extraNodes.length).toBe(1);
+    expect(extraNodes.at(0).getDOMNode().innerHTML).toBe('0');
+  });
+
   describe('it should support activeKey number 0', () => {
     const collapse = mount(
       <Collapse onChange={onChange} activeKey={0}>

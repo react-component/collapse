@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import shallowEqual from 'shallowequal';
 import PanelContent from './PanelContent';
-import { CollapsePanelProps } from './interface';
+import type { CollapsePanelProps } from './interface';
 
 class CollapsePanel extends React.Component<CollapsePanelProps, any> {
   static defaultProps = {
@@ -73,6 +73,8 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       icon = expandIcon(this.props);
     }
 
+    const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
+
     return (
       <div className={itemCls} style={style} id={id}>
         <div
@@ -91,7 +93,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
           ) : (
             header
           )}
-          {extra && <div className={`${prefixCls}-extra`}>{extra}</div>}
+          {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
         <CSSMotion
           visible={isActive}
