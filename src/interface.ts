@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { CSSMotionProps } from 'rc-motion';
+import type * as React from 'react';
+import type { CSSMotionProps } from 'rc-motion';
 
 export type CollapsibleType = 'header' | 'disabled';
 
@@ -25,6 +25,7 @@ export interface CollapsePanelProps {
   showArrow?: boolean;
   className?: string;
   style?: object;
+  contentBoxStyle?: object;
   isActive?: boolean;
   openMotion?: CSSMotionProps;
   destroyInactivePanel?: boolean;

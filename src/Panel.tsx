@@ -38,6 +38,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       className,
       id,
       style,
+      contentBoxStyle,
       prefixCls,
       header,
       headerClass,
@@ -109,6 +110,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
                 prefixCls={prefixCls}
                 className={motionClassName}
                 style={motionStyle}
+                contentBoxStyle={contentBoxStyle}
                 isActive={isActive}
                 forceRender={forceRender}
                 role={accordion ? 'tabpanel' : null}

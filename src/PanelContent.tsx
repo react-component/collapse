@@ -2,13 +2,14 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import classnames from 'classnames';
-import { CollapsePanelProps } from './interface';
+import type { CollapsePanelProps } from './interface';
 
 const PanelContent = React.forwardRef<
   HTMLDivElement,
   CollapsePanelProps & { children: React.ReactNode }
 >((props, ref) => {
-  const { prefixCls, forceRender, className, style, children, isActive, role } = props;
+  const { prefixCls, forceRender, className, style, contentBoxStyle, children, isActive, role } =
+    props;
 
   const [rendered, setRendered] = React.useState(isActive || forceRender);
 
@@ -36,7 +37,9 @@ const PanelContent = React.forwardRef<
       style={style}
       role={role}
     >
-      <div className={`${prefixCls}-content-box`}>{children}</div>
+      <div className={`${prefixCls}-content-box`} style={contentBoxStyle}>
+        {children}
+      </div>
     </div>
   );
 });
