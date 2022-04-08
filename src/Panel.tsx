@@ -54,11 +54,10 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     } = this.props;
 
     const disabled = collapsible === 'disabled';
-    const collapsibleHeader = collapsible === 'header';
 
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
-      [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
+      [`${prefixCls}-header-collapsible-only`]: collapsible === 'header',
     });
     const itemCls = classNames(
       {
@@ -70,36 +69,24 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     );
 
     let icon: any = <i className="arrow" />;
-
-    /** header 节点属性 */
-    const headerProps: React.HTMLAttributes<HTMLDivElement> = {
-      className: headerCls,
-      'aria-expanded': isActive,
-      onKeyPress: this.handleKeyPress,
-    };
-
     if (showArrow && typeof expandIcon === 'function') {
       icon = expandIcon(this.props);
-    }
-    if (collapsibleHeader) {
-      icon = (
-        <span style={{ cursor: 'pointer' }} onClick={() => this.handleItemClick()}>
-          {icon}
-        </span>
-      );
-    } else {
-      headerProps.onClick = this.handleItemClick;
-      headerProps.role = accordion ? 'tab' : 'button';
-      headerProps.tabIndex = disabled ? -1 : 0;
     }
 
     const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
     return (
       <div className={itemCls} style={style} id={id}>
-        <div {...headerProps}>
+        <div
+          className={headerCls}
+          onClick={() => collapsible !== 'header' && this.handleItemClick()}
+          role={accordion ? 'tab' : 'button'}
+          tabIndex={disabled ? -1 : 0}
+          aria-expanded={isActive}
+          onKeyPress={this.handleKeyPress}
+        >
           {showArrow && icon}
-          {collapsibleHeader ? (
+          {collapsible === 'header' ? (
             <span onClick={this.handleItemClick} className={`${prefixCls}-header-text`}>
               {header}
             </span>
