@@ -16,6 +16,7 @@ export interface CollapseProps {
   expandIcon?: (props: object) => React.ReactNode;
   collapsible?: CollapsibleType;
   headerRender?: (props: object) => React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface CollapsePanelProps {
@@ -38,4 +39,5 @@ export interface CollapsePanelProps {
   panelKey?: string | number;
   role?: string;
   collapsible?: CollapsibleType;
+  children?: React.ReactNode;
 }
