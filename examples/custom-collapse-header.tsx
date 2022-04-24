@@ -13,6 +13,18 @@ function random() {
   return parseInt((Math.random() * 10).toString(), 10) + 1;
 }
 
+function customHeaderRender({ header, isActive, extra }) {
+  return (
+    <div style={{ display: 'flex' }}>
+      <div>
+        {header}
+        <span style={{ marginLeft: 10 }}>{isActive ? '收起' : '展开'}</span>
+      </div>
+      <div style={{ marginLeft: 20 }}>{extra}</div>
+    </div>
+  );
+}
+
 class Test extends React.Component {
   state = {
     time: random(),
@@ -134,17 +146,7 @@ class Test extends React.Component {
           openMotion={motion}
           // 获取panel props来自定义渲染header
           // 比panel header上的其他配置项优先级高
-          headerRender={({ header, isActive, extra }) => {
-            return (
-              <div style={{ display: 'flex' }}>
-                <div>
-                  {header}
-                  <span style={{ marginLeft: 10 }}>{isActive ? '收起' : '展开'}</span>
-                </div>
-                <div style={{ marginLeft: 20 }}>{extra}</div>
-              </div>
-            );
-          }}
+          headerRender={customHeaderRender}
         >
           {this.getItems()}
         </Collapse>
