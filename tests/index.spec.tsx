@@ -559,4 +559,50 @@ describe('collapse', () => {
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
   });
+
+  describe('customHeader', () => {
+    const customHeaderRender = ({ header, isActive, extra }) => {
+      return (
+        <div style={{ display: 'flex' }}>
+          <div>
+            {header}
+            <span style={{ marginLeft: 10 }}>{isActive ? '收起' : '展开'}</span>
+          </div>
+          <div style={{ marginLeft: 20 }}>{extra}</div>
+        </div>
+      );
+    };
+
+    let collapse: ReactWrapper;
+    beforeEach(() => {
+      collapse = mount(
+        <Collapse onChange={onChange} headerRender={customHeaderRender}>
+          <Panel header="collapse 1" key="1" collapsible="disabled">
+            first
+          </Panel>
+          <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
+            second
+          </Panel>
+          <Panel header="collapse 3" key="3" className="important">
+            third
+          </Panel>
+        </Collapse>,
+      );
+    });
+
+    it('should toggle show on panel', () => {
+      let header = collapse.find('.rc-collapse-header').at(1);
+      header.simulate('click');
+      jest.runAllTimers();
+      collapse.update();
+      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      header = collapse.find('.rc-collapse-header').at(1);
+      header.simulate('click');
+      jest.runAllTimers();
+      collapse.update();
+      expect(collapse.find('.rc-collapse-content-active').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-item-active').exists()).toBeFalsy();
+    });
+  });
 });
