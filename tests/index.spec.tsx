@@ -1,9 +1,7 @@
-import React, { Fragment } from 'react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
-
 import KeyCode from 'rc-util/lib/KeyCode';
-
+import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
 
 describe('collapse', () => {
@@ -546,7 +544,7 @@ describe('collapse', () => {
       expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
 
-    it('icon trigger when collapsible equal header', () => {
+    it('icon not trigger when collapsible equal header', () => {
       const collapse = mount(
         <Collapse collapsible="header">
           <Panel header="collapse 1" key="1">
@@ -556,7 +554,20 @@ describe('collapse', () => {
       );
 
       collapse.find('.rc-collapse-header .arrow').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+    });
+
+    it('header not trigger when collapsible equal icon', () => {
+      const collapse = mount(
+        <Collapse collapsible="icon">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+
+      collapse.find('.rc-collapse-header-text-static').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
   });
 });

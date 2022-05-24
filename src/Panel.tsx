@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
+import * as React from 'react';
 import shallowEqual from 'shallowequal';
-import PanelContent from './PanelContent';
 import type { CollapsePanelProps } from './interface';
+import PanelContent from './PanelContent';
 
 class CollapsePanel extends React.Component<CollapsePanelProps, any> {
   static defaultProps = {
@@ -55,10 +55,12 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
 
     const disabled = collapsible === 'disabled';
     const collapsibleHeader = collapsible === 'header';
+    const collapsibleIcon = collapsible === 'icon';
 
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
       [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
+      [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
     });
     const itemCls = classNames(
       {
@@ -81,13 +83,8 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     if (showArrow && typeof expandIcon === 'function') {
       icon = expandIcon(this.props);
     }
-    if (collapsibleHeader) {
-      icon = (
-        <span style={{ cursor: 'pointer' }} onClick={() => this.handleItemClick()}>
-          {icon}
-        </span>
-      );
-    } else {
+
+    if (!collapsibleHeader && !collapsibleIcon) {
       headerProps.onClick = this.handleItemClick;
       headerProps.role = accordion ? 'tab' : 'button';
       headerProps.tabIndex = disabled ? -1 : 0;
@@ -98,13 +95,21 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     return (
       <div className={itemCls} style={style} id={id}>
         <div {...headerProps}>
-          {showArrow && icon}
+          {/* {showArrow && icon} */}
+          {showArrow &&
+            (collapsibleIcon ? (
+              <span onClick={this.handleItemClick} className={`${prefixCls}-header-icon`}>
+                {icon}
+              </span>
+            ) : (
+              icon
+            ))}
           {collapsibleHeader ? (
             <span onClick={this.handleItemClick} className={`${prefixCls}-header-text`}>
               {header}
             </span>
           ) : (
-            header
+            <span className={`${prefixCls}-header-text-static`}>{header}</span>
           )}
           {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
