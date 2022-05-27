@@ -19,7 +19,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     return !shallowEqual(this.props, nextProps);
   }
 
-  handleItemClick = () => {
+  onItemClick = () => {
     const { onItemClick, panelKey } = this.props;
 
     if (typeof onItemClick === 'function') {
@@ -29,8 +29,42 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
 
   handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.keyCode === 13 || e.which === 13) {
-      this.handleItemClick();
+      this.onItemClick();
     }
+  };
+
+  renderIcon = () => {
+    const { showArrow, expandIcon, prefixCls, collapsible } = this.props;
+    if (!showArrow) {
+      return null;
+    }
+
+    const iconNode =
+      typeof expandIcon === 'function' ? expandIcon(this.props) : <i className="arrow" />;
+
+    return (
+      iconNode && (
+        <div
+          className={`${prefixCls}-expand-icon`}
+          onClick={collapsible === 'header' ? this.onItemClick : null}
+        >
+          {iconNode}
+        </div>
+      )
+    );
+  };
+
+  renderTitle = () => {
+    const { header, prefixCls, collapsible } = this.props;
+
+    return (
+      <span
+        className={`${prefixCls}-header-text`}
+        onClick={collapsible === 'header' ? this.onItemClick : null}
+      >
+        {header}
+      </span>
+    );
   };
 
   render() {
@@ -39,16 +73,13 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       id,
       style,
       prefixCls,
-      header,
       headerClass,
       children,
       isActive,
-      showArrow,
       destroyInactivePanel,
       accordion,
       forceRender,
       openMotion,
-      expandIcon,
       extra,
       collapsible,
     } = this.props;
@@ -56,10 +87,6 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     const disabled = collapsible === 'disabled';
     const collapsibleHeader = collapsible === 'header';
 
-    const headerCls = classNames(`${prefixCls}-header`, {
-      [headerClass]: headerClass,
-      [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
-    });
     const itemCls = classNames(
       {
         [`${prefixCls}-item`]: true,
@@ -69,7 +96,10 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       className,
     );
 
-    let icon: any = <i className="arrow" />;
+    const headerCls = classNames(`${prefixCls}-header`, {
+      [headerClass]: headerClass,
+      [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
+    });
 
     /** header 节点属性 */
     const headerProps: React.HTMLAttributes<HTMLDivElement> = {
@@ -78,17 +108,8 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       onKeyPress: this.handleKeyPress,
     };
 
-    if (showArrow && typeof expandIcon === 'function') {
-      icon = expandIcon(this.props);
-    }
-    if (collapsibleHeader) {
-      icon = (
-        <span style={{ cursor: 'pointer' }} onClick={() => this.handleItemClick()}>
-          {icon}
-        </span>
-      );
-    } else {
-      headerProps.onClick = this.handleItemClick;
+    if (!collapsibleHeader) {
+      headerProps.onClick = this.onItemClick;
       headerProps.role = accordion ? 'tab' : 'button';
       headerProps.tabIndex = disabled ? -1 : 0;
     }
@@ -98,14 +119,8 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     return (
       <div className={itemCls} style={style} id={id}>
         <div {...headerProps}>
-          {showArrow && icon}
-          {collapsibleHeader ? (
-            <span onClick={this.handleItemClick} className={`${prefixCls}-header-text`}>
-              {header}
-            </span>
-          ) : (
-            header
-          )}
+          {this.renderIcon()}
+          {this.renderTitle()}
           {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
         <CSSMotion
