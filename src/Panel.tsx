@@ -105,6 +105,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     const headerProps: React.HTMLAttributes<HTMLDivElement> = {
       className: headerCls,
       'aria-expanded': isActive,
+      'aria-disabled': disabled,
       onKeyPress: this.handleKeyPress,
     };
 
