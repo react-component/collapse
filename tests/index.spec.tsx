@@ -470,7 +470,6 @@ describe('collapse', () => {
         </Panel>
       </Collapse>,
     );
-    console.log('>>>', wrapper.find('.rc-collapse-header').html());
     expect(wrapper.find('.rc-collapse-header').at(0).getDOMNode().childNodes.length).toBe(1);
   });
 
@@ -558,5 +557,17 @@ describe('collapse', () => {
       collapse.find('.rc-collapse-header .arrow').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
+  });
+
+  it('!showArrow', () => {
+    const wrapper = mount(
+      <Collapse>
+        <Panel header="collapse 1" key="1" showArrow={false}>
+          first
+        </Panel>
+      </Collapse>,
+    );
+
+    expect(wrapper.exists('.rc-collapse-expand-icon')).toBeFalsy();
   });
 });
