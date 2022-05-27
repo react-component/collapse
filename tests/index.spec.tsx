@@ -139,8 +139,7 @@ describe('collapse', () => {
           activeKey: ['2'],
         };
 
-        constructor(props: any) {
-          super(props);
+        componentDidMount(): void {
           this.setState({
             activeKey: ['2'],
           });
@@ -471,6 +470,7 @@ describe('collapse', () => {
         </Panel>
       </Collapse>,
     );
+    console.log('>>>', wrapper.find('.rc-collapse-header').html());
     expect(wrapper.find('.rc-collapse-header').at(0).getDOMNode().childNodes.length).toBe(1);
   });
 
@@ -495,7 +495,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
       collapse.find('.rc-collapse-header').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
@@ -522,7 +522,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
 
       expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
 
@@ -538,7 +538,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
 
       expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
 
