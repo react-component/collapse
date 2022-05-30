@@ -84,7 +84,19 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       icon = expandIcon(this.props);
     }
 
-    if (!collapsibleHeader && !collapsibleIcon) {
+    if (collapsibleHeader) {
+      icon = (
+        <span onClick={() => this.handleItemClick()} className={`${prefixCls}-header-icon`}>
+          {icon}
+        </span>
+      );
+    } else if (collapsibleIcon) {
+      icon = (
+        <span onClick={() => this.handleItemClick()} className={`${prefixCls}-header-icon`}>
+          {icon}
+        </span>
+      );
+    } else {
       headerProps.onClick = this.handleItemClick;
       headerProps.role = accordion ? 'tab' : 'button';
       headerProps.tabIndex = disabled ? -1 : 0;
@@ -95,15 +107,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     return (
       <div className={itemCls} style={style} id={id}>
         <div {...headerProps}>
-          {/* {showArrow && icon} */}
-          {showArrow &&
-            (collapsibleIcon ? (
-              <span onClick={this.handleItemClick} className={`${prefixCls}-header-icon`}>
-                {icon}
-              </span>
-            ) : (
-              icon
-            ))}
+          {showArrow && icon}
           {collapsibleHeader ? (
             <span onClick={this.handleItemClick} className={`${prefixCls}-header-text`}>
               {header}

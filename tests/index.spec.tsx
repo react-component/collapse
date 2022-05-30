@@ -511,6 +511,20 @@ describe('collapse', () => {
       collapse.find('.rc-collapse-header-text').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
+    it('should work when value is icon', () => {
+      const collapse = mount(
+        <Collapse collapsible="icon">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-header-icon').exists()).toBeTruthy();
+      collapse.find('.rc-collapse-header').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      collapse.find('.rc-collapse-header-icon').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+    });
 
     it('should disabled when value is disabled', () => {
       const collapse = mount(
@@ -544,7 +558,7 @@ describe('collapse', () => {
       expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
 
-    it('icon not trigger when collapsible equal header', () => {
+    it('icon trigger when collapsible equal header', () => {
       const collapse = mount(
         <Collapse collapsible="header">
           <Panel header="collapse 1" key="1">
@@ -554,7 +568,7 @@ describe('collapse', () => {
       );
 
       collapse.find('.rc-collapse-header .arrow').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
 
     it('header not trigger when collapsible equal icon', () => {
