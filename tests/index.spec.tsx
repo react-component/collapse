@@ -137,8 +137,7 @@ describe('collapse', () => {
           activeKey: ['2'],
         };
 
-        constructor(props: any) {
-          super(props);
+        componentDidMount(): void {
           this.setState({
             activeKey: ['2'],
           });
@@ -493,7 +492,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
       collapse.find('.rc-collapse-header').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
@@ -519,10 +518,10 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-icon').exists()).toBeTruthy();
+      expect(collapse.find('.rc-collapse-expand-icon').exists()).toBeTruthy();
       collapse.find('.rc-collapse-header').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
-      collapse.find('.rc-collapse-header-icon').simulate('click');
+      collapse.find('.rc-collapse-expand-icon').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
 
@@ -534,7 +533,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
 
       expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
 
@@ -550,7 +549,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeFalsy();
+      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
 
       expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
 
@@ -580,8 +579,20 @@ describe('collapse', () => {
         </Collapse>,
       );
 
-      collapse.find('.rc-collapse-header-text-static').simulate('click');
+      collapse.find('.rc-collapse-header-text').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
+  });
+
+  it('!showArrow', () => {
+    const wrapper = mount(
+      <Collapse>
+        <Panel header="collapse 1" key="1" showArrow={false}>
+          first
+        </Panel>
+      </Collapse>,
+    );
+
+    expect(wrapper.exists('.rc-collapse-expand-icon')).toBeFalsy();
   });
 });
