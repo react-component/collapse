@@ -177,6 +177,12 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
         <td>custom style</td>
       </tr>
       <tr>
+        <td>contentBoxStyle</td>
+        <td>object</td>
+        <th></th>
+        <td>custom style for content box</td>
+      </tr>
+      <tr>
         <td>openMotion</td>
         <td>object</td>
         <th></th>

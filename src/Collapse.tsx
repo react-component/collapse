@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import shallowEqual from 'shallowequal';
 import toArray from 'rc-util/lib/Children/toArray';
 import CollapsePanel from './Panel';
-import { CollapseProps, CollapsibleType } from './interface';
+import type { CollapseProps, CollapsibleType } from './interface';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
@@ -78,10 +78,23 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
     if (!child) return null;
 
     const { activeKey } = this.state;
-    const { prefixCls, openMotion, accordion, destroyInactivePanel: rootDestroyInactivePanel, expandIcon, collapsible } = this.props;
+    const {
+      prefixCls,
+      openMotion,
+      accordion,
+      destroyInactivePanel: rootDestroyInactivePanel,
+      expandIcon,
+      collapsible,
+    } = this.props;
     // If there is no key provide, use the panel order as default key
     const key = child.key || String(index);
-    const { header, headerClass, destroyInactivePanel, collapsible: childCollapsible } = child.props;
+    const {
+      header,
+      headerClass,
+      contentBoxStyle,
+      destroyInactivePanel,
+      collapsible: childCollapsible,
+    } = child.props;
     let isActive = false;
     if (accordion) {
       isActive = activeKey[0] === key;
@@ -89,13 +102,14 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       isActive = activeKey.indexOf(key) > -1;
     }
 
-    const mergeCollapsible: CollapsibleType  = childCollapsible ?? collapsible;
+    const mergeCollapsible: CollapsibleType = childCollapsible ?? collapsible;
 
     const props = {
       key,
       panelKey: key,
       header,
       headerClass,
+      contentBoxStyle,
       isActive,
       prefixCls,
       destroyInactivePanel: destroyInactivePanel ?? rootDestroyInactivePanel,

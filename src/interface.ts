@@ -26,6 +26,7 @@ export interface CollapsePanelProps {
   showArrow?: boolean;
   className?: string;
   style?: object;
+  contentBoxStyle?: object;
   isActive?: boolean;
   openMotion?: CSSMotionProps;
   destroyInactivePanel?: boolean;
