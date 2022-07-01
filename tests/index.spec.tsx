@@ -485,6 +485,34 @@ describe('collapse', () => {
     expect(collapse.find('.custom-child').getDOMNode().innerHTML).toBe('custom-child');
   });
 
+  // https://github.com/ant-design/ant-design/issues/36327
+  // https://github.com/ant-design/ant-design/issues/6179
+  // https://github.com/react-component/collapse/issues/73#issuecomment-323626120
+  it('should support custom component', () => {
+    const PanelElement = (props) => (
+      <Panel header="collapse 1" {...props}>
+        <p>test</p>
+      </Panel>
+    );
+    const collapse = mount(
+      <Collapse defaultActiveKey="1">
+        <PanelElement key="1" />
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+      </Collapse>,
+    );
+    expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
+    expect(collapse.find('.rc-collapse-content').hasClass('rc-collapse-content-active')).toBe(true);
+    expect(collapse.find('.rc-collapse-header').at(0).text()).toBe('collapse 1');
+    expect(collapse.find('.rc-collapse-header').at(0).find('.arrow').length).toBe(1);
+    collapse.find('.rc-collapse-header').at(0).simulate('click');
+    expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
+    expect(collapse.find('.rc-collapse-content').hasClass('rc-collapse-content-inactive')).toBe(
+      true,
+    );
+  });
+
   describe('collapsible', () => {
     it('default', () => {
       const collapse = mount(

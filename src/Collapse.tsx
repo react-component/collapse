@@ -126,6 +126,12 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       return child;
     }
 
+    Object.keys(props).forEach((propName: keyof typeof props) => {
+      if (typeof props[propName] === 'undefined') {
+        delete props[propName];
+      }
+    });
+
     return React.cloneElement(child, props);
   };
 
