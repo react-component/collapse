@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Collapse, { Panel } from '../src';
+import Collapse, { Panel } from '../../src';
 import motion from './_util/motionUtil';
-import '../assets/index.less';
+import '../../assets/index.less';
 
 const text = `
   A dog is a type of domesticated animal.
