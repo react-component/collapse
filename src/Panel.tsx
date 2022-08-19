@@ -82,7 +82,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       openMotion,
       extra,
       collapsible,
-      ...rest,
+      ...rest
     } = this.props;
 
     const disabled = collapsible === 'disabled';
