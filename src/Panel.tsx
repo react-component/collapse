@@ -119,7 +119,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
     return (
-      <div className={itemCls} style={style} id={id} {...rest}>
+      <div {...rest} className={itemCls} style={style} id={id}>
         <div {...headerProps}>
           {this.renderIcon()}
           {this.renderTitle()}
