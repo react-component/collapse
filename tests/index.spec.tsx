@@ -600,15 +600,16 @@ describe('collapse', () => {
   });
 
   it('Panel container dom can set event handler', () => {
+    const clickHandler = jest.fn();
     const wrapper = mount(
       <Collapse defaultActiveKey="1">
-        <Panel header="collapse 1" key="1" onClick={() => (window.numTest = 100)}>
+        <Panel header="collapse 1" key="1" onClick={clickHandler}>
           <div className="target">Click this</div>
         </Panel>
       </Collapse>,
     );
-    expect(window.numTest).toBe(undefined);
+
     wrapper.find('.target').simulate('click');
-    expect(window.numTest).toBe(100);
+    expect(clickHandler).toHaveBeenCalled();
   });
 });
