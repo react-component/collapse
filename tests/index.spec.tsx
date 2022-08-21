@@ -598,4 +598,18 @@ describe('collapse', () => {
 
     expect(wrapper.exists('.rc-collapse-expand-icon')).toBeFalsy();
   });
+
+  it('Panel container dom can set event handler', () => {
+    const clickHandler = jest.fn();
+    const wrapper = mount(
+      <Collapse defaultActiveKey="1">
+        <Panel header="collapse 1" key="1" onClick={clickHandler}>
+          <div className="target">Click this</div>
+        </Panel>
+      </Collapse>,
+    );
+
+    wrapper.find('.target').simulate('click');
+    expect(clickHandler).toHaveBeenCalled();
+  });
 });
