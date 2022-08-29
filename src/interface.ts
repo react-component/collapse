@@ -19,7 +19,7 @@ export interface CollapseProps {
   headerRender?: (props: object) => React.ReactNode;
 }
 
-export interface CollapsePanelProps {
+export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> {
   id?: string;
   header?: string | React.ReactNode;
   prefixCls?: string;

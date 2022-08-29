@@ -83,6 +83,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       headerRender,
       extra,
       collapsible,
+      ...rest
     } = this.props;
 
     const disabled = collapsible === 'disabled';
@@ -119,7 +120,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
     return (
-      <div className={itemCls} style={style} id={id}>
+      <div {...rest} className={itemCls} style={style} id={id}>
         <div {...headerProps}>
           {headerRender && typeof headerRender === 'function' ? (
             headerRender(this.props)
