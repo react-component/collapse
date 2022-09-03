@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
+import * as React from 'react';
 import shallowEqual from 'shallowequal';
-import PanelContent from './PanelContent';
 import type { CollapsePanelProps } from './interface';
+import PanelContent from './PanelContent';
 
 class CollapsePanel extends React.Component<CollapsePanelProps, any> {
   static defaultProps = {
@@ -46,7 +46,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       iconNode && (
         <div
           className={`${prefixCls}-expand-icon`}
-          onClick={collapsible === 'header' ? this.onItemClick : null}
+          onClick={collapsible === 'header' || collapsible === 'icon' ? this.onItemClick : null}
         >
           {iconNode}
         </div>
@@ -87,6 +87,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
 
     const disabled = collapsible === 'disabled';
     const collapsibleHeader = collapsible === 'header';
+    const collapsibleIcon = collapsible === 'icon';
 
     const itemCls = classNames(
       {
@@ -100,6 +101,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     const headerCls = classNames(`${prefixCls}-header`, {
       [headerClass]: headerClass,
       [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
+      [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
     });
 
     /** header 节点属性 */
@@ -110,7 +112,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       onKeyPress: this.handleKeyPress,
     };
 
-    if (!collapsibleHeader) {
+    if (!collapsibleHeader && !collapsibleIcon) {
       headerProps.onClick = this.onItemClick;
       headerProps.role = accordion ? 'tab' : 'button';
       headerProps.tabIndex = disabled ? -1 : 0;

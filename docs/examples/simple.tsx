@@ -94,7 +94,7 @@ class Test extends React.Component {
   };
 
   handleCollapsibleChange = (e: any) => {
-    const values = [undefined, 'header', 'disabled'];
+    const values = [undefined, 'header', 'icon', 'disabled'];
     this.setState({
       collapsible: values[e.target.value],
     });
@@ -116,7 +116,8 @@ class Test extends React.Component {
           <select onChange={this.handleCollapsibleChange}>
             <option value={0}>default</option>
             <option value={1}>header</option>
-            <option value={2}>disabled</option>
+            <option value={2}>icon</option>
+            <option value={3}>disabled</option>
           </select>
         </p>
         <br />

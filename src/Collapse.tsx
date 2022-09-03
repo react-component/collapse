@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import * as React from 'react';
 import classNames from 'classnames';
-import shallowEqual from 'shallowequal';
 import toArray from 'rc-util/lib/Children/toArray';
-import CollapsePanel from './Panel';
+import * as React from 'react';
+import shallowEqual from 'shallowequal';
 import type { CollapseProps, CollapsibleType } from './interface';
+import CollapsePanel from './Panel';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;

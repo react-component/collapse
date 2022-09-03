@@ -196,7 +196,7 @@ If `accordion` is true, only one panel can be open.  Opening another panel will 
       </tr>
       <tr>
           <td>collapsible</td>
-          <td>'header' | 'disabled'</td>
+          <td>'header' | 'icon' | 'disabled'</td>
           <th>-</th>
           <td>specify whether the panel be collapsible or the area of collapsible.</td>
       </tr>

@@ -1,9 +1,7 @@
-import React, { Fragment } from 'react';
 import type { ReactWrapper } from 'enzyme';
 import { mount } from 'enzyme';
-
 import KeyCode from 'rc-util/lib/KeyCode';
-
+import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
 
 describe('collapse', () => {
@@ -540,6 +538,20 @@ describe('collapse', () => {
       collapse.find('.rc-collapse-header-text').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
     });
+    it('should work when value is icon', () => {
+      const collapse = mount(
+        <Collapse collapsible="icon">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+      expect(collapse.find('.rc-collapse-expand-icon').exists()).toBeTruthy();
+      collapse.find('.rc-collapse-header').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      collapse.find('.rc-collapse-expand-icon').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+    });
 
     it('should disabled when value is disabled', () => {
       const collapse = mount(
@@ -584,6 +596,19 @@ describe('collapse', () => {
 
       collapse.find('.rc-collapse-header .arrow').simulate('click');
       expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+    });
+
+    it('header not trigger when collapsible equal icon', () => {
+      const collapse = mount(
+        <Collapse collapsible="icon">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
+      );
+
+      collapse.find('.rc-collapse-header-text').simulate('click');
+      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
     });
   });
 
