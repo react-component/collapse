@@ -119,7 +119,7 @@ ReactDOM.render(collapse, container);
       </tr>
       <tr>
           <td>collapsible</td>
-          <td>'header' | 'disabled'</td>
+          <td>'header' | 'icon' | 'disabled'</td>
           <th>-</th>
           <td>specify whether the panel of children is collapsible or the area of collapsible.</td>
       </tr>
