@@ -120,6 +120,13 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
 
     const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
+    // https://github.com/ant-design/ant-design/pull/37419#issuecomment-1238812797
+    delete rest.header;
+    delete rest.panelKey;
+    delete rest.onItemClick;
+    delete rest.showArrow;
+    delete rest.expandIcon;
+
     return (
       <div {...rest} className={itemCls} style={style} id={id}>
         <div {...headerProps}>
