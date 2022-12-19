@@ -44,7 +44,6 @@
     "@types/jest": "^26.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@types/shallowequal": "^1.1.1",
     "@umijs/fabric": "^2.0.0",
     "cross-env": "^7.0.0",
     "dumi": "^1.1.4",
@@ -66,8 +65,7 @@
     "@babel/runtime": "^7.10.1",
     "classnames": "2.x",
     "rc-motion": "^2.3.4",
-    "rc-util": "^5.2.1",
-    "shallowequal": "^1.1.0"
+    "rc-util": "^5.27.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

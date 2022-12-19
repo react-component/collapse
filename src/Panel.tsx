@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import * as React from 'react';
-import shallowEqual from 'shallowequal';
+import isEqual from 'rc-util/lib/isEqual';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
 
@@ -16,7 +16,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
   };
 
   shouldComponentUpdate(nextProps: CollapsePanelProps) {
-    return !shallowEqual(this.props, nextProps);
+    return !isEqual(this.props, nextProps, true);
   }
 
   onItemClick = () => {

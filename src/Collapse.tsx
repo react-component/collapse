@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
 import * as React from 'react';
-import shallowEqual from 'shallowequal';
+import isEqual from 'rc-util/lib/isEqual';
 import type { CollapseProps, CollapsibleType } from './interface';
 import CollapsePanel from './Panel';
 
@@ -45,7 +45,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
   }
 
   shouldComponentUpdate(nextProps: CollapseProps, nextState: CollapseState) {
-    return !shallowEqual(this.props, nextProps) || !shallowEqual(this.state, nextState);
+    return !isEqual(this.props, nextProps, true) || !isEqual(this.state, nextState, true);
   }
 
   onClickItem = (key: React.Key) => {
