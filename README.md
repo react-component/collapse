@@ -5,17 +5,15 @@ rc-collapse ui component for react
 
 [![NPM version][npm-image]][npm-url]
 [![build status][github-actions-image]][github-actions-url]
-[![Test coverage][coveralls-image]][coveralls-url]
+[![Test coverage][codecov-image]][codecov-url]
 [![npm download][download-image]][download-url]
-[![Dependencies](https://img.shields.io/david/react-component/collapse.svg?style=flat-square)](https://david-dm.org/react-component/collapse)
-[![DevDependencies](https://img.shields.io/david/dev/react-component/collapse.svg?style=flat-square)](https://david-dm.org/react-component/collapse?type=dev)
 
 [npm-image]: http://img.shields.io/npm/v/rc-collapse.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-collapse
 [github-actions-image]: https://github.com/react-component/collapse/workflows/CI/badge.svg
 [github-actions-url]: https://github.com/react-component/collapse/actions
-[coveralls-image]: https://img.shields.io/coveralls/react-component/collapse.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/react-component/collapse?branch=master
+[codecov-image]: https://img.shields.io/codecov/c/github/react-component/collapse/master.svg?style=flat-square
+[codecov-url]: https://app.codecov.io/gh/react-component/collapse
 [download-image]: https://img.shields.io/npm/dm/rc-collapse.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-collapse
 
