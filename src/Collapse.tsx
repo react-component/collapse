@@ -84,6 +84,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       accordion,
       destroyInactivePanel: rootDestroyInactivePanel,
       expandIcon,
+      headerRender,
       collapsible,
     } = this.props;
     // If there is no key provide, use the panel order as default key
@@ -116,6 +117,7 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       children: child.props.children,
       onItemClick: mergeCollapsible === 'disabled' ? null : this.onClickItem,
       expandIcon,
+      headerRender,
       collapsible: mergeCollapsible,
     };
 

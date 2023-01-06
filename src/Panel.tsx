@@ -80,6 +80,7 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
       accordion,
       forceRender,
       openMotion,
+      headerRender,
       extra,
       collapsible,
       ...rest
@@ -130,9 +131,15 @@ class CollapsePanel extends React.Component<CollapsePanelProps, any> {
     return (
       <div {...rest} className={itemCls} style={style} id={id}>
         <div {...headerProps}>
-          {this.renderIcon()}
-          {this.renderTitle()}
-          {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
+          {headerRender && typeof headerRender === 'function' ? (
+            headerRender(this.props)
+          ) : (
+            <>
+              {this.renderIcon()}
+              {this.renderTitle()}
+              {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
+            </>
+          )}
         </div>
         <CSSMotion
           visible={isActive}
