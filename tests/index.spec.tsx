@@ -391,14 +391,18 @@ describe('collapse', () => {
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
 
-    expect(container.querySelector('.rc-collapse-content')).toHaveClass('rc-collapse-content-active');
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-active',
+    );
 
     header = container.querySelector('.rc-collapse-header');
     fireEvent.keyDown(header, { key: 'Enter', keyCode: KeyCode.ENTER });
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-content').className).not.toContain('rc-collapse-content-active');
+    expect(container.querySelector('.rc-collapse-content').className).not.toContain(
+      'rc-collapse-content-active',
+    );
   });
 
   describe('wrapped in Fragment', () => {
@@ -444,9 +448,7 @@ describe('collapse', () => {
         <a className="custom-child">custom-child</a>
       </Collapse>,
     );
-    expect(container.querySelector('.custom-child').innerHTML).toBe(
-      'custom-child',
-    );
+    expect(container.querySelector('.custom-child').innerHTML).toBe('custom-child');
   });
 
   // https://github.com/ant-design/ant-design/issues/36327
@@ -468,12 +470,18 @@ describe('collapse', () => {
     );
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
-    expect(container.querySelector('.rc-collapse-content')).toHaveClass('rc-collapse-content-active');
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-active',
+    );
     expect(container.querySelector('.rc-collapse-header').textContent).toBe('collapse 1');
-    expect(container.querySelector('.rc-collapse-header').querySelectorAll('.arrow')).toHaveLength(1);
+    expect(container.querySelector('.rc-collapse-header').querySelectorAll('.arrow')).toHaveLength(
+      1,
+    );
     fireEvent.click(container.querySelector('.rc-collapse-header'));
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-content')).toHaveClass('rc-collapse-content-inactive');
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-inactive',
+    );
   });
 
   describe('prop: collapsible', () => {

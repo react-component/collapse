@@ -11,30 +11,36 @@
     "accordion"
   ],
   "homepage": "http://github.com/react-component/collapse",
+  "bugs": {
+    "url": "http://github.com/react-component/collapse/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:react-component/collapse.git"
   },
-  "bugs": {
-    "url": "http://github.com/react-component/collapse/issues"
-  },
   "license": "MIT",
+  "main": "./lib/index",
+  "module": "./es/index",
   "files": [
     "lib",
     "es",
     "assets/*.css"
   ],
-  "main": "./lib/index",
-  "module": "./es/index",
   "scripts": {
-    "start": "dumi dev",
     "build": "dumi build",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "coverage": "father test --coverage",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
+    "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "test": "rc-test",
-    "coverage": "father test --coverage"
+    "start": "dumi dev",
+    "test": "rc-test"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.10.1",
+    "classnames": "2.x",
+    "rc-motion": "^2.3.4",
+    "rc-util": "^5.27.0"
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^1.0.1",
@@ -56,12 +62,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^4.0.2"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.10.1",
-    "classnames": "2.x",
-    "rc-motion": "^2.3.4",
-    "rc-util": "^5.27.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",

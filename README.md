@@ -1,12 +1,10 @@
 # rc-collapse
+
 ---
 
 rc-collapse ui component for react
 
-[![NPM version][npm-image]][npm-url]
-[![build status][github-actions-image]][github-actions-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![npm download][download-image]][download-url]
+[![NPM version][npm-image]][npm-url] [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![npm download][download-image]][download-url]
 
 [npm-image]: http://img.shields.io/npm/v/rc-collapse.svg?style=flat-square
 [npm-url]: http://npmjs.org/package/rc-collapse
@@ -30,10 +28,9 @@ http://localhost:8000/examples/
 
 online example: http://react-component.github.io/collapse/
 
-
 ## Features
 
-* support ie8,ie8+,chrome,firefox,safari
+- support ie8,ie8+,chrome,firefox,safari
 
 ## Install
 
@@ -50,7 +47,9 @@ require('rc-collapse/assets/index.css');
 
 var collapse = (
   <Collapse accordion={true}>
-    <Panel header="hello" headerClass="my-header-class">this is panel content</Panel>
+    <Panel header="hello" headerClass="my-header-class">
+      this is panel content
+    </Panel>
     <Panel header="title2">this is panel content2 or other</Panel>
   </Collapse>
 );
@@ -124,11 +123,9 @@ ReactDOM.render(collapse, container);
     </tbody>
 </table>
 
-If `accordion` is null or false, every panel can open.  Opening another panel will not close any of the other panels.
-`activeKey` should be an string, if passing an array (the first item in the array will be used).
+If `accordion` is null or false, every panel can open. Opening another panel will not close any of the other panels. `activeKey` should be an string, if passing an array (the first item in the array will be used).
 
-If `accordion` is true, only one panel can be open.  Opening another panel will cause the previously opened panel to close.
-`activeKey` should be an string, if passing an array (the first item in the array will be used).
+If `accordion` is true, only one panel can be open. Opening another panel will cause the previously opened panel to close. `activeKey` should be an string, if passing an array (the first item in the array will be used).
 
 ### Collapse.Panel
 
