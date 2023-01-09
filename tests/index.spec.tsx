@@ -367,12 +367,12 @@ describe('collapse', () => {
 
   it('should toggle panel when press enter', () => {
     const myKeyEvent = {
-      key:'Enter',
+      key: 'Enter',
       keyCode: 13,
       which: 13,
       // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-455854112
       charCode: 13,
-    }
+    };
 
     const { container } = render(
       <Collapse>
