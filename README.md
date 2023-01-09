@@ -1,7 +1,5 @@
 # rc-collapse
 
----
-
 rc-collapse ui component for react
 
 [![NPM version][npm-image]][npm-url] [![build status][github-actions-image]][github-actions-url] [![Test coverage][codecov-image]][codecov-url] [![npm download][download-image]][download-url]
@@ -15,22 +13,9 @@ rc-collapse ui component for react
 [download-image]: https://img.shields.io/npm/dm/rc-collapse.svg?style=flat-square
 [download-url]: https://npmjs.org/package/rc-collapse
 
-## Development
+## Live Demo
 
-```
-npm install
-npm start
-```
-
-## Example
-
-http://localhost:8000/examples/
-
-online example: http://react-component.github.io/collapse/
-
-## Features
-
-- support ie8,ie8+,chrome,firefox,safari
+http://react-component.github.io/collapse/
 
 ## Install
 
@@ -45,7 +30,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 require('rc-collapse/assets/index.css');
 
-var collapse = (
+var App = (
   <Collapse accordion={true}>
     <Panel header="hello" headerClass="my-header-class">
       this is panel content
@@ -53,14 +38,16 @@ var collapse = (
     <Panel header="title2">this is panel content2 or other</Panel>
   </Collapse>
 );
-ReactDOM.render(collapse, container);
+ReactDOM.render(App, container);
 ```
+
+## Features
+
+- support ie8,ie8+,chrome,firefox,safari
 
 ## API
 
-### Collapse
-
-#### props:
+### Collapse props
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -127,9 +114,7 @@ If `accordion` is null or false, every panel can open. Opening another panel wil
 
 If `accordion` is true, only one panel can be open. Opening another panel will cause the previously opened panel to close. `activeKey` should be an string, if passing an array (the first item in the array will be used).
 
-### Collapse.Panel
-
-#### props
+### Collapse.Panel props
 
 <table class="table table-bordered table-striped">
     <thead>
@@ -204,20 +189,24 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
 
 If `key` is not provided, the panel's index will be used instead.
 
+## Development
+
+```bash
+npm install
+npm start
+```
+
 ## Test Case
 
-```
+```bash
 npm test
-npm run chrome-test
 ```
 
 ## Coverage
 
+```bash
+npm test -- --coverage
 ```
-npm run coverage
-```
-
-open coverage/ dir
 
 ## License
 
