@@ -31,8 +31,8 @@ package-lock.json
 .storybook
 .doc
 
-# umi
-.umi
-.umi-production
-.umi-test
+# dumi
+.dumi/tmp
+.dumi/tmp-production
+.dumi/tmp-test
 .env.local
