@@ -365,7 +365,15 @@ describe('collapse', () => {
     });
   });
 
-  it.skip('should toggle panel when press enter', () => {
+  it('should toggle panel when press enter', () => {
+    const myKeyEvent = {
+      key:'Enter',
+      keyCode: 13,
+      which: 13,
+      // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-455854112
+      charCode: 13,
+    }
+
     const { container } = render(
       <Collapse>
         <Panel header="collapse 1" key="1">
@@ -380,13 +388,11 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    let header = container.querySelectorAll('.rc-collapse-header')?.[2];
-    fireEvent.keyDown(header, { key: 'Enter', KeyCode: KeyCode.ENTER });
+    fireEvent.keyPress(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
     jest.runAllTimers();
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
 
-    header = container.querySelector('.rc-collapse-header');
-    fireEvent.keyDown(header, { key: 'Enter', keyCode: KeyCode.ENTER });
+    fireEvent.keyPress(container.querySelector('.rc-collapse-header'), myKeyEvent);
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
@@ -395,8 +401,7 @@ describe('collapse', () => {
       'rc-collapse-content-active',
     );
 
-    header = container.querySelector('.rc-collapse-header');
-    fireEvent.keyDown(header, { key: 'Enter', keyCode: KeyCode.ENTER });
+    fireEvent.keyPress(container.querySelector('.rc-collapse-header'), myKeyEvent);
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
