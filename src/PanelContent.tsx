@@ -1,8 +1,6 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable react/prop-types */
 import * as React from 'react';
 import classnames from 'classnames';
-import { CollapsePanelProps } from './interface';
+import type { CollapsePanelProps } from './interface';
 
 const PanelContent = React.forwardRef<
   HTMLDivElement,

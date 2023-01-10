@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Collapse, { Panel } from '../../src';
+import Collapse, { Panel } from 'rc-collapse';
 import motion from './_util/motionUtil';
 import '../../assets/index.less';
 

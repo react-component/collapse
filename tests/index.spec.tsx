@@ -1,5 +1,5 @@
-import type { ReactWrapper } from 'enzyme';
-import { mount } from 'enzyme';
+import { fireEvent, render } from '@testing-library/react';
+import type { RenderResult } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
@@ -24,10 +24,10 @@ describe('collapse', () => {
   }
 
   function runNormalTest(element: any) {
-    let collapse: ReactWrapper;
+    let collapse: RenderResult;
 
     beforeEach(() => {
-      collapse = mount(element);
+      collapse = render(element);
     });
 
     afterEach(() => {
@@ -36,77 +36,77 @@ describe('collapse', () => {
 
     it('add className', () => {
       const expectedClassName = 'rc-collapse-item important';
-      expect(collapse.find('.rc-collapse-item').at(2).getDOMNode().className).toBe(
+      expect(collapse.container.querySelectorAll('.rc-collapse-item')?.[2]).toHaveClass(
         expectedClassName,
       );
     });
 
     it('create works', () => {
-      expect(collapse.find('.rc-collapse').length).toBe(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse')).toHaveLength(1);
     });
 
     it('header works', () => {
-      expect(collapse.find('.rc-collapse-header').length).toBe(3);
+      expect(collapse.container.querySelectorAll('.rc-collapse-header')).toHaveLength(3);
     });
 
     it('panel works', () => {
-      expect(collapse.find('.rc-collapse-item').length).toBe(3);
-      expect(collapse.find('.rc-collapse-content').length).toBe(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item')).toHaveLength(3);
+      expect(collapse.container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
     });
 
     it('should render custom arrow icon corrctly', () => {
-      expect(collapse.find('.rc-collapse-header').at(0).getDOMNode().textContent).toContain(
+      expect(collapse.container.querySelector('.rc-collapse-header').textContent).toContain(
         'test>',
       );
     });
 
     it('default active works', () => {
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item-active').length).toBeFalsy();
     });
 
     it('extra works', () => {
-      const extraNodes = collapse.find('.rc-collapse-extra');
-      expect(extraNodes.length).toBe(1);
-      expect(extraNodes.at(0).getDOMNode().innerHTML).toBe('<span>ExtraSpan</span>');
+      const extraNodes = collapse.container.querySelectorAll('.rc-collapse-extra');
+      expect(extraNodes).toHaveLength(1);
+      expect(extraNodes?.[0]?.innerHTML).toBe('<span>ExtraSpan</span>');
     });
 
     it('onChange works', () => {
       changeHook = jest.fn();
-      collapse.find('.rc-collapse-header').at(1).simulate('click');
+      const header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
+      fireEvent.click(header);
       expect(changeHook.mock.calls[0][0]).toEqual(['2']);
     });
 
     it('click should toggle panel state', () => {
-      const header = collapse.find('.rc-collapse-header').at(1);
-      header.simulate('click');
+      const header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      header.simulate('click');
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-inactive').at(0).getDOMNode().innerHTML).toBe(
+      expect(collapse.container.querySelector('.rc-collapse-content-inactive')?.innerHTML).toBe(
         '<div class="rc-collapse-content-box">second</div>',
       );
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
     });
 
     it('click should not toggle disabled panel state', () => {
-      const header = collapse.find('.rc-collapse-header').at(0);
-      header.simulate('click');
+      const header = collapse.container.querySelector('.rc-collapse-header');
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
     });
 
     it('should not have role', () => {
-      const item = collapse.find('.rc-collapse').at(0);
-      expect(item.getDOMNode().getAttribute('role')).toBe(null);
+      const item = collapse.container.querySelector('.rc-collapse');
+      expect(item).toBeTruthy();
+      expect(item.getAttribute('role')).toBe(null);
     });
 
     it('should set button role on panel title', () => {
-      const item = collapse.find('.rc-collapse-header').at(0);
-      expect(item.getDOMNode().getAttribute('role')).toBe('button');
+      const item = collapse.container.querySelector('.rc-collapse-header');
+      expect(item).toBeTruthy();
+      expect(item.getAttribute('role')).toBe('button');
     });
   }
 
@@ -130,53 +130,39 @@ describe('collapse', () => {
     runNormalTest(element);
 
     it('controlled', () => {
-      class ControlledCollapse extends React.Component {
-        state: {
-          activeKey: string[];
-        } = {
-          activeKey: ['2'],
+      const onChangeSpy = jest.fn();
+
+      const ControlledCollapse = () => {
+        const [activeKey, updateActiveKey] = React.useState<string[]>(['2']);
+
+        const handleChange = (key: string[]) => {
+          updateActiveKey(key);
+          onChangeSpy(key);
         };
 
-        componentDidMount(): void {
-          this.setState({
-            activeKey: ['2'],
-          });
-        }
+        return (
+          <Collapse onChange={handleChange} activeKey={activeKey}>
+            <Panel header="collapse 1" key="1">
+              first
+            </Panel>
+            <Panel header="collapse 2" key="2">
+              second
+            </Panel>
+            <Panel header="collapse 3" key="3">
+              third
+            </Panel>
+          </Collapse>
+        );
+      };
 
-        onChange = (val: string[]) => {
-          this.setState({
-            activeKey: val,
-          });
-        };
+      const { container } = render(<ControlledCollapse />);
 
-        render() {
-          const { activeKey } = this.state;
-          return (
-            <Collapse onChange={this.onChange} activeKey={activeKey}>
-              <Panel header="collapse 1" key="1">
-                first
-              </Panel>
-              <Panel header="collapse 2" key="2">
-                second
-              </Panel>
-              <Panel header="collapse 3" key="3">
-                third
-              </Panel>
-            </Collapse>
-          );
-        }
-      }
-
-      const collapse = mount(<ControlledCollapse />);
-
-      expect(collapse.find(Collapse).state('activeKey')).toEqual(['2']);
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      const header = collapse.find('.rc-collapse-header').at(0);
-      header.simulate('click');
+      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      const header = container.querySelector('.rc-collapse-header');
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.state('activeKey')).toEqual(['2', '1']);
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(2);
+      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(2);
+      expect(onChangeSpy).toBeCalledWith(['2', '1']);
     });
   });
 
@@ -199,8 +185,8 @@ describe('collapse', () => {
     runNormalTest(element);
   });
 
-  describe('it shoule support extra whit number 0', () => {
-    const collapse = mount(
+  it('shoule support extra whit number 0', () => {
+    const { container } = render(
       <Collapse onChange={onChange} activeKey={0}>
         <Panel header="collapse 0" key={0} extra={0}>
           zero
@@ -208,13 +194,13 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    const extraNodes = collapse.find('.rc-collapse-extra');
-    expect(extraNodes.length).toBe(1);
-    expect(extraNodes.at(0).getDOMNode().innerHTML).toBe('0');
+    const extraNodes = container.querySelectorAll('.rc-collapse-extra');
+    expect(extraNodes).toHaveLength(1);
+    expect(extraNodes[0].innerHTML).toBe('0');
   });
 
-  describe('it should support activeKey number 0', () => {
-    const collapse = mount(
+  it('should support activeKey number 0', () => {
+    const { container } = render(
       <Collapse onChange={onChange} activeKey={0}>
         <Panel header="collapse 0" key={0}>
           zero
@@ -228,13 +214,12 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    it('activeKey number 0, should open one item', () => {
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-    });
+    // activeKey number 0, should open one item
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
   });
 
-  describe('destroyInactivePanel', () => {
-    const collapse = mount(
+  it('click should toggle panel state', () => {
+    const { container } = render(
       <Collapse onChange={onChange} destroyInactivePanel>
         <Panel header="collapse 1" key="1">
           first
@@ -248,19 +233,18 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    it('click should toggle panel state', () => {
-      const header = collapse.find('.rc-collapse-header').at(1);
-      header.simulate('click');
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      header.simulate('click');
-      expect(collapse.find('.rc-collapse-content-inactive').exists()).toBeFalsy();
-    });
+    const header = container.querySelectorAll('.rc-collapse-header')?.[1];
+    fireEvent.click(header);
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+    fireEvent.click(header);
+    expect(container.querySelectorAll('.rc-collapse-content-inactive').length).toBeFalsy();
   });
 
-  describe('accordion', () => {
-    let collapse: ReactWrapper;
+  describe('prop: accordion', () => {
+    let collapse: RenderResult;
+
     beforeEach(() => {
-      collapse = mount(
+      collapse = render(
         <Collapse onChange={onChange} accordion>
           <Panel header="collapse 1" key="1">
             first
@@ -276,70 +260,63 @@ describe('collapse', () => {
     });
 
     it('accordion content, should default open zero item', () => {
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
     });
 
     it('accordion item, should default open zero item', () => {
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
 
     it('should toggle show on panel', () => {
-      let header = collapse.find('.rc-collapse-header').at(1);
-      header.simulate('click');
+      let header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
-      header = collapse.find('.rc-collapse-header').at(1);
-      header.simulate('click');
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
+      header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').exists()).toBeFalsy();
-      expect(collapse.find('.rc-collapse-item-active').exists()).toBeFalsy();
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
 
     it('should only show on panel', () => {
-      let header = collapse.find('.rc-collapse-header').at(1);
-      header.simulate('click');
+      let header = collapse.container.querySelector('.rc-collapse-header');
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
-      header = collapse.find('.rc-collapse-header').at(2);
-      header.simulate('click');
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
+      header = collapse.container.querySelectorAll('.rc-collapse-header')?.[2];
+      fireEvent.click(header);
       jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
 
     it('should add tab role on panel title', () => {
-      const item = collapse.find('.rc-collapse-header').at(0);
-      expect(item.getDOMNode().getAttribute('role')).toBe('tab');
+      const item = collapse.container.querySelector('.rc-collapse-header');
+      expect(item).toBeTruthy();
+      expect(item.getAttribute('role')).toBe('tab');
     });
 
     it('should add tablist role on accordion', () => {
-      const item = collapse.find('.rc-collapse').at(0);
-      expect(item.getDOMNode().getAttribute('role')).toBe('tablist');
+      const item = collapse.container.querySelector('.rc-collapse');
+      expect(item).toBeTruthy();
+      expect(item.getAttribute('role')).toBe('tablist');
     });
 
     it('should add tablist role on PanelContent', () => {
-      const header = collapse.find('.rc-collapse-header').at(0);
-      header.simulate('click');
-      const item = collapse.find('.rc-collapse-content').at(0);
-      expect(item.getDOMNode().getAttribute('role')).toBe('tabpanel');
+      const header = collapse.container.querySelector('.rc-collapse-header');
+      fireEvent.click(header);
+      const item = collapse.container.querySelector('.rc-collapse-content');
+      expect(item).toBeTruthy();
+      expect(item.getAttribute('role')).toBe('tabpanel');
     });
   });
 
   describe('forceRender', () => {
-    let collapse: ReactWrapper;
-
-    const renderCollapse = (element: any) => {
-      collapse = mount(element);
-    };
-
     it('when forceRender is not supplied it should lazy render the panel content', () => {
-      renderCollapse(
+      const { container } = render(
         <Collapse>
           <Panel header="collapse 1" key="1" collapsible="disabled">
             first
@@ -349,11 +326,11 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-content').length).toBe(0);
+      expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
     });
 
     it('when forceRender is FALSE it should lazy render the panel content', () => {
-      renderCollapse(
+      const { container } = render(
         <Collapse>
           <Panel header="collapse 1" key="1" forceRender={false} collapsible="disabled">
             first
@@ -363,11 +340,11 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-content').length).toBe(0);
+      expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
     });
 
     it('when forceRender is TRUE then it should render all the panel content to the DOM', () => {
-      renderCollapse(
+      const { container } = render(
         <Collapse>
           <Panel header="collapse 1" key="1" forceRender collapsible="disabled">
             first
@@ -379,62 +356,58 @@ describe('collapse', () => {
       );
 
       jest.runAllTimers();
-      collapse.update();
 
-      expect(collapse.find('.rc-collapse-content').length).toBe(1);
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
-      expect(collapse.find('div.rc-collapse-content-inactive').props().style).toEqual({
-        display: 'none',
-      });
+      expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(1);
+      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+      const inactiveDom = container.querySelector('div.rc-collapse-content-inactive');
+      expect(inactiveDom).not.toBeFalsy();
+      expect(getComputedStyle(inactiveDom)).toHaveProperty('display', 'none');
     });
   });
 
-  describe('keyboard support', () => {
-    let collapse: ReactWrapper;
-
-    const renderCollapse = (element: any) => {
-      collapse = mount(element);
+  it('should toggle panel when press enter', () => {
+    const myKeyEvent = {
+      key: 'Enter',
+      keyCode: 13,
+      which: 13,
+      // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-455854112
+      charCode: 13,
     };
 
-    it('should toggle panel when press enter', () => {
-      renderCollapse(
-        <Collapse>
-          <Panel header="collapse 1" key="1">
-            first
-          </Panel>
-          <Panel header="collapse 2" key="2">
-            second
-          </Panel>
-          <Panel header="collapse 3" key="3" collapsible="disabled">
-            second
-          </Panel>
-        </Collapse>,
-      );
-      collapse.find('.rc-collapse-header').at(2).simulate('keyPress', {
-        keyCode: KeyCode.ENTER,
-      });
-      jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
-      collapse.find('.rc-collapse-header').at(0).simulate('keyPress', {
-        keyCode: KeyCode.ENTER,
-      });
-      jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-      expect(
-        collapse.find('.rc-collapse-content').at(0).hasClass('rc-collapse-content-active'),
-      ).toBeTruthy();
-      collapse.find('.rc-collapse-header').at(0).simulate('keyPress', {
-        keyCode: KeyCode.ENTER,
-      });
-      jest.runAllTimers();
-      collapse.update();
-      expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
-      expect(
-        collapse.find('.rc-collapse-content').at(0).hasClass('rc-collapse-content-active'),
-      ).toBeFalsy();
-    });
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3" collapsible="disabled">
+          second
+        </Panel>
+      </Collapse>,
+    );
+
+    fireEvent.keyPress(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+
+    fireEvent.keyPress(container.querySelector('.rc-collapse-header'), myKeyEvent);
+    jest.runAllTimers();
+
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-active',
+    );
+
+    fireEvent.keyPress(container.querySelector('.rc-collapse-header'), myKeyEvent);
+    jest.runAllTimers();
+
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+    expect(container.querySelector('.rc-collapse-content').className).not.toContain(
+      'rc-collapse-content-active',
+    );
   });
 
   describe('wrapped in Fragment', () => {
@@ -461,18 +434,18 @@ describe('collapse', () => {
   });
 
   it('should support return null icon', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Collapse expandIcon={() => null}>
         <Panel header="title" key="1">
           first
         </Panel>
       </Collapse>,
     );
-    expect(wrapper.find('.rc-collapse-header').at(0).getDOMNode().childNodes.length).toBe(1);
+    expect(container.querySelector('.rc-collapse-header').childNodes).toHaveLength(1);
   });
 
   it('should support custom child', () => {
-    const collapse = mount(
+    const { container } = render(
       <Collapse>
         <Panel header="collapse 1" key="1">
           first
@@ -480,7 +453,7 @@ describe('collapse', () => {
         <a className="custom-child">custom-child</a>
       </Collapse>,
     );
-    expect(collapse.find('.custom-child').getDOMNode().innerHTML).toBe('custom-child');
+    expect(container.querySelector('.custom-child').innerHTML).toBe('custom-child');
   });
 
   // https://github.com/ant-design/ant-design/issues/36327
@@ -492,7 +465,7 @@ describe('collapse', () => {
         <p>test</p>
       </Panel>
     );
-    const collapse = mount(
+    const { container } = render(
       <Collapse defaultActiveKey="1">
         <PanelElement key="1" />
         <Panel header="collapse 2" key="2">
@@ -500,93 +473,96 @@ describe('collapse', () => {
         </Panel>
       </Collapse>,
     );
-    expect(collapse.find('.rc-collapse-content-active').length).toBe(1);
-    expect(collapse.find('.rc-collapse-content').hasClass('rc-collapse-content-active')).toBe(true);
-    expect(collapse.find('.rc-collapse-header').at(0).text()).toBe('collapse 1');
-    expect(collapse.find('.rc-collapse-header').at(0).find('.arrow').length).toBe(1);
-    collapse.find('.rc-collapse-header').at(0).simulate('click');
-    expect(collapse.find('.rc-collapse-content-active').length).toBe(0);
-    expect(collapse.find('.rc-collapse-content').hasClass('rc-collapse-content-inactive')).toBe(
-      true,
+
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-active',
+    );
+    expect(container.querySelector('.rc-collapse-header').textContent).toBe('collapse 1');
+    expect(container.querySelector('.rc-collapse-header').querySelectorAll('.arrow')).toHaveLength(
+      1,
+    );
+    fireEvent.click(container.querySelector('.rc-collapse-header'));
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-inactive',
     );
   });
 
-  describe('collapsible', () => {
+  describe('prop: collapsible', () => {
     it('default', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse>
           <Panel header="collapse 1" key="1">
             first
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
-      collapse.find('.rc-collapse-header').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
     it('should work when value is header', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse collapsible="header">
           <Panel header="collapse 1" key="1">
             first
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
-      collapse.find('.rc-collapse-header').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
-      collapse.find('.rc-collapse-header-text').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
+      fireEvent.click(container.querySelector('.rc-collapse-header-text'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
     it('should work when value is icon', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse collapsible="icon">
           <Panel header="collapse 1" key="1">
             first
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-expand-icon').exists()).toBeTruthy();
-      collapse.find('.rc-collapse-header').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
-      collapse.find('.rc-collapse-expand-icon').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      expect(container.querySelector('.rc-collapse-expand-icon')).toBeTruthy();
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
+      fireEvent.click(container.querySelector('.rc-collapse-expand-icon'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
 
     it('should disabled when value is disabled', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse collapsible="disabled">
           <Panel header="collapse 1" key="1">
             first
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
-
-      expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
-
-      collapse.find('.rc-collapse-header').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      expect(container.querySelectorAll('.rc-collapse-item-disabled')).toHaveLength(1);
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
 
     it('the value of panel should be read first', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse collapsible="header">
           <Panel collapsible="disabled" header="collapse 1" key="1">
             first
           </Panel>
         </Collapse>,
       );
-      expect(collapse.find('.rc-collapse-header-text').exists()).toBeTruthy();
+      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
 
-      expect(collapse.find('.rc-collapse-item-disabled').length).toBe(1);
+      expect(container.querySelectorAll('.rc-collapse-item-disabled')).toHaveLength(1);
 
-      collapse.find('.rc-collapse-header').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
 
     it('icon trigger when collapsible equal header', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse collapsible="header">
           <Panel header="collapse 1" key="1">
             first
@@ -594,12 +570,12 @@ describe('collapse', () => {
         </Collapse>,
       );
 
-      collapse.find('.rc-collapse-header .arrow').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(1);
+      fireEvent.click(container.querySelector('.rc-collapse-header .arrow'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
 
     it('header not trigger when collapsible equal icon', () => {
-      const collapse = mount(
+      const { container } = render(
         <Collapse collapsible="icon">
           <Panel header="collapse 1" key="1">
             first
@@ -607,13 +583,13 @@ describe('collapse', () => {
         </Collapse>,
       );
 
-      collapse.find('.rc-collapse-header-text').simulate('click');
-      expect(collapse.find('.rc-collapse-item-active').length).toBe(0);
+      fireEvent.click(container.querySelector('.rc-collapse-header-text'));
+      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
   });
 
   it('!showArrow', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Collapse>
         <Panel header="collapse 1" key="1" showArrow={false}>
           first
@@ -621,12 +597,12 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    expect(wrapper.exists('.rc-collapse-expand-icon')).toBeFalsy();
+    expect(container.querySelectorAll('.rc-collapse-expand-icon')).toHaveLength(0);
   });
 
   it('Panel container dom can set event handler', () => {
     const clickHandler = jest.fn();
-    const wrapper = mount(
+    const { container } = render(
       <Collapse defaultActiveKey="1">
         <Panel header="collapse 1" key="1" onClick={clickHandler}>
           <div className="target">Click this</div>
@@ -634,7 +610,7 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    wrapper.find('.target').simulate('click');
+    fireEvent.click(container.querySelector('.target'));
     expect(clickHandler).toHaveBeenCalled();
   });
 });

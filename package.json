@@ -11,61 +11,57 @@
     "accordion"
   ],
   "homepage": "http://github.com/react-component/collapse",
+  "bugs": {
+    "url": "http://github.com/react-component/collapse/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:react-component/collapse.git"
   },
-  "bugs": {
-    "url": "http://github.com/react-component/collapse/issues"
-  },
   "license": "MIT",
+  "main": "./lib/index",
+  "module": "./es/index",
   "files": [
     "lib",
     "es",
     "assets/*.css"
   ],
-  "main": "./lib/index",
-  "module": "./es/index",
   "scripts": {
-    "start": "dumi dev",
     "build": "dumi build",
     "compile": "father build && lessc assets/index.less assets/index.css",
-    "gh-pages": "npm run build && father doc deploy",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
-    "postpublish": "npm run gh-pages",
+    "coverage": "father test --coverage",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
+    "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "test": "father test",
-    "coverage": "father test --coverage"
-  },
-  "devDependencies": {
-    "@types/classnames": "^2.2.9",
-    "@types/enzyme": "^3.10.6",
-    "@types/jest": "^26.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "@umijs/fabric": "^2.0.0",
-    "cross-env": "^7.0.0",
-    "dumi": "^1.1.4",
-    "enzyme": "^3.1.1",
-    "enzyme-adapter-react-16": "^1.0.1",
-    "enzyme-to-json": "^3.1.2",
-    "eslint": "^7.11.0",
-    "father": "^2.22.0",
-    "glob": "^7.1.6",
-    "jest": "^29.1.2",
-    "less": "^3.12.2",
-    "np": "^6.0.0",
-    "prettier": "^2.1.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "typescript": "^4.0.2"
+    "start": "dumi dev",
+    "test": "rc-test"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
     "classnames": "2.x",
     "rc-motion": "^2.3.4",
     "rc-util": "^5.27.0"
+  },
+  "devDependencies": {
+    "@rc-component/father-plugin": "^1.0.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@types/classnames": "^2.2.9",
+    "@types/jest": "^26.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@umijs/fabric": "^2.0.0",
+    "dumi": "^2.1.1",
+    "eslint": "^7.11.0",
+    "father": "^4.1.3",
+    "jest": "^29.1.2",
+    "less": "^3.12.2",
+    "np": "^6.0.0",
+    "prettier": "^2.1.2",
+    "rc-test": "^7.0.14",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.0.2"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
