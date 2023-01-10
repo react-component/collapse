@@ -21,6 +21,7 @@
   "license": "MIT",
   "main": "./lib/index",
   "module": "./es/index",
+  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
