@@ -37,11 +37,8 @@ function CollapsePanel(props: CollapsePanelProps) {
     onItemClick?.(panelKey!);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (
-      [e.key, e.code].includes('Enter') ||
-      [e.keyCode, e.which].includes(KeyCode.ENTER)
-    ) {
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
       handleItemClick();
     }
   };
@@ -80,7 +77,7 @@ function CollapsePanel(props: CollapsePanelProps) {
     className: headerClassName,
     'aria-expanded': isActive,
     'aria-disabled': disabled,
-    onKeyDown: handleKeyDown,
+    onKeyPress: handleKeyPress,
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {
