@@ -2,6 +2,9 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 
+const basePath = process.env.GITHUB_ACTIONS ? '/collapse/' : '/';
+const publicPath = process.env.GITHUB_ACTIONS ? '/collapse/' : '/';
+
 export default defineConfig({
   alias: {
     'rc-collapse$': path.resolve('src'),
@@ -14,4 +17,6 @@ export default defineConfig({
   },
   outputPath: '.doc',
   exportStatic: {},
+  base: basePath,
+  publicPath,
 });
