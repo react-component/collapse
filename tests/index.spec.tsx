@@ -639,7 +639,7 @@ describe('collapse', () => {
     expect(container.querySelectorAll('.rc-collapse-item')).toHaveLength(2);
   });
 
-  it.only('ref should work', () => {
+  it('ref should work', () => {
     const ref = React.createRef<any>();
     const panelRef = React.createRef<any>();
     const { container } = render(
