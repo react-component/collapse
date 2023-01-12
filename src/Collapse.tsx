@@ -1,9 +1,9 @@
+import React from 'react';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
-import * as React from 'react';
-import isEqual from 'rc-util/lib/isEqual';
-import type { CollapseProps, CollapsibleType } from './interface';
+import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import CollapsePanel from './Panel';
+import type { CollapseProps, CollapsibleType } from './interface';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
@@ -15,84 +15,59 @@ function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   return currentActiveKey.map((key) => String(key));
 }
 
-export interface CollapseState {
-  activeKey: React.Key[];
-}
+function Collapse(props: CollapseProps) {
+  const {
+    prefixCls = 'rc-collapse',
+    destroyInactivePanel = false,
+    style,
+    accordion,
+    className,
+    children: rawChildren,
+    collapsible,
+    openMotion,
+    expandIcon,
+    activeKey: rawActiveKey,
+    defaultActiveKey,
+    onChange,
+  } = props;
 
-class Collapse extends React.Component<CollapseProps, CollapseState> {
-  static defaultProps = {
-    prefixCls: 'rc-collapse',
-    onChange() {},
-    accordion: false,
-    destroyInactivePanel: false,
-  };
+  const collapseClassName = classNames(prefixCls, className);
 
-  static Panel = CollapsePanel;
+  const [activeKey, setActiveKey] = useMergedState<React.Key | React.Key[], React.Key[]>([], {
+    value: rawActiveKey,
+    onChange: (v) => onChange?.(v),
+    defaultValue: defaultActiveKey,
+    postState: getActiveKeysArray,
+  });
 
-  constructor(props: CollapseProps) {
-    super(props);
+  const onClickItem = (key: React.Key) =>
+    setActiveKey(() => {
+      if (accordion) {
+        return activeKey[0] === key ? [] : [key];
+      }
 
-    const { activeKey, defaultActiveKey } = props;
-    let currentActiveKey = defaultActiveKey;
-    if ('activeKey' in props) {
-      currentActiveKey = activeKey;
-    }
-
-    this.state = {
-      activeKey: getActiveKeysArray(currentActiveKey),
-    };
-  }
-
-  shouldComponentUpdate(nextProps: CollapseProps, nextState: CollapseState) {
-    return !isEqual(this.props, nextProps, true) || !isEqual(this.state, nextState, true);
-  }
-
-  onClickItem = (key: React.Key) => {
-    let { activeKey } = this.state;
-    if (this.props.accordion) {
-      activeKey = activeKey[0] === key ? [] : [key];
-    } else {
-      activeKey = [...activeKey];
       const index = activeKey.indexOf(key);
       const isActive = index > -1;
       if (isActive) {
-        // remove active state
-        activeKey.splice(index, 1);
-      } else {
-        activeKey.push(key);
+        return activeKey.filter((item) => item !== key);
       }
-    }
-    this.setActiveKey(activeKey);
-  };
 
-  static getDerivedStateFromProps(nextProps: CollapseProps) {
-    const newState: Partial<CollapseState> = {};
-    if ('activeKey' in nextProps) {
-      newState.activeKey = getActiveKeysArray(nextProps.activeKey);
-    }
-    return newState;
-  }
+      return [...activeKey, key];
+    });
 
-  getNewChild = (child: React.ReactElement, index: number) => {
+  // ======================== Children ========================
+  const getNewChild = (child: React.ReactElement, index: number) => {
     if (!child) return null;
 
-    const { activeKey } = this.state;
-    const {
-      prefixCls,
-      openMotion,
-      accordion,
-      destroyInactivePanel: rootDestroyInactivePanel,
-      expandIcon,
-      collapsible,
-    } = this.props;
-    // If there is no key provide, use the panel order as default key
     const key = child.key || String(index);
+
     const {
       header,
       headerClass,
-      destroyInactivePanel,
+      destroyInactivePanel: childDestroyInactivePanel,
       collapsible: childCollapsible,
     } = child.props;
+
     let isActive = false;
     if (accordion) {
       isActive = activeKey[0] === key;
@@ -102,18 +77,18 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
 
     const mergeCollapsible: CollapsibleType = childCollapsible ?? collapsible;
 
-    const props = {
+    const childProps = {
       key,
       panelKey: key,
       header,
       headerClass,
       isActive,
       prefixCls,
-      destroyInactivePanel: destroyInactivePanel ?? rootDestroyInactivePanel,
+      destroyInactivePanel: childDestroyInactivePanel ?? destroyInactivePanel,
       openMotion,
       accordion,
       children: child.props.children,
-      onItemClick: mergeCollapsible === 'disabled' ? null : this.onClickItem,
+      onItemClick: mergeCollapsible === 'disabled' ? null : onClickItem,
       expandIcon,
       collapsible: mergeCollapsible,
     };
@@ -123,39 +98,23 @@ class Collapse extends React.Component<CollapseProps, CollapseState> {
       return child;
     }
 
-    Object.keys(props).forEach((propName: keyof typeof props) => {
-      if (typeof props[propName] === 'undefined') {
-        delete props[propName];
+    Object.keys(childProps).forEach((propName) => {
+      if (typeof childProps[propName] === 'undefined') {
+        delete childProps[propName];
       }
     });
 
-    return React.cloneElement(child, props);
+    return React.cloneElement(child, childProps);
   };
 
-  getItems = () => {
-    const { children } = this.props;
-    return toArray(children).map(this.getNewChild);
-  };
+  const children = toArray(rawChildren).map(getNewChild);
 
-  setActiveKey = (activeKey: React.Key[]) => {
-    if (!('activeKey' in this.props)) {
-      this.setState({ activeKey });
-    }
-    this.props.onChange(this.props.accordion ? activeKey[0] : activeKey);
-  };
-
-  render() {
-    const { prefixCls, className, style, accordion } = this.props;
-    const collapseClassName = classNames({
-      [prefixCls]: true,
-      [className]: !!className,
-    });
-    return (
-      <div className={collapseClassName} style={style} role={accordion ? 'tablist' : null}>
-        {this.getItems()}
-      </div>
-    );
-  }
+  // ======================== Render ========================
+  return (
+    <div className={collapseClassName} style={style} role={accordion ? 'tablist' : undefined}>
+      {children}
+    </div>
+  );
 }
 
-export default Collapse;
+export default Object.assign(Collapse, { Panel: CollapsePanel });
