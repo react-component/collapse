@@ -618,4 +618,24 @@ describe('collapse', () => {
     fireEvent.click(container.querySelector('.target')!);
     expect(clickHandler).toHaveBeenCalled();
   });
+
+  it('falsy Panel', () => {
+    const { container } = render(
+      <Collapse>
+        {null}
+        <Panel header="collapse 1" key="1" >
+          <p>Panel 1 content</p>
+        </Panel>
+        {0}
+        <Panel header="collapse 2" key="2" >
+          <p>Panel 2 content</p>
+        </Panel>
+        {undefined}
+        {false}
+        {true}
+      </Collapse>,
+    );
+
+    expect(container.querySelectorAll('.rc-collapse-item')).toHaveLength(2);
+  });
 });
