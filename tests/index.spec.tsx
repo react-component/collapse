@@ -638,4 +638,18 @@ describe('collapse', () => {
 
     expect(container.querySelectorAll('.rc-collapse-item')).toHaveLength(2);
   });
+
+  it.only('ref should work', () => {
+    const ref = React.createRef<any>();
+    const panelRef = React.createRef<any>();
+    const { container } = render(
+      <Collapse ref={ref}>
+        <Panel header="collapse 1" key="1" ref={panelRef}>
+          first
+        </Panel>
+      </Collapse>,
+    );
+    expect(ref.current).toBe(container.firstChild);
+    expect(panelRef.current).toBe(container.querySelector('.rc-collapse-item'));
+  });
 });
