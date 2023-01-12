@@ -36,3 +36,5 @@ package-lock.json
 .dumi/tmp-production
 .dumi/tmp-test
 .env.local
+src/.umi
+
