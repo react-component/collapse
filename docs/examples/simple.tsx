@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { CollapsibleType } from 'rc-collapse';
+import type { CollapseProps } from 'rc-collapse';
 import Collapse, { Panel } from 'rc-collapse';
 import motion from './_util/motionUtil';
 import '../../assets/index.less';
@@ -46,7 +46,7 @@ const App: React.FC = () => {
   const [, reRender] = React.useState({});
   const [accordion, setAccordion] = React.useState(false);
   const [activeKey, setActiveKey] = React.useState<React.Key | React.Key[]>(['4']);
-  const [collapsible, setCollapsible] = React.useState<CollapsibleType>();
+  const [collapsible, setCollapsible] = React.useState<CollapseProps['collapsible']>();
 
   const time = random();
 
