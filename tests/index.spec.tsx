@@ -1,5 +1,5 @@
-import { fireEvent, render } from '@testing-library/react';
 import type { RenderResult } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
@@ -623,11 +623,11 @@ describe('collapse', () => {
     const { container } = render(
       <Collapse>
         {null}
-        <Panel header="collapse 1" key="1" >
+        <Panel header="collapse 1" key="1">
           <p>Panel 1 content</p>
         </Panel>
         {0}
-        <Panel header="collapse 2" key="2" >
+        <Panel header="collapse 2" key="2">
           <p>Panel 2 content</p>
         </Panel>
         {undefined}

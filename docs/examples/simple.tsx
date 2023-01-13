@@ -1,8 +1,8 @@
-import * as React from 'react';
 import type { CollapseProps } from 'rc-collapse';
 import Collapse, { Panel } from 'rc-collapse';
-import motion from './_util/motionUtil';
+import * as React from 'react';
 import '../../assets/index.less';
+import motion from './_util/motionUtil';
 
 const initLength = 3;
 
@@ -50,65 +50,44 @@ const App: React.FC = () => {
 
   const time = random();
 
-  const panelItems = Array
-    .from<object, React.ReactNode>(
-      { length: initLength },
-      (_, i) => {
-        const key = i + 1;
-        return (
-          <Panel
-            header={`This is panel header ${key}`}
-            key={key}
-          >
-            <p>{text.repeat(time)}</p>
-          </Panel>
-        )
-      })
-    .concat(
-      <Panel
-        header={`This is panel header ${initLength + 1}`}
-        key={initLength + 1}
-      >
-        <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-          <Panel
-            header="This is panel nest panel"
-            key="1"
-            id="header-test"
-          >
-            <p>{text}</p>
-          </Panel>
-        </Collapse>
-      </Panel>,
-      <Panel
-        header={`This is panel header ${initLength + 2}`}
-        key={initLength + 2}
-      >
-        <Collapse defaultActiveKey="1">
-          <Panel
-            header="This is panel nest panel"
-            key="1"
-            id="another-test"
-          >
-            <form>
-              <label htmlFor="test">Name:&nbsp;</label>
-              <input type="text" id="test" />
-            </form>
-          </Panel>
-        </Collapse>
-      </Panel>,
-      <Panel
-        header={`This is panel header ${initLength + 3}`}
-        key={initLength + 3}
-        extra={<span>Extra Node</span>}
-      >
-        <p>Panel with extra</p>
+  const panelItems = Array.from<object, React.ReactNode>({ length: initLength }, (_, i) => {
+    const key = i + 1;
+    return (
+      <Panel header={`This is panel header ${key}`} key={key}>
+        <p>{text.repeat(time)}</p>
       </Panel>
     );
+  }).concat(
+    <Panel header={`This is panel header ${initLength + 1}`} key={initLength + 1}>
+      <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
+        <Panel header="This is panel nest panel" key="1" id="header-test">
+          <p>{text}</p>
+        </Panel>
+      </Collapse>
+    </Panel>,
+    <Panel header={`This is panel header ${initLength + 2}`} key={initLength + 2}>
+      <Collapse defaultActiveKey="1">
+        <Panel header="This is panel nest panel" key="1" id="another-test">
+          <form>
+            <label htmlFor="test">Name:&nbsp;</label>
+            <input type="text" id="test" />
+          </form>
+        </Panel>
+      </Collapse>
+    </Panel>,
+    <Panel
+      header={`This is panel header ${initLength + 3}`}
+      key={initLength + 3}
+      extra={<span>Extra Node</span>}
+    >
+      <p>Panel with extra</p>
+    </Panel>,
+  );
 
   const handleCollapsibleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const values = [undefined, 'header', 'icon', 'disabled'];
-    setCollapsible(values[e.target.value])
-  }
+    setCollapsible(values[e.target.value]);
+  };
 
   const tools = (
     <>
@@ -117,7 +96,7 @@ const App: React.FC = () => {
       </button>
       <br />
       <br />
-      <button type="button" onClick={() => setAccordion(prev => !prev)}>
+      <button type="button" onClick={() => setAccordion((prev) => !prev)}>
         {accordion ? 'Mode: accordion' : 'Mode: collapse'}
       </button>
       <br />
@@ -138,7 +117,7 @@ const App: React.FC = () => {
       <br />
       <br />
     </>
-  )
+  );
 
   return (
     <>
@@ -154,7 +133,7 @@ const App: React.FC = () => {
         {panelItems}
       </Collapse>
     </>
-  )
-}
+  );
+};
 
 export default App;

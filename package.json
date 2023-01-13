@@ -32,11 +32,15 @@
     "compile": "father build && lessc assets/index.less assets/index.css",
     "coverage": "npm test -- --coverage",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
+    "prepare": "husky install",
     "prepublishOnly": "npm run compile && np --yolo --no-publish",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "start": "dumi dev",
-    "test": "rc-test",
-    "prepare": "husky install"
+    "test": "rc-test"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": "npm run lint -- --fix",
+    "*.{json,less,md}": "npm run prettier -- --ignore-unknown"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
@@ -70,9 +74,5 @@
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": "npm run lint -- --fix",
-    "*.{json,less,md}": "npm run prettier -- --ignore-unknown"
   }
 }

@@ -1,6 +1,6 @@
+import Collapse, { Panel } from 'rc-collapse';
 import * as React from 'react';
 import { Fragment } from 'react';
-import Collapse, { Panel } from 'rc-collapse';
 import '../../assets/index.less';
 
 const App = () => (

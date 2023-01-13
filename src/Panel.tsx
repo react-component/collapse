@@ -1,8 +1,8 @@
-import React from 'react';
 import classNames from 'classnames';
-import type { CollapsePanelProps } from './interface';
-import KeyCode from 'rc-util/lib/KeyCode';
 import CSSMotion from 'rc-motion';
+import KeyCode from 'rc-util/lib/KeyCode';
+import React from 'react';
+import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
 
 const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((props, ref) => {
