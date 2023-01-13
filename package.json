@@ -39,7 +39,10 @@
     "test": "rc-test"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": "npm run lint -- --fix",
+    "*.{ts,tsx,js,jsx}": [
+      "npm run prettier -- --ignore-unknown",
+      "npm run lint -- --fix"
+    ],
     "*.{json,less,md}": "npm run prettier -- --ignore-unknown"
   },
   "dependencies": {
