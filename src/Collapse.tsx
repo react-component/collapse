@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import React from 'react';
-import type { CollapseProps, CollapsibleType } from './interface';
+import type { CollapsePanelProps, CollapseProps, CollapsibleType } from './interface';
 import CollapsePanel from './Panel';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
@@ -56,7 +56,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     });
 
   // ======================== Children ========================
-  const getNewChild = (child: React.ReactElement, index: number) => {
+  const getNewChild = (child: React.ReactElement<CollapsePanelProps>, index: number) => {
     if (!child) return null;
 
     const key = child.key || String(index);
@@ -66,6 +66,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       headerClass,
       destroyInactivePanel: childDestroyInactivePanel,
       collapsible: childCollapsible,
+      onItemClick: childOnItemClick,
     } = child.props;
 
     let isActive = false;
@@ -76,6 +77,12 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     }
 
     const mergeCollapsible: CollapsibleType = childCollapsible ?? collapsible;
+
+    const handleItemClick = (value: React.Key) => {
+      if (mergeCollapsible === 'disabled') return;
+      onClickItem(value);
+      childOnItemClick?.(value);
+    };
 
     const childProps = {
       key,
@@ -88,7 +95,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       openMotion,
       accordion,
       children: child.props.children,
-      onItemClick: mergeCollapsible === 'disabled' ? null : onClickItem,
+      onItemClick: handleItemClick,
       expandIcon,
       collapsible: mergeCollapsible,
     };
