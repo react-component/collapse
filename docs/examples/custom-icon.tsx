@@ -3,6 +3,8 @@ import Collapse, { Panel } from 'rc-collapse';
 import motion from './_util/motionUtil';
 import '../../assets/index.less';
 
+const initLength = 3;
+
 const text = `
   A dog is a type of domesticated animal.
   Known for its loyalty and faithfulness,
@@ -33,52 +35,42 @@ function expandIcon({ isActive }) {
           transform: `rotate(${isActive ? 90 : 0}deg)`,
         }}
       >
-        <path d={arrowPath} p-id="5827" />
+        <path d={arrowPath} />
       </svg>
     </i>
   );
 }
 
-class Test extends React.Component {
-  state = {
-    time: random(),
-    accordion: false,
-    activeKey: ['4'],
-  };
+const App: React.FC = () => {
+  const [, reRender] = React.useState({});
+  const [accordion, setAccordion] = React.useState(false);
+  const [activeKey, setActiveKey] = React.useState<React.Key | React.Key[]>(['4']);
 
-  onChange = (activeKey: string) => {
-    this.setState({
-      activeKey,
-    });
-  };
+  const time = random();
 
-  getItems() {
-    const items = [];
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0, len = 3; i < len; i += 1) {
-      const key = i + 1;
-      items.push(
-        <Panel
-          header={`This is panel header ${key}`}
-          key={key}
-          // disabled={i === 0}
-        >
-          <p>{text.repeat(this.state.time)}</p>
-        </Panel>,
-      );
-    }
-    items.push(
-      <Panel header="This is panel header 4" key="4">
+  const panelItems = Array
+    .from<object, React.ReactNode>(
+      { length: initLength },
+      (_, i) => {
+        const key = i + 1;
+        return (
+          <Panel
+            header={`This is panel header ${key}`}
+            key={key}
+          >
+            <p>{text.repeat(time)}</p>
+          </Panel>
+        )
+      })
+    .concat(
+      <Panel header={`This is panel header ${initLength + 1}`} key={initLength + 1}>
         <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
           <Panel header="This is panel nest panel" key="1" id="header-test">
             <p>{text}</p>
           </Panel>
         </Collapse>
       </Panel>,
-    );
-
-    items.push(
-      <Panel header="This is panel header 5" key="5">
+      <Panel header={`This is panel header ${initLength + 2}`} key={initLength + 2}>
         <Collapse defaultActiveKey="1">
           <Panel header="This is panel nest panel" key="1" id="another-test">
             <form>
@@ -87,61 +79,44 @@ class Test extends React.Component {
             </form>
           </Panel>
         </Collapse>
-      </Panel>,
+      </Panel>
     );
 
-    return items;
-  }
 
-  setActivityKey = () => {
-    this.setState({
-      activeKey: ['2'],
-    });
-  };
+  const tools = (
+    <>
+      <button type="button" onClick={() => reRender({})}>
+        reRender
+      </button>
+      <br />
+      <br />
+      <button type="button" onClick={() => setAccordion(prev => !prev)}>
+        {accordion ? 'Mode: accordion' : 'Mode: collapse'}
+      </button>
+      <br />
+      <br />
+      <button type="button" onClick={() => setActiveKey(['2'])}>
+        active header 2
+      </button>
+      <br />
+      <br />
+    </>
+  )
 
-  toggle = () => {
-    const { accordion } = this.state;
-    this.setState({
-      accordion: !accordion,
-    });
-  };
-
-  reRender = () => {
-    this.setState({
-      time: random(),
-    });
-  };
-
-  render() {
-    const { accordion, activeKey } = this.state;
-    const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
-    return (
-      <div style={{ margin: 20, width: 400 }}>
-        <button type="button" onClick={this.reRender}>
-          reRender
-        </button>
-        <button type="button" onClick={this.toggle}>
-          {btn}
-        </button>
-        <br />
-        <br />
-        <button type="button" onClick={this.setActivityKey}>
-          active header 2
-        </button>
-        <br />
-        <br />
-        <Collapse
-          accordion={accordion}
-          onChange={this.onChange}
-          activeKey={activeKey}
-          expandIcon={expandIcon}
-          openMotion={motion}
-        >
-          {this.getItems()}
-        </Collapse>
-      </div>
-    );
-  }
+  return (
+    <>
+      {tools}
+      <Collapse
+        accordion={accordion}
+        onChange={setActiveKey}
+        activeKey={activeKey}
+        expandIcon={expandIcon}
+        openMotion={motion}
+      >
+        {panelItems}
+      </Collapse>
+    </>
+  )
 }
 
-export default Test;
+export default App;
