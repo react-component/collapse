@@ -39,11 +39,7 @@
     "test": "rc-test"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "npm run prettier -- --ignore-unknown",
-      "npm run lint -- --fix"
-    ],
-    "*.{json,less,md}": "npm run prettier -- --ignore-unknown"
+    "**/*.{ts,tsx,js,jsx,json,md}": "npm run prettier"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
