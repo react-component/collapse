@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import Collapse, { Panel } from 'rc-collapse';
 import '../../assets/index.less';
 
-const Test = () => (
+const App = () => (
   <Collapse>
     <Panel header="title">content</Panel>
     <Panel header="title">content</Panel>
@@ -20,4 +20,4 @@ const Test = () => (
   </Collapse>
 );
 
-export default Test;
+export default App;

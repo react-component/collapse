@@ -1,7 +1,10 @@
 import * as React from 'react';
+import type { CollapsibleType } from 'rc-collapse';
 import Collapse, { Panel } from 'rc-collapse';
 import motion from './_util/motionUtil';
 import '../../assets/index.less';
+
+const initLength = 3;
 
 const text = `
   A dog is a type of domesticated animal.
@@ -13,49 +16,79 @@ function random() {
   return parseInt((Math.random() * 10).toString(), 10) + 1;
 }
 
-class Test extends React.Component {
-  state = {
-    time: random(),
-    accordion: false,
-    activeKey: ['4'],
-    collapsible: undefined,
-  };
+const arrowPath =
+  'M869 487.8L491.2 159.9c-2.9-2.5-6.6-3.9-10.5-3.9h-88' +
+  '.5c-7.4 0-10.8 9.2-5.2 14l350.2 304H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.' +
+  '6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5.' +
+  '2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z';
 
-  onChange = (activeKey: string) => {
-    this.setState({
-      activeKey,
-    });
-  };
+function expandIcon({ isActive }) {
+  return (
+    <i style={{ marginRight: '.5rem' }}>
+      <svg
+        viewBox="0 0 1024 1024"
+        width="1em"
+        height="1em"
+        fill="currentColor"
+        style={{
+          verticalAlign: '-.125em',
+          transition: 'transform .2s',
+          transform: `rotate(${isActive ? 90 : 0}deg)`,
+        }}
+      >
+        <path d={arrowPath} />
+      </svg>
+    </i>
+  );
+}
 
-  getItems() {
-    const items = [];
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0, len = 3; i < len; i++) {
-      const key = i + 1;
-      items.push(
-        <Panel
-          header={`This is panel header ${key}`}
-          key={key}
-          collapsible={i === 0 ? 'disabled' : undefined}
-        >
-          <p>{text.repeat(this.state.time)}</p>
-        </Panel>,
-      );
-    }
-    items.push(
-      <Panel header="This is panel header 4" key="4">
-        <Collapse defaultActiveKey="1">
-          <Panel header="This is panel nest panel" key="41" id="header-test">
+const App: React.FC = () => {
+  const [, reRender] = React.useState({});
+  const [accordion, setAccordion] = React.useState(false);
+  const [activeKey, setActiveKey] = React.useState<React.Key | React.Key[]>(['4']);
+  const [collapsible, setCollapsible] = React.useState<CollapsibleType>();
+
+  const time = random();
+
+  const panelItems = Array
+    .from<object, React.ReactNode>(
+      { length: initLength },
+      (_, i) => {
+        const key = i + 1;
+        return (
+          <Panel
+            header={`This is panel header ${key}`}
+            key={key}
+          >
+            <p>{text.repeat(time)}</p>
+          </Panel>
+        )
+      })
+    .concat(
+      <Panel
+        header={`This is panel header ${initLength + 1}`}
+        key={initLength + 1}
+      >
+        <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
+          <Panel
+            header="This is panel nest panel"
+            key="1"
+            id="header-test"
+          >
             <p>{text}</p>
           </Panel>
         </Collapse>
       </Panel>,
-    );
-
-    items.push(
-      <Panel header="This is panel header 5" key="5">
+      <Panel
+        header={`This is panel header ${initLength + 2}`}
+        key={initLength + 2}
+      >
         <Collapse defaultActiveKey="1">
-          <Panel header="This is panel nest panel" key="51" id="another-test">
+          <Panel
+            header="This is panel nest panel"
+            key="1"
+            id="another-test"
+          >
             <form>
               <label htmlFor="test">Name:&nbsp;</label>
               <input type="text" id="test" />
@@ -63,82 +96,65 @@ class Test extends React.Component {
           </Panel>
         </Collapse>
       </Panel>,
-    );
-
-    items.push(
-      <Panel header="This is panel header 6" key="6" extra={<span>Extra Node</span>}>
+      <Panel
+        header={`This is panel header ${initLength + 3}`}
+        key={initLength + 3}
+        extra={<span>Extra Node</span>}
+      >
         <p>Panel with extra</p>
-      </Panel>,
+      </Panel>
     );
 
-    return items;
-  }
-
-  setActivityKey = () => {
-    this.setState({
-      activeKey: ['2'],
-    });
-  };
-
-  reRender = () => {
-    this.setState({
-      time: random(),
-    });
-  };
-
-  toggle = () => {
-    const { accordion } = this.state;
-    this.setState({
-      accordion: !accordion,
-    });
-  };
-
-  handleCollapsibleChange = (e: any) => {
+  const handleCollapsibleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const values = [undefined, 'header', 'icon', 'disabled'];
-    this.setState({
-      collapsible: values[e.target.value],
-    });
-  };
-
-  render() {
-    const { accordion, activeKey, collapsible } = this.state;
-    const btn = accordion ? 'Mode: accordion' : 'Mode: collapse';
-    return (
-      <div style={{ margin: 20, width: 400 }}>
-        <button type="button" onClick={this.reRender}>
-          reRender
-        </button>
-        <button type="button" onClick={this.toggle}>
-          {btn}
-        </button>
-        <p>
-          collapsible:
-          <select onChange={this.handleCollapsibleChange}>
-            <option value={0}>default</option>
-            <option value={1}>header</option>
-            <option value={2}>icon</option>
-            <option value={3}>disabled</option>
-          </select>
-        </p>
-        <br />
-        <br />
-        <button type="button" onClick={this.setActivityKey}>
-          active header 2
-        </button>
-        <br />
-        <br />
-        <Collapse
-          collapsible={collapsible}
-          accordion={accordion}
-          onChange={this.onChange}
-          activeKey={activeKey}
-          openMotion={motion}
-        >
-          {this.getItems()}
-        </Collapse>
-      </div>
-    );
+    setCollapsible(values[e.target.value])
   }
+
+  const tools = (
+    <>
+      <button type="button" onClick={() => reRender({})}>
+        reRender
+      </button>
+      <br />
+      <br />
+      <button type="button" onClick={() => setAccordion(prev => !prev)}>
+        {accordion ? 'Mode: accordion' : 'Mode: collapse'}
+      </button>
+      <br />
+      <br />
+      <div>
+        collapsible:
+        <select onChange={handleCollapsibleChange}>
+          <option value={0}>default</option>
+          <option value={1}>header</option>
+          <option value={2}>icon</option>
+          <option value={3}>disabled</option>
+        </select>
+      </div>
+      <br />
+      <button type="button" onClick={() => setActiveKey(['2'])}>
+        active header 2
+      </button>
+      <br />
+      <br />
+    </>
+  )
+
+  return (
+    <>
+      {tools}
+      <Collapse
+        accordion={accordion}
+        onChange={setActiveKey}
+        activeKey={activeKey}
+        expandIcon={expandIcon}
+        openMotion={motion}
+        collapsible={collapsible}
+      >
+        {panelItems}
+      </Collapse>
+    </>
+  )
 }
 
-export default Test;
+export default App;
