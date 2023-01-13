@@ -5,7 +5,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import CSSMotion from 'rc-motion';
 import PanelContent from './PanelContent';
 
-function CollapsePanel(props: CollapsePanelProps) {
+const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((props, ref) => {
   const {
     showArrow = true,
     headerClass,
@@ -88,7 +88,7 @@ function CollapsePanel(props: CollapsePanelProps) {
 
   // ======================== Render ========================
   return (
-    <div {...resetProps} className={collapsePanelClassNames}>
+    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
       <div {...headerProps}>
         {showArrow && iconNode}
         <span
@@ -106,10 +106,10 @@ function CollapsePanel(props: CollapsePanelProps) {
         forceRender={forceRender}
         removeOnLeave={destroyInactivePanel}
       >
-        {({ className: motionClassName, style: motionStyle }, ref) => {
+        {({ className: motionClassName, style: motionStyle }, motionRef) => {
           return (
             <PanelContent
-              ref={ref}
+              ref={motionRef}
               prefixCls={prefixCls}
               className={motionClassName}
               style={motionStyle}
@@ -124,6 +124,6 @@ function CollapsePanel(props: CollapsePanelProps) {
       </CSSMotion>
     </div>
   );
-}
+});
 
 export default CollapsePanel;

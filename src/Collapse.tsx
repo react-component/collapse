@@ -15,7 +15,7 @@ function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   return currentActiveKey.map((key) => String(key));
 }
 
-function Collapse(props: CollapseProps) {
+const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
   const {
     prefixCls = 'rc-collapse',
     destroyInactivePanel = false,
@@ -111,10 +111,15 @@ function Collapse(props: CollapseProps) {
 
   // ======================== Render ========================
   return (
-    <div className={collapseClassName} style={style} role={accordion ? 'tablist' : undefined}>
+    <div
+      ref={ref}
+      className={collapseClassName}
+      style={style}
+      role={accordion ? 'tablist' : undefined}
+    >
       {children}
     </div>
   );
-}
+});
 
 export default Object.assign(Collapse, { Panel: CollapsePanel });
