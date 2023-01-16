@@ -14,5 +14,6 @@ module.exports = {
     'jsx-a11y/label-has-for': 0,
     'jsx-a11y/no-noninteractive-tabindex': 0,
     'import/no-extraneous-dependencies': 0,
+    '@typescript-eslint/consistent-type-exports': 2,
   },
 };

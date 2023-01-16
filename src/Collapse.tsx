@@ -1,9 +1,9 @@
-import React from 'react';
 import classNames from 'classnames';
 import toArray from 'rc-util/lib/Children/toArray';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import CollapsePanel from './Panel';
+import React from 'react';
 import type { CollapseProps, CollapsibleType } from './interface';
+import CollapsePanel from './Panel';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
