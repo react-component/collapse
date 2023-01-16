@@ -652,4 +652,31 @@ describe('collapse', () => {
     expect(ref.current).toBe(container.firstChild);
     expect(panelRef.current).toBe(container.querySelector('.rc-collapse-item'));
   });
+
+  // https://github.com/react-component/collapse/issues/235
+  it('onItemClick should work', () => {
+    const onItemClick = jest.fn();
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1" onItemClick={onItemClick}>
+          first
+        </Panel>
+      </Collapse>,
+    );
+    fireEvent.click(container.querySelector('.rc-collapse-header')!);
+    expect(onItemClick).toHaveBeenCalled();
+  });
+
+  it('onItemClick should not work when collapsible is disabled', () => {
+    const onItemClick = jest.fn();
+    const { container } = render(
+      <Collapse collapsible="disabled">
+        <Panel header="collapse 1" key="1" onItemClick={onItemClick}>
+          first
+        </Panel>
+      </Collapse>,
+    );
+    fireEvent.click(container.querySelector('.rc-collapse-header')!);
+    expect(onItemClick).not.toHaveBeenCalled();
+  });
 });
