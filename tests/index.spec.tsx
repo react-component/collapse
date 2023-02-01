@@ -679,4 +679,15 @@ describe('collapse', () => {
     fireEvent.click(container.querySelector('.rc-collapse-header')!);
     expect(onItemClick).not.toHaveBeenCalled();
   });
+
+  it('panel style should work', () => {
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1" style={{ color: 'red' }}>
+          first
+        </Panel>
+      </Collapse>,
+    );
+    expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
+  });
 });
