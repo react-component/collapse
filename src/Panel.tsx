@@ -13,7 +13,6 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     onItemClick,
     forceRender,
     className,
-    style,
     prefixCls,
     collapsible,
     accordion,
