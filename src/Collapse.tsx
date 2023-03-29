@@ -174,7 +174,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     });
 
   const children = Array.isArray(items)
-    ? [convertItemsToNodes(items), rawChildren]
+    ? convertItemsToNodes(items)
     : toArray(rawChildren).map(getNewChild);
 
   // ======================== Render ========================

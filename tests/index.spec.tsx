@@ -825,22 +825,5 @@ describe('collapse', () => {
       expect(container.querySelectorAll('.custom-icon')).toHaveLength(1);
       expect(container.querySelector('.custom-icon')?.innerHTML).toBe('p');
     });
-
-    it('should support custom child', () => {
-      const { container } = render(
-        <Collapse
-          items={[
-            {
-              key: '1',
-              label: 'title',
-              children: 'first',
-            },
-          ]}
-        >
-          <a className="custom-child">custom-child</a>
-        </Collapse>,
-      );
-      expect(container.querySelector('.custom-child')?.innerHTML).toBe('custom-child');
-    });
   });
 });
