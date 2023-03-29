@@ -126,6 +126,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     items.map((item, index) => {
       const {
         children,
+        label,
         key: rawKey,
         collapsible: rawCollapsible,
         onItemClick: rawOnItemClick,
@@ -161,6 +162,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
           isActive={isActive}
           accordion={accordion}
           openMotion={openMotion}
+          header={label}
           collapsible={mergeCollapsible}
           onItemClick={handleItemClick}
           destroyInactivePanel={mergeDestroyInactivePanel}

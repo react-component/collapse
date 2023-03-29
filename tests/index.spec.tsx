@@ -695,19 +695,19 @@ describe('collapse', () => {
     const items: ItemType[] = [
       {
         key: '1',
-        header: 'collapse 1',
+        label: 'collapse 1',
         children: 'first',
         collapsible: 'disabled',
       },
       {
         key: '2',
-        header: 'collapse 2',
+        label: 'collapse 2',
         children: 'second',
         extra: <span>ExtraSpan</span>,
       },
       {
         key: '3',
-        header: 'collapse 3',
+        label: 'collapse 3',
         className: 'important',
         children: 'third',
       },
@@ -723,7 +723,7 @@ describe('collapse', () => {
         <Collapse
           items={[
             {
-              header: 'title 3',
+              label: 'title 3',
               onItemClick,
             },
           ]}
@@ -743,7 +743,7 @@ describe('collapse', () => {
           items={[
             ...items.slice(0, 1),
             {
-              header: 'title 3',
+              label: 'title 3',
               onItemClick,
               collapsible: 'icon',
             },
@@ -767,7 +767,7 @@ describe('collapse', () => {
         <Collapse
           items={[
             {
-              header: 'title',
+              label: 'title',
               expandIcon: () => <span className="custom-icon">i</span>,
             },
           ]}
@@ -782,7 +782,7 @@ describe('collapse', () => {
           items={[
             ...items,
             {
-              header: 'title 3',
+              label: 'title 3',
               children: <Collapse items={items} />,
             },
           ]}
@@ -797,7 +797,7 @@ describe('collapse', () => {
           items={[
             {
               key: '1',
-              header: 'title',
+              label: 'title',
               children: 'first',
             },
           ]}

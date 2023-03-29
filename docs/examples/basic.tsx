@@ -6,21 +6,21 @@ import '../../assets/index.less';
 const App = () => {
   const items: CollapseProps['items'] = [
     {
-      header: 'title',
+      label: 'title',
       children: 'content',
     },
     {
-      header: 'title 2',
+      label: 'title 2',
       children: 'content 2',
       collapsible: 'disabled',
     },
     {
-      header: 'title 3',
+      label: 'title 3',
       children: 'content 3',
       onItemClick: console.log,
     },
     {
-      header: 'title 4',
+      label: 'title 4',
       children: 'content 4',
       expandIcon: () => <i>custom icon</i>,
     },
