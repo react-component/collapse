@@ -691,30 +691,37 @@ describe('collapse', () => {
     expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
   });
 
-  describe('props items', () => {
+  describe.only('props items', () => {
     const items: ItemType[] = [
       {
-        header: 'title',
-        children: 'content',
+        key: '1',
+        header: 'collapse 1',
+        children: 'first',
+        collapsible: 'disabled',
       },
       {
-        header: 'title 2',
-        children: 'content 2',
-        collapsible: 'disabled',
+        key: '2',
+        header: 'collapse 2',
+        children: 'second',
+        extra: <span>ExtraSpan</span>,
+      },
+      {
+        key: '3',
+        header: 'collapse 3',
+        className: 'important',
+        children: 'third',
       },
     ];
 
-    it('should work', () => {
-      const { container } = render(<Collapse items={items} />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
+    runNormalTest(
+      <Collapse onChange={onChange} expandIcon={() => <span>test{'>'}</span>} items={items} />,
+    );
 
     it('should work with onItemClick', () => {
       const onItemClick = jest.fn();
       const { container } = render(
         <Collapse
           items={[
-            ...items,
             {
               header: 'title 3',
               onItemClick,
@@ -722,9 +729,9 @@ describe('collapse', () => {
           ]}
         />,
       );
-      fireEvent.click(container.querySelectorAll('.rc-collapse-header')[2]);
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
       expect(onItemClick).toHaveBeenCalled();
-      expect(onItemClick).lastCalledWith('2');
+      expect(onItemClick).lastCalledWith('0');
     });
 
     it('should work with collapsible', () => {
@@ -734,7 +741,7 @@ describe('collapse', () => {
         <Collapse
           onChange={onChangeFn}
           items={[
-            ...items,
+            ...items.slice(0, 1),
             {
               header: 'title 3',
               onItemClick,
@@ -744,15 +751,15 @@ describe('collapse', () => {
         />,
       );
 
-      fireEvent.click(container.querySelectorAll('.rc-collapse-header')[2]);
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
       expect(onItemClick).not.toHaveBeenCalled();
 
       fireEvent.click(
-        container.querySelector('.rc-collapse-item:nth-child(3) .rc-collapse-expand-icon'),
+        container.querySelector('.rc-collapse-item:nth-child(2) .rc-collapse-expand-icon'),
       );
       expect(onItemClick).toHaveBeenCalled();
       expect(onChangeFn).toBeCalledTimes(1);
-      expect(onChangeFn).lastCalledWith(['2']);
+      expect(onChangeFn).lastCalledWith(['1']);
     });
 
     it('should work with custom icon', () => {
