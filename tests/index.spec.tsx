@@ -243,23 +243,15 @@ describe('collapse', () => {
     expect(container.querySelectorAll('.rc-collapse-content-inactive').length).toBeFalsy();
   });
 
-  describe('prop: accordion', () => {
+  function runAccordionTest(element: React.ReactElement) {
     let collapse: RenderResult;
 
     beforeEach(() => {
-      collapse = render(
-        <Collapse onChange={onChange} accordion>
-          <Panel header="collapse 1" key="1">
-            first
-          </Panel>
-          <Panel header="collapse 2" key="2">
-            second
-          </Panel>
-          <Panel header="collapse 3" key="3">
-            third
-          </Panel>
-        </Collapse>,
-      );
+      collapse = render(element);
+    });
+
+    afterEach(() => {
+      collapse.unmount();
     });
 
     it('accordion content, should default open zero item', () => {
@@ -317,6 +309,22 @@ describe('collapse', () => {
       expect(item).toBeTruthy();
       expect(item!.getAttribute('role')).toBe('tabpanel');
     });
+  }
+
+  describe('prop: accordion', () => {
+    runAccordionTest(
+      <Collapse onChange={onChange} accordion>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3">
+          third
+        </Panel>
+      </Collapse>,
+    );
   });
 
   describe('forceRender', () => {
@@ -715,6 +723,30 @@ describe('collapse', () => {
 
     runNormalTest(
       <Collapse onChange={onChange} expandIcon={() => <span>test{'>'}</span>} items={items} />,
+    );
+
+    runAccordionTest(
+      <Collapse
+        onChange={onChange}
+        accordion
+        items={[
+          {
+            key: '1',
+            label: 'collapse 1',
+            children: 'first',
+          },
+          {
+            key: '2',
+            label: 'collapse 2',
+            children: 'second',
+          },
+          {
+            key: '3',
+            label: 'collapse 3',
+            children: 'third',
+          },
+        ]}
+      />,
     );
 
     it('should work with onItemClick', () => {
