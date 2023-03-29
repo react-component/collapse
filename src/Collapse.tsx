@@ -130,6 +130,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
         collapsible: rawCollapsible,
         onItemClick: rawOnItemClick,
         destroyInactivePanel: rawDestroyInactivePanel,
+        expandIcon: rawExpandIcon = expandIcon,
         ...restProps
       } = item;
 
@@ -159,6 +160,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
           collapsible={mergeCollapsible}
           onItemClick={handleItemClick}
           destroyInactivePanel={mergeDestroyInactivePanel}
+          expandIcon={rawExpandIcon}
           {...restProps}
         >
           {children}
