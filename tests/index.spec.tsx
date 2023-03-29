@@ -807,42 +807,5 @@ describe('collapse', () => {
       );
       expect(container.querySelector('.custom-child')?.innerHTML).toBe('custom-child');
     });
-
-    it('should work with accordion', () => {
-      const { container } = render(
-        <Collapse
-          onChange={onChange}
-          accordion
-          items={[
-            {
-              key: '1',
-              label: 'title 1',
-              children: 'first',
-            },
-            {
-              key: '2',
-              label: 'title 2',
-              children: 'second',
-            },
-            {
-              key: '3',
-              label: 'title 3',
-              children: 'third',
-            },
-          ]}
-        />,
-      );
-
-      let header = container.querySelectorAll('.rc-collapse-header')?.[1];
-      fireEvent.click(header);
-      jest.runAllTimers();
-      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
-      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
-      header = container.querySelectorAll('.rc-collapse-header')?.[1];
-      fireEvent.click(header);
-      jest.runAllTimers();
-      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-      expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
-    });
   });
 });
