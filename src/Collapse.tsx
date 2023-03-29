@@ -134,7 +134,9 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
         ...restProps
       } = item;
 
-      const key = rawKey || String(index);
+      // You may be puzzled why you want to convert them all into strings, me too.
+      // Maybe: https://github.com/react-component/collapse/blob/aac303a8b6ff30e35060b4f8fecde6f4556fcbe2/src/Collapse.tsx#L15
+      const key = String(rawKey ?? index);
       const mergeCollapsible = rawCollapsible ?? collapsible;
       const mergeDestroyInactivePanel = rawDestroyInactivePanel ?? destroyInactivePanel;
 
