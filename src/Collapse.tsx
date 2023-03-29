@@ -154,20 +154,23 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       }
 
       return (
-        <CollapsePanel
-          prefixCls={prefixCls}
-          key={key}
-          panelKey={key}
-          isActive={isActive}
-          accordion={accordion}
-          collapsible={mergeCollapsible}
-          onItemClick={handleItemClick}
-          destroyInactivePanel={mergeDestroyInactivePanel}
-          expandIcon={rawExpandIcon}
-          {...restProps}
-        >
-          {children}
-        </CollapsePanel>
+        <>
+          <CollapsePanel
+            prefixCls={prefixCls}
+            key={key}
+            panelKey={key}
+            isActive={isActive}
+            accordion={accordion}
+            collapsible={mergeCollapsible}
+            onItemClick={handleItemClick}
+            destroyInactivePanel={mergeDestroyInactivePanel}
+            expandIcon={rawExpandIcon}
+            {...restProps}
+          >
+            {children}
+          </CollapsePanel>
+          {props.children}
+        </>
       );
     });
 

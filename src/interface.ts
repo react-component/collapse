@@ -21,9 +21,6 @@ export interface CollapseProps {
   destroyInactivePanel?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
   collapsible?: CollapsibleType;
-  /**
-   * @deprecated use `items` instead, will be removed in `v4.0.0`
-   */
   children?: React.ReactNode;
   /**
    * Collapse items content
