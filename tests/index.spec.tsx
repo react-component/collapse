@@ -823,6 +823,23 @@ describe('collapse', () => {
       expect(container.firstChild).toMatchSnapshot();
     });
 
+    it('should not support expandIcon', () => {
+      const { container } = render(
+        <Collapse
+          expandIcon={() => <i className="custom-icon">p</i>}
+          items={[
+            {
+              label: 'title',
+              expandIcon: () => <i className="custom-icon">c</i>,
+            } as any,
+          ]}
+        />,
+      );
+
+      expect(container.querySelectorAll('.custom-icon')).toHaveLength(1);
+      expect(container.querySelector('.custom-icon')?.innerHTML).toBe('p');
+    });
+
     it('should support custom child', () => {
       const { container } = render(
         <Collapse
