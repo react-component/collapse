@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
-import type { CollapseProps } from '../src/interface';
+import type { CollapseProps, ItemType } from '../src/interface';
 
 describe('collapse', () => {
   let changeHook: jest.Mock<any, any> | null;
@@ -689,5 +689,99 @@ describe('collapse', () => {
       </Collapse>,
     );
     expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
+  });
+
+  describe('props items', () => {
+    const items: ItemType[] = [
+      {
+        header: 'title',
+        children: 'content',
+      },
+      {
+        header: 'title 2',
+        children: 'content 2',
+        collapsible: 'disabled',
+      },
+    ];
+
+    it('should work', () => {
+      const { container } = render(<Collapse items={items} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('should work with onItemClick', () => {
+      const onItemClick = jest.fn();
+      const { container } = render(
+        <Collapse
+          items={[
+            ...items,
+            {
+              header: 'title 3',
+              onItemClick,
+            },
+          ]}
+        />,
+      );
+      fireEvent.click(container.querySelectorAll('.rc-collapse-header')[2]);
+      expect(onItemClick).toHaveBeenCalled();
+      expect(onItemClick).lastCalledWith('2');
+    });
+
+    it('should work with collapsible', () => {
+      const onItemClick = jest.fn();
+      const onChangeFn = jest.fn();
+      const { container } = render(
+        <Collapse
+          onChange={onChangeFn}
+          items={[
+            ...items,
+            {
+              header: 'title 3',
+              onItemClick,
+              collapsible: 'icon',
+            },
+          ]}
+        />,
+      );
+
+      fireEvent.click(container.querySelectorAll('.rc-collapse-header')[2]);
+      expect(onItemClick).not.toHaveBeenCalled();
+
+      fireEvent.click(
+        container.querySelector('.rc-collapse-item:nth-child(3) .rc-collapse-expand-icon'),
+      );
+      expect(onItemClick).toHaveBeenCalled();
+      expect(onChangeFn).toBeCalledTimes(1);
+      expect(onChangeFn).lastCalledWith(['2']);
+    });
+
+    it('should work with custom icon', () => {
+      const { container } = render(
+        <Collapse
+          items={[
+            {
+              header: 'title',
+              expandIcon: () => <span className="custom-icon">i</span>,
+            },
+          ]}
+        />,
+      );
+      expect(container.querySelector('.custom-icon')).toBeTruthy();
+    });
+
+    it('should work with nested', () => {
+      const { container } = render(
+        <Collapse
+          items={[
+            ...items,
+            {
+              header: 'title 3',
+              children: <Collapse items={items} />,
+            },
+          ]}
+        />,
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
   });
 });
