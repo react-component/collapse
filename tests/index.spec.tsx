@@ -691,7 +691,7 @@ describe('collapse', () => {
     expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
   });
 
-  describe.only('props items', () => {
+  describe('props items', () => {
     const items: ItemType[] = [
       {
         key: '1',
