@@ -107,6 +107,14 @@ ReactDOM.render(App, container);
           <th>-</th>
           <td>specify whether the panel of children is collapsible or the area of collapsible.</td>
       </tr>
+      <tr>
+          <td>items</td>
+          <td>
+            <a href="./src/interface.ts#ItemType">interface.ts#ItemType</a>
+          </td>
+          <th>-</th>
+          <td>collapse items content</td>
+      </tr>
     </tbody>
 </table>
 
@@ -115,6 +123,8 @@ If `accordion` is null or false, every panel can open. Opening another panel wil
 If `accordion` is true, only one panel can be open. Opening another panel will cause the previously opened panel to close. `activeKey` should be an string, if passing an array (the first item in the array will be used).
 
 ### Collapse.Panel props
+
+> **deprecated** use `items` instead, will be removed in `v4.0.0`
 
 <table class="table table-bordered table-striped">
     <thead>
