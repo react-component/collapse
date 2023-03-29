@@ -8,7 +8,7 @@ export interface ItemType
     CollapsePanelProps,
     'header' | 'prefixCls' | 'panelKey' | 'isActive' | 'accordion' | 'openMotion'
   > {
-  label: CollapsePanelProps['header'];
+  label?: CollapsePanelProps['header'];
   ref?: React.RefObject<HTMLDivElement>;
   key?: React.Key;
 }
