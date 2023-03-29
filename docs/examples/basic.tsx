@@ -19,11 +19,6 @@ const App = () => {
       children: 'content 3',
       onItemClick: console.log,
     },
-    {
-      label: 'title 4',
-      children: 'content 4',
-      expandIcon: () => <i>custom icon</i>,
-    },
   ];
 
   return <Collapse items={items} />;

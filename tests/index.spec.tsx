@@ -794,20 +794,6 @@ describe('collapse', () => {
       expect(onChangeFn).lastCalledWith(['1']);
     });
 
-    it('should work with custom icon', () => {
-      const { container } = render(
-        <Collapse
-          items={[
-            {
-              label: 'title',
-              expandIcon: () => <span className="custom-icon">i</span>,
-            },
-          ]}
-        />,
-      );
-      expect(container.querySelector('.custom-icon')).toBeTruthy();
-    });
-
     it('should work with nested', () => {
       const { container } = render(
         <Collapse
