@@ -3,7 +3,8 @@ import type * as React from 'react';
 
 export type CollapsibleType = 'header' | 'icon' | 'disabled';
 
-export interface ItemType extends Omit<CollapsePanelProps, 'prefixCls' | 'panelKey' | 'isActive'> {
+export interface ItemType
+  extends Omit<CollapsePanelProps, 'prefixCls' | 'panelKey' | 'isActive' | 'accordion'> {
   ref?: React.RefObject<HTMLDivElement>;
   key?: React.Key;
 }
