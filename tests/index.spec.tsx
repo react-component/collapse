@@ -790,5 +790,22 @@ describe('collapse', () => {
       );
       expect(container.firstChild).toMatchSnapshot();
     });
+
+    it('should support custom child', () => {
+      const { container } = render(
+        <Collapse
+          items={[
+            {
+              key: '1',
+              header: 'title',
+              children: 'first',
+            },
+          ]}
+        >
+          <a className="custom-child">custom-child</a>
+        </Collapse>,
+      );
+      expect(container.querySelector('.custom-child')?.innerHTML).toBe('custom-child');
+    });
   });
 });
