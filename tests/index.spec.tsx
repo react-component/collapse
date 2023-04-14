@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
-import type { CollapseProps } from '../src/interface';
+import type { CollapseProps, ItemType } from '../src/interface';
 
 describe('collapse', () => {
   let changeHook: jest.Mock<any, any> | null;
@@ -243,23 +243,15 @@ describe('collapse', () => {
     expect(container.querySelectorAll('.rc-collapse-content-inactive').length).toBeFalsy();
   });
 
-  describe('prop: accordion', () => {
+  function runAccordionTest(element: React.ReactElement) {
     let collapse: RenderResult;
 
     beforeEach(() => {
-      collapse = render(
-        <Collapse onChange={onChange} accordion>
-          <Panel header="collapse 1" key="1">
-            first
-          </Panel>
-          <Panel header="collapse 2" key="2">
-            second
-          </Panel>
-          <Panel header="collapse 3" key="3">
-            third
-          </Panel>
-        </Collapse>,
-      );
+      collapse = render(element);
+    });
+
+    afterEach(() => {
+      collapse.unmount();
     });
 
     it('accordion content, should default open zero item', () => {
@@ -317,6 +309,22 @@ describe('collapse', () => {
       expect(item).toBeTruthy();
       expect(item!.getAttribute('role')).toBe('tabpanel');
     });
+  }
+
+  describe('prop: accordion', () => {
+    runAccordionTest(
+      <Collapse onChange={onChange} accordion>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3">
+          third
+        </Panel>
+      </Collapse>,
+    );
   });
 
   describe('forceRender', () => {
@@ -689,5 +697,133 @@ describe('collapse', () => {
       </Collapse>,
     );
     expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
+  });
+
+  describe('props items', () => {
+    const items: ItemType[] = [
+      {
+        key: '1',
+        label: 'collapse 1',
+        children: 'first',
+        collapsible: 'disabled',
+      },
+      {
+        key: '2',
+        label: 'collapse 2',
+        children: 'second',
+        extra: <span>ExtraSpan</span>,
+      },
+      {
+        key: '3',
+        label: 'collapse 3',
+        className: 'important',
+        children: 'third',
+      },
+    ];
+
+    runNormalTest(
+      <Collapse onChange={onChange} expandIcon={() => <span>test{'>'}</span>} items={items} />,
+    );
+
+    runAccordionTest(
+      <Collapse
+        onChange={onChange}
+        accordion
+        items={[
+          {
+            key: '1',
+            label: 'collapse 1',
+            children: 'first',
+          },
+          {
+            key: '2',
+            label: 'collapse 2',
+            children: 'second',
+          },
+          {
+            key: '3',
+            label: 'collapse 3',
+            children: 'third',
+          },
+        ]}
+      />,
+    );
+
+    it('should work with onItemClick', () => {
+      const onItemClick = jest.fn();
+      const { container } = render(
+        <Collapse
+          items={[
+            {
+              label: 'title 3',
+              onItemClick,
+            },
+          ]}
+        />,
+      );
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(onItemClick).toHaveBeenCalled();
+      expect(onItemClick).lastCalledWith('0');
+    });
+
+    it('should work with collapsible', () => {
+      const onItemClick = jest.fn();
+      const onChangeFn = jest.fn();
+      const { container } = render(
+        <Collapse
+          onChange={onChangeFn}
+          items={[
+            ...items.slice(0, 1),
+            {
+              label: 'title 3',
+              onItemClick,
+              collapsible: 'icon',
+            },
+          ]}
+        />,
+      );
+
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(onItemClick).not.toHaveBeenCalled();
+
+      fireEvent.click(
+        container.querySelector('.rc-collapse-item:nth-child(2) .rc-collapse-expand-icon'),
+      );
+      expect(onItemClick).toHaveBeenCalled();
+      expect(onChangeFn).toBeCalledTimes(1);
+      expect(onChangeFn).lastCalledWith(['1']);
+    });
+
+    it('should work with nested', () => {
+      const { container } = render(
+        <Collapse
+          items={[
+            ...items,
+            {
+              label: 'title 3',
+              children: <Collapse items={items} />,
+            },
+          ]}
+        />,
+      );
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('should not support expandIcon', () => {
+      const { container } = render(
+        <Collapse
+          expandIcon={() => <i className="custom-icon">p</i>}
+          items={[
+            {
+              label: 'title',
+              expandIcon: () => <i className="custom-icon">c</i>,
+            } as any,
+          ]}
+        />,
+      );
+
+      expect(container.querySelectorAll('.custom-icon')).toHaveLength(1);
+      expect(container.querySelector('.custom-icon')?.innerHTML).toBe('p');
+    });
   });
 });

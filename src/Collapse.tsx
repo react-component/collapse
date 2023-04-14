@@ -1,8 +1,9 @@
 import classNames from 'classnames';
-import toArray from 'rc-util/lib/Children/toArray';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
+import warning from 'rc-util/lib/warning';
 import React from 'react';
-import type { CollapsePanelProps, CollapseProps, CollapsibleType } from './interface';
+import useItems from './hooks/useItems';
+import type { CollapseProps } from './interface';
 import CollapsePanel from './Panel';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
@@ -22,13 +23,14 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     style,
     accordion,
     className,
-    children: rawChildren,
+    children,
     collapsible,
     openMotion,
     expandIcon,
     activeKey: rawActiveKey,
     defaultActiveKey,
     onChange,
+    items,
   } = props;
 
   const collapseClassName = classNames(prefixCls, className);
@@ -40,7 +42,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     postState: getActiveKeysArray,
   });
 
-  const onClickItem = (key: React.Key) =>
+  const onItemClick = (key: React.Key) =>
     setActiveKey(() => {
       if (accordion) {
         return activeKey[0] === key ? [] : [key];
@@ -56,65 +58,21 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     });
 
   // ======================== Children ========================
-  const getNewChild = (child: React.ReactElement<CollapsePanelProps>, index: number) => {
-    if (!child) return null;
+  warning(
+    !children,
+    '`children` will be removed in next major version. Please use `items` instead.',
+  );
 
-    const key = child.key || String(index);
-
-    const {
-      header,
-      headerClass,
-      destroyInactivePanel: childDestroyInactivePanel,
-      collapsible: childCollapsible,
-      onItemClick: childOnItemClick,
-    } = child.props;
-
-    let isActive = false;
-    if (accordion) {
-      isActive = activeKey[0] === key;
-    } else {
-      isActive = activeKey.indexOf(key) > -1;
-    }
-
-    const mergeCollapsible: CollapsibleType = childCollapsible ?? collapsible;
-
-    const handleItemClick = (value: React.Key) => {
-      if (mergeCollapsible === 'disabled') return;
-      onClickItem(value);
-      childOnItemClick?.(value);
-    };
-
-    const childProps = {
-      key,
-      panelKey: key,
-      header,
-      headerClass,
-      isActive,
-      prefixCls,
-      destroyInactivePanel: childDestroyInactivePanel ?? destroyInactivePanel,
-      openMotion,
-      accordion,
-      children: child.props.children,
-      onItemClick: handleItemClick,
-      expandIcon,
-      collapsible: mergeCollapsible,
-    };
-
-    // https://github.com/ant-design/ant-design/issues/20479
-    if (typeof child.type === 'string') {
-      return child;
-    }
-
-    Object.keys(childProps).forEach((propName) => {
-      if (typeof childProps[propName] === 'undefined') {
-        delete childProps[propName];
-      }
-    });
-
-    return React.cloneElement(child, childProps);
-  };
-
-  const children = toArray(rawChildren).map(getNewChild);
+  const mergedChildren = useItems(items, children, {
+    prefixCls,
+    accordion,
+    openMotion,
+    expandIcon,
+    collapsible,
+    destroyInactivePanel,
+    onItemClick,
+    activeKey,
+  });
 
   // ======================== Render ========================
   return (
@@ -124,9 +82,14 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       style={style}
       role={accordion ? 'tablist' : undefined}
     >
-      {children}
+      {mergedChildren}
     </div>
   );
 });
 
-export default Object.assign(Collapse, { Panel: CollapsePanel });
+export default Object.assign(Collapse, {
+  /**
+   * @deprecated use `items` instead, will be removed in `v4.0.0`
+   */
+  Panel: CollapsePanel,
+});

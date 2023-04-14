@@ -3,6 +3,22 @@ import type * as React from 'react';
 
 export type CollapsibleType = 'header' | 'icon' | 'disabled';
 
+export interface ItemType
+  extends Omit<
+    CollapsePanelProps,
+    | 'header' // alias of label
+    | 'prefixCls'
+    | 'panelKey' // alias of key
+    | 'isActive'
+    | 'accordion'
+    | 'openMotion'
+    | 'expandIcon'
+  > {
+  key?: CollapsePanelProps['panelKey'];
+  label?: CollapsePanelProps['header'];
+  ref?: React.RefObject<HTMLDivElement>;
+}
+
 export interface CollapseProps {
   prefixCls?: string;
   activeKey?: React.Key | React.Key[];
@@ -16,6 +32,11 @@ export interface CollapseProps {
   expandIcon?: (props: object) => React.ReactNode;
   collapsible?: CollapsibleType;
   children?: React.ReactNode;
+  /**
+   * Collapse items content
+   * @since 3.6.0
+   */
+  items?: ItemType[];
 }
 
 export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> {
