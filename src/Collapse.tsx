@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import toArray from 'rc-util/lib/Children/toArray';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import warning from 'rc-util/lib/warning';
 import React from 'react';
-import type { CollapsePanelProps, CollapseProps, CollapsibleType, ItemType } from './interface';
+import useItems from './hooks/useItems';
+import type { CollapseProps } from './interface';
 import CollapsePanel from './Panel';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
@@ -23,7 +23,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     style,
     accordion,
     className,
-    children: rawChildren,
+    children,
     collapsible,
     openMotion,
     expandIcon,
@@ -42,7 +42,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     postState: getActiveKeysArray,
   });
 
-  const onClickItem = (key: React.Key) =>
+  const onItemClick = (key: React.Key) =>
     setActiveKey(() => {
       if (accordion) {
         return activeKey[0] === key ? [] : [key];
@@ -59,123 +59,20 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
 
   // ======================== Children ========================
   warning(
-    !rawChildren,
+    !children,
     '`children` will be removed in next major version. Please use `items` instead.',
   );
 
-  const getNewChild = (child: React.ReactElement<CollapsePanelProps>, index: number) => {
-    if (!child) return null;
-
-    const key = child.key || String(index);
-
-    const {
-      header,
-      headerClass,
-      destroyInactivePanel: childDestroyInactivePanel,
-      collapsible: childCollapsible,
-      onItemClick: childOnItemClick,
-    } = child.props;
-
-    let isActive = false;
-    if (accordion) {
-      isActive = activeKey[0] === key;
-    } else {
-      isActive = activeKey.indexOf(key) > -1;
-    }
-
-    const mergeCollapsible: CollapsibleType = childCollapsible ?? collapsible;
-
-    const handleItemClick = (value: React.Key) => {
-      if (mergeCollapsible === 'disabled') return;
-      onClickItem(value);
-      childOnItemClick?.(value);
-    };
-
-    const childProps = {
-      key,
-      panelKey: key,
-      header,
-      headerClass,
-      isActive,
-      prefixCls,
-      destroyInactivePanel: childDestroyInactivePanel ?? destroyInactivePanel,
-      openMotion,
-      accordion,
-      children: child.props.children,
-      onItemClick: handleItemClick,
-      expandIcon,
-      collapsible: mergeCollapsible,
-    };
-
-    // https://github.com/ant-design/ant-design/issues/20479
-    if (typeof child.type === 'string') {
-      return child;
-    }
-
-    Object.keys(childProps).forEach((propName) => {
-      if (typeof childProps[propName] === 'undefined') {
-        delete childProps[propName];
-      }
-    });
-
-    return React.cloneElement(child, childProps);
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const convertItemsToNodes = (items: ItemType[]) =>
-    items.map((item, index) => {
-      const {
-        children,
-        label,
-        key: rawKey,
-        collapsible: rawCollapsible,
-        onItemClick: rawOnItemClick,
-        destroyInactivePanel: rawDestroyInactivePanel,
-        ...restProps
-      } = item;
-
-      // You may be puzzled why you want to convert them all into strings, me too.
-      // Maybe: https://github.com/react-component/collapse/blob/aac303a8b6ff30e35060b4f8fecde6f4556fcbe2/src/Collapse.tsx#L15
-      const key = String(rawKey ?? index);
-      const mergeCollapsible = rawCollapsible ?? collapsible;
-      const mergeDestroyInactivePanel = rawDestroyInactivePanel ?? destroyInactivePanel;
-
-      const handleItemClick = (value: React.Key) => {
-        if (mergeCollapsible === 'disabled') return;
-        onClickItem(value);
-        rawOnItemClick?.(value);
-      };
-
-      let isActive = false;
-      if (accordion) {
-        isActive = activeKey[0] === key;
-      } else {
-        isActive = activeKey.indexOf(key) > -1;
-      }
-
-      return (
-        <CollapsePanel
-          {...restProps}
-          prefixCls={prefixCls}
-          key={key}
-          panelKey={key}
-          isActive={isActive}
-          accordion={accordion}
-          openMotion={openMotion}
-          expandIcon={expandIcon}
-          header={label}
-          collapsible={mergeCollapsible}
-          onItemClick={handleItemClick}
-          destroyInactivePanel={mergeDestroyInactivePanel}
-        >
-          {children}
-        </CollapsePanel>
-      );
-    });
-
-  const children = Array.isArray(items)
-    ? convertItemsToNodes(items)
-    : toArray(rawChildren).map(getNewChild);
+  const mergedChildren = useItems(items, children, {
+    prefixCls,
+    accordion,
+    openMotion,
+    expandIcon,
+    collapsible,
+    destroyInactivePanel,
+    onItemClick,
+    activeKey,
+  });
 
   // ======================== Render ========================
   return (
@@ -185,7 +82,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       style={style}
       role={accordion ? 'tablist' : undefined}
     >
-      {children}
+      {mergedChildren}
     </div>
   );
 });
