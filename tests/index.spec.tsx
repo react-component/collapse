@@ -1,8 +1,8 @@
 import type { RenderResult } from '@testing-library/react';
 import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
-import React from 'react';
-import Collapse from '../src/index';
+import React, { Fragment } from 'react';
+import Collapse, { Panel } from '../src/index';
 import type { CollapseProps, ItemType } from '../src/interface';
 
 describe('collapse', () => {
@@ -23,27 +23,6 @@ describe('collapse', () => {
       changeHook.apply(this, args);
     }
   }
-
-  const items: ItemType[] = [
-    {
-      key: '1',
-      header: 'collapse 1',
-      collapsible: 'disabled',
-      children: 'first',
-    },
-    {
-      key: '2',
-      header: 'collapse 2',
-      extra: <span>ExtraSpan</span>,
-      children: 'second',
-    },
-    {
-      key: '3',
-      header: 'collapse 3',
-      className: 'important',
-      children: 'third',
-    },
-  ];
 
   function runNormalTest(element: any) {
     let collapse: RenderResult;
@@ -136,7 +115,21 @@ describe('collapse', () => {
   describe('collapse', () => {
     const expandIcon = () => <span>test{'>'}</span>;
 
-    runNormalTest(<Collapse onChange={onChange} expandIcon={expandIcon} items={items} />);
+    const element = (
+      <Collapse onChange={onChange} expandIcon={expandIcon}>
+        <Panel header="collapse 1" key="1" collapsible="disabled">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3" className="important">
+          third
+        </Panel>
+      </Collapse>
+    );
+
+    runNormalTest(element);
 
     it('controlled', () => {
       const onChangeSpy = jest.fn();
@@ -150,27 +143,17 @@ describe('collapse', () => {
         };
 
         return (
-          <Collapse
-            onChange={handleChange}
-            activeKey={activeKey}
-            items={[
-              {
-                key: '1',
-                header: 'collapse 1',
-                children: 'first',
-              },
-              {
-                key: '2',
-                header: 'collapse 2',
-                children: 'second',
-              },
-              {
-                key: '3',
-                header: 'collapse 3',
-                children: 'third',
-              },
-            ]}
-          />
+          <Collapse onChange={handleChange} activeKey={activeKey}>
+            <Panel header="collapse 1" key="1">
+              first
+            </Panel>
+            <Panel header="collapse 2" key="2">
+              second
+            </Panel>
+            <Panel header="collapse 3" key="3">
+              third
+            </Panel>
+          </Collapse>
         );
       };
 
@@ -187,32 +170,31 @@ describe('collapse', () => {
   });
 
   describe('it should support number key', () => {
-    runNormalTest(
-      <Collapse
-        onChange={onChange}
-        expandIcon={() => <span>test{'>'}</span>}
-        items={items.map((item) => ({
-          ...item,
-          key: Number(item.key),
-        }))}
-      />,
+    const expandIcon = () => <span>test{'>'}</span>;
+    const element = (
+      <Collapse onChange={onChange} expandIcon={expandIcon}>
+        <Panel header="collapse 1" key={1} collapsible="disabled">
+          first
+        </Panel>
+        <Panel header="collapse 2" key={2} extra={<span>ExtraSpan</span>}>
+          second
+        </Panel>
+        <Panel header="collapse 3" key={3} className="important">
+          third
+        </Panel>
+      </Collapse>
     );
+
+    runNormalTest(element);
   });
 
   it('shoule support extra whit number 0', () => {
     const { container } = render(
-      <Collapse
-        onChange={onChange}
-        activeKey={0}
-        items={[
-          {
-            header: 'collapse 0',
-            key: 0,
-            extra: 0,
-            children: 'zero',
-          },
-        ]}
-      />,
+      <Collapse onChange={onChange} activeKey={0}>
+        <Panel header="collapse 0" key={0} extra={0}>
+          zero
+        </Panel>
+      </Collapse>,
     );
 
     const extraNodes = container.querySelectorAll('.rc-collapse-extra');
@@ -222,14 +204,17 @@ describe('collapse', () => {
 
   it('should support activeKey number 0', () => {
     const { container } = render(
-      <Collapse
-        onChange={onChange}
-        activeKey={0}
-        items={items.map((item, index) => ({
-          ...item,
-          key: index,
-        }))}
-      />,
+      <Collapse onChange={onChange} activeKey={0}>
+        <Panel header="collapse 0" key={0}>
+          zero
+        </Panel>
+        <Panel header="collapse 1" key={1}>
+          first
+        </Panel>
+        <Panel header="collapse 2" key={2}>
+          second
+        </Panel>
+      </Collapse>,
     );
 
     // activeKey number 0, should open one item
@@ -238,7 +223,17 @@ describe('collapse', () => {
 
   it('click should toggle panel state', () => {
     const { container } = render(
-      <Collapse onChange={onChange} destroyInactivePanel items={items} />,
+      <Collapse onChange={onChange} destroyInactivePanel>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3" className="important">
+          third
+        </Panel>
+      </Collapse>,
     );
 
     const header = container.querySelectorAll('.rc-collapse-header')?.[1];
@@ -252,29 +247,11 @@ describe('collapse', () => {
     let collapse: RenderResult;
 
     beforeEach(() => {
-      collapse = render(
-        <Collapse
-          onChange={onChange}
-          accordion
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-            {
-              key: '2',
-              header: 'collapse 2',
-              children: 'second',
-            },
-            {
-              key: '3',
-              header: 'collapse 3',
-              children: 'third',
-            },
-          ]}
-        />,
-      );
+      collapse = render(element);
+    });
+
+    afterEach(() => {
+      collapse.unmount();
     });
 
     it('accordion content, should default open zero item', () => {
@@ -332,6 +309,22 @@ describe('collapse', () => {
       expect(item).toBeTruthy();
       expect(item!.getAttribute('role')).toBe('tabpanel');
     });
+  }
+
+  describe('prop: accordion', () => {
+    runAccordionTest(
+      <Collapse onChange={onChange} accordion>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3">
+          third
+        </Panel>
+      </Collapse>,
+    );
   });
 
   describe('forceRender', () => {
@@ -351,42 +344,28 @@ describe('collapse', () => {
 
     it('when forceRender is FALSE it should lazy render the panel content', () => {
       const { container } = render(
-        <Collapse
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              forceRender: false,
-              collapsible: 'disabled',
-            },
-            {
-              key: '2',
-              header: 'collapse 2',
-              children: 'second',
-            },
-          ]}
-        />,
+        <Collapse>
+          <Panel header="collapse 1" key="1" forceRender={false} collapsible="disabled">
+            first
+          </Panel>
+          <Panel header="collapse 2" key="2">
+            second
+          </Panel>
+        </Collapse>,
       );
       expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
     });
 
     it('when forceRender is TRUE then it should render all the panel content to the DOM', () => {
       const { container } = render(
-        <Collapse
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              forceRender: true,
-              collapsible: 'disabled',
-            },
-            {
-              key: '2',
-              header: 'collapse 2',
-              children: 'second',
-            },
-          ]}
-        />,
+        <Collapse>
+          <Panel header="collapse 1" key="1" forceRender collapsible="disabled">
+            first
+          </Panel>
+          <Panel header="collapse 2" key="2">
+            second
+          </Panel>
+        </Collapse>,
       );
 
       jest.runAllTimers();
@@ -409,26 +388,17 @@ describe('collapse', () => {
     };
 
     const { container } = render(
-      <Collapse
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            children: 'first',
-          },
-          {
-            key: '2',
-            header: 'collapse 2',
-            children: 'second',
-          },
-          {
-            key: '3',
-            header: 'collapse 3',
-            children: 'second',
-            collapsible: 'disabled',
-          },
-        ]}
-      />,
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3" collapsible="disabled">
+          second
+        </Panel>
+      </Collapse>,
     );
 
     fireEvent.keyPress(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
@@ -453,57 +423,46 @@ describe('collapse', () => {
     );
   });
 
-  // TODO: 移除 Panel 后需要在 Ant Design 里面测试，待 Ant Design 稳定后再移除 by @Wxh16144
-  // describe.skip('wrapped in Fragment', () => {
-  //   const expandIcon = () => <span>test{'>'}</span>;
-  //   const element = (
-  //     <Collapse onChange={onChange} expandIcon={expandIcon}>
-  //       <Fragment>
-  //         <Panel header="collapse 1" key="1" collapsible="disabled">
-  //           first
-  //         </Panel>
-  //         <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
-  //           second
-  //         </Panel>
-  //         <Fragment>
-  //           <Panel header="collapse 3" key="3" className="important">
-  //             third
-  //           </Panel>
-  //         </Fragment>
-  //       </Fragment>
-  //     </Collapse>
-  //   );
+  describe('wrapped in Fragment', () => {
+    const expandIcon = () => <span>test{'>'}</span>;
+    const element = (
+      <Collapse onChange={onChange} expandIcon={expandIcon}>
+        <Fragment>
+          <Panel header="collapse 1" key="1" collapsible="disabled">
+            first
+          </Panel>
+          <Panel header="collapse 2" key="2" extra={<span>ExtraSpan</span>}>
+            second
+          </Panel>
+          <Fragment>
+            <Panel header="collapse 3" key="3" className="important">
+              third
+            </Panel>
+          </Fragment>
+        </Fragment>
+      </Collapse>
+    );
 
-  //   runNormalTest(element);
-  // });
+    runNormalTest(element);
+  });
 
   it('should support return null icon', () => {
     const { container } = render(
-      <Collapse
-        expandIcon={() => null}
-        items={[
-          {
-            key: '1',
-            header: 'title',
-            children: 'first',
-          },
-        ]}
-      />,
+      <Collapse expandIcon={() => null}>
+        <Panel header="title" key="1">
+          first
+        </Panel>
+      </Collapse>,
     );
     expect(container.querySelector('.rc-collapse-header')?.childNodes).toHaveLength(1);
   });
 
   it('should support custom child', () => {
     const { container } = render(
-      <Collapse
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            children: 'first',
-          },
-        ]}
-      >
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
         <a className="custom-child">custom-child</a>
       </Collapse>,
     );
@@ -513,49 +472,44 @@ describe('collapse', () => {
   // https://github.com/ant-design/ant-design/issues/36327
   // https://github.com/ant-design/ant-design/issues/6179
   // https://github.com/react-component/collapse/issues/73#issuecomment-323626120
-  //  TODO: 移除 Panel 后需要在 Ant Design 里面测试，待 Ant Design 稳定后再移除 by @Wxh16144
-  // it.skip('should support custom component', () => {
-  //   const PanelElement = (props) => (
-  //     <Panel header="collapse 1" {...props}>
-  //       <p>test</p>
-  //     </Panel>
-  //   );
-  //   const { container } = render(
-  //     <Collapse defaultActiveKey="1">
-  //       <PanelElement key="1" />
-  //       <Panel header="collapse 2" key="2">
-  //         second
-  //       </Panel>
-  //     </Collapse>,
-  //   );
+  it('should support custom component', () => {
+    const PanelElement = (props) => (
+      <Panel header="collapse 1" {...props}>
+        <p>test</p>
+      </Panel>
+    );
+    const { container } = render(
+      <Collapse defaultActiveKey="1">
+        <PanelElement key="1" />
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+      </Collapse>,
+    );
 
-  //   expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
-  //   expect(container.querySelector('.rc-collapse-content')).toHaveClass(
-  //     'rc-collapse-content-active',
-  //   );
-  //   expect(container.querySelector('.rc-collapse-header')?.textContent).toBe('collapse 1');
-  //   expect(container.querySelector('.rc-collapse-header')?.querySelectorAll('.arrow')).toHaveLength(
-  //     1,
-  //   );
-  //   fireEvent.click(container.querySelector('.rc-collapse-header')!);
-  //   expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-  //   expect(container.querySelector('.rc-collapse-content')).toHaveClass(
-  //     'rc-collapse-content-inactive',
-  //   );
-  // });
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-active',
+    );
+    expect(container.querySelector('.rc-collapse-header')?.textContent).toBe('collapse 1');
+    expect(container.querySelector('.rc-collapse-header')?.querySelectorAll('.arrow')).toHaveLength(
+      1,
+    );
+    fireEvent.click(container.querySelector('.rc-collapse-header')!);
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
+      'rc-collapse-content-inactive',
+    );
+  });
 
   describe('prop: collapsible', () => {
     it('default', () => {
       const { container } = render(
-        <Collapse
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-          ]}
-        />,
+        <Collapse>
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
       expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
       fireEvent.click(container.querySelector('.rc-collapse-header')!);
@@ -563,16 +517,11 @@ describe('collapse', () => {
     });
     it('should work when value is header', () => {
       const { container } = render(
-        <Collapse
-          collapsible="header"
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-          ]}
-        />,
+        <Collapse collapsible="header">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
       expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
       fireEvent.click(container.querySelector('.rc-collapse-header')!);
@@ -582,16 +531,11 @@ describe('collapse', () => {
     });
     it('should work when value is icon', () => {
       const { container } = render(
-        <Collapse
-          collapsible="icon"
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-          ]}
-        />,
+        <Collapse collapsible="icon">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
       expect(container.querySelector('.rc-collapse-expand-icon')).toBeTruthy();
       fireEvent.click(container.querySelector('.rc-collapse-header')!);
@@ -602,16 +546,11 @@ describe('collapse', () => {
 
     it('should disabled when value is disabled', () => {
       const { container } = render(
-        <Collapse
-          collapsible="disabled"
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-          ]}
-        />,
+        <Collapse collapsible="disabled">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
       expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
       expect(container.querySelectorAll('.rc-collapse-item-disabled')).toHaveLength(1);
@@ -621,17 +560,11 @@ describe('collapse', () => {
 
     it('the value of panel should be read first', () => {
       const { container } = render(
-        <Collapse
-          collapsible="header"
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-              collapsible: 'disabled',
-            },
-          ]}
-        />,
+        <Collapse collapsible="header">
+          <Panel collapsible="disabled" header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
       expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
 
@@ -643,16 +576,11 @@ describe('collapse', () => {
 
     it('icon trigger when collapsible equal header', () => {
       const { container } = render(
-        <Collapse
-          collapsible="header"
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-          ]}
-        />,
+        <Collapse collapsible="header">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
 
       fireEvent.click(container.querySelector('.rc-collapse-header .arrow')!);
@@ -661,16 +589,11 @@ describe('collapse', () => {
 
     it('header not trigger when collapsible equal icon', () => {
       const { container } = render(
-        <Collapse
-          collapsible="icon"
-          items={[
-            {
-              key: '1',
-              header: 'collapse 1',
-              children: 'first',
-            },
-          ]}
-        />,
+        <Collapse collapsible="icon">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>,
       );
 
       fireEvent.click(container.querySelector('.rc-collapse-header-text')!);
@@ -680,16 +603,11 @@ describe('collapse', () => {
 
   it('!showArrow', () => {
     const { container } = render(
-      <Collapse
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            children: 'first',
-            showArrow: false,
-          },
-        ]}
-      />,
+      <Collapse>
+        <Panel header="collapse 1" key="1" showArrow={false}>
+          first
+        </Panel>
+      </Collapse>,
     );
 
     expect(container.querySelectorAll('.rc-collapse-expand-icon')).toHaveLength(0);
@@ -698,38 +616,46 @@ describe('collapse', () => {
   it('Panel container dom can set event handler', () => {
     const clickHandler = jest.fn();
     const { container } = render(
-      <Collapse
-        defaultActiveKey="1"
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            onClick: clickHandler,
-            children: <div className="target">Click this</div>,
-          },
-        ]}
-      />,
+      <Collapse defaultActiveKey="1">
+        <Panel header="collapse 1" key="1" onClick={clickHandler}>
+          <div className="target">Click this</div>
+        </Panel>
+      </Collapse>,
     );
 
     fireEvent.click(container.querySelector('.target')!);
     expect(clickHandler).toHaveBeenCalled();
   });
 
+  it('falsy Panel', () => {
+    const { container } = render(
+      <Collapse>
+        {null}
+        <Panel header="collapse 1" key="1">
+          <p>Panel 1 content</p>
+        </Panel>
+        {0}
+        <Panel header="collapse 2" key="2">
+          <p>Panel 2 content</p>
+        </Panel>
+        {undefined}
+        {false}
+        {true}
+      </Collapse>,
+    );
+
+    expect(container.querySelectorAll('.rc-collapse-item')).toHaveLength(2);
+  });
+
   it('ref should work', () => {
     const ref = React.createRef<any>();
     const panelRef = React.createRef<any>();
     const { container } = render(
-      <Collapse
-        ref={ref}
-        items={[
-          {
-            key: '1',
-            ref: panelRef,
-            header: 'collapse 1',
-            children: 'first',
-          },
-        ]}
-      />,
+      <Collapse ref={ref}>
+        <Panel header="collapse 1" key="1" ref={panelRef}>
+          first
+        </Panel>
+      </Collapse>,
     );
     expect(ref.current).toBe(container.firstChild);
     expect(panelRef.current).toBe(container.querySelector('.rc-collapse-item'));
@@ -739,16 +665,11 @@ describe('collapse', () => {
   it('onItemClick should work', () => {
     const onItemClick = jest.fn();
     const { container } = render(
-      <Collapse
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            onItemClick,
-            children: 'first',
-          },
-        ]}
-      />,
+      <Collapse>
+        <Panel header="collapse 1" key="1" onItemClick={onItemClick}>
+          first
+        </Panel>
+      </Collapse>,
     );
     fireEvent.click(container.querySelector('.rc-collapse-header')!);
     expect(onItemClick).toHaveBeenCalled();
@@ -757,17 +678,11 @@ describe('collapse', () => {
   it('onItemClick should not work when collapsible is disabled', () => {
     const onItemClick = jest.fn();
     const { container } = render(
-      <Collapse
-        collapsible="disabled"
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            onItemClick,
-            children: 'first',
-          },
-        ]}
-      />,
+      <Collapse collapsible="disabled">
+        <Panel header="collapse 1" key="1" onItemClick={onItemClick}>
+          first
+        </Panel>
+      </Collapse>,
     );
     fireEvent.click(container.querySelector('.rc-collapse-header')!);
     expect(onItemClick).not.toHaveBeenCalled();
@@ -775,25 +690,37 @@ describe('collapse', () => {
 
   it('panel style should work', () => {
     const { container } = render(
-      <Collapse
-        items={[
-          {
-            key: '1',
-            header: 'collapse 1',
-            style: { color: 'red' },
-            children: 'first',
-          },
-        ]}
-      />,
+      <Collapse>
+        <Panel header="collapse 1" key="1" style={{ color: 'red' }}>
+          first
+        </Panel>
+      </Collapse>,
     );
-
-    expect(window.getComputedStyle(container.querySelector('.rc-collapse-item'))).toHaveProperty(
-      'color',
-      'red',
-    );
+    expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
   });
 
   describe('props items', () => {
+    const items: ItemType[] = [
+      {
+        key: '1',
+        label: 'collapse 1',
+        children: 'first',
+        collapsible: 'disabled',
+      },
+      {
+        key: '2',
+        label: 'collapse 2',
+        children: 'second',
+        extra: <span>ExtraSpan</span>,
+      },
+      {
+        key: '3',
+        label: 'collapse 3',
+        className: 'important',
+        children: 'third',
+      },
+    ];
+
     runNormalTest(
       <Collapse onChange={onChange} expandIcon={() => <span>test{'>'}</span>} items={items} />,
     );

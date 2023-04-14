@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
+import warning from 'rc-util/lib/warning';
 import React from 'react';
 import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
@@ -22,6 +23,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     style,
     accordion,
     className,
+    children,
     collapsible,
     openMotion,
     expandIcon,
@@ -72,57 +74,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     activeKey,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  const convertItemsToNodes = (items: ItemType[]) =>
-    items.map((item, index) => {
-      const {
-        children,
-        key: rawKey,
-        collapsible: rawCollapsible,
-        onItemClick: rawOnItemClick,
-        destroyInactivePanel: rawDestroyInactivePanel,
-        expandIcon: rawExpandIcon = expandIcon,
-        ...restProps
-      } = item;
-
-      // You may be puzzled why you want to convert them all into strings, me too.
-      // Maybe: https://github.com/react-component/collapse/blob/aac303a8b6ff30e35060b4f8fecde6f4556fcbe2/src/Collapse.tsx#L15
-      const key = String(rawKey ?? index);
-      const mergeCollapsible = rawCollapsible ?? collapsible;
-      const mergeDestroyInactivePanel = rawDestroyInactivePanel ?? destroyInactivePanel;
-
-      const handleItemClick = (value: React.Key) => {
-        if (mergeCollapsible === 'disabled') return;
-        onClickItem(value);
-        rawOnItemClick?.(value);
-      };
-
-      let isActive = false;
-      if (accordion) {
-        isActive = activeKey[0] === key;
-      } else {
-        isActive = activeKey.indexOf(key) > -1;
-      }
-
-      return (
-        <CollapsePanel
-          prefixCls={prefixCls}
-          key={key}
-          panelKey={key}
-          isActive={isActive}
-          accordion={accordion}
-          openMotion={openMotion}
-          collapsible={mergeCollapsible}
-          onItemClick={handleItemClick}
-          destroyInactivePanel={mergeDestroyInactivePanel}
-          expandIcon={rawExpandIcon}
-          {...restProps}
-        >
-          {children}
-        </CollapsePanel>
-      );
-    });
-
   // ======================== Render ========================
   return (
     <div
@@ -136,4 +87,9 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   );
 });
 
-export default Collapse;
+export default Object.assign(Collapse, {
+  /**
+   * @deprecated use `items` instead, will be removed in `v4.0.0`
+   */
+  Panel: CollapsePanel,
+});
