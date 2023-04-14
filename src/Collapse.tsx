@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import warning from 'rc-util/lib/warning';
 import React from 'react';
 import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
@@ -23,7 +22,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     style,
     accordion,
     className,
-    children,
     collapsible,
     openMotion,
     expandIcon,
@@ -58,12 +56,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     });
 
   // ======================== Children ========================
-  warning(
-    !children,
-    '`children` will be removed in next major version. Please use `items` instead.',
-  );
-
-  const mergedChildren = useItems(items, children, {
+  const mergedChildren = useItems(items, {
     prefixCls,
     accordion,
     openMotion,
