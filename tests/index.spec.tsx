@@ -401,11 +401,11 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    fireEvent.keyPress(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
+    fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
     jest.runAllTimers();
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
 
-    fireEvent.keyPress(container.querySelector('.rc-collapse-header')!, myKeyEvent);
+    fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, myKeyEvent);
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
@@ -414,7 +414,7 @@ describe('collapse', () => {
       'rc-collapse-content-active',
     );
 
-    fireEvent.keyPress(container.querySelector('.rc-collapse-header')!, myKeyEvent);
+    fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, myKeyEvent);
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);

@@ -31,6 +31,7 @@ export interface CollapseProps {
   destroyInactivePanel?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
   collapsible?: CollapsibleType;
+  changeByClickOnly?: boolean;
   children?: React.ReactNode;
   /**
    * Collapse items content
@@ -59,4 +60,5 @@ export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> 
   role?: string;
   collapsible?: CollapsibleType;
   children?: React.ReactNode;
+  changeByClickOnly?: boolean;
 }

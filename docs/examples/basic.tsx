@@ -6,8 +6,14 @@ import '../../assets/index.less';
 const App = () => {
   const items: CollapseProps['items'] = [
     {
-      label: 'title',
+      label: <input />,
       children: 'content',
+      changeByClickOnly: true,
+    },
+    {
+      label: <input />,
+      children: 'content',
+      collapsible: 'icon',
     },
     {
       label: 'title 2',

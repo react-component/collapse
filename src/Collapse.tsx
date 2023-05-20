@@ -31,6 +31,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     defaultActiveKey,
     onChange,
     items,
+    changeByClickOnly = false,
   } = props;
 
   const collapseClassName = classNames(prefixCls, className);
@@ -72,6 +73,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     destroyInactivePanel,
     onItemClick,
     activeKey,
+    changeByClickOnly,
   });
 
   // ======================== Render ========================

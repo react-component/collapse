@@ -190,6 +190,12 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
           <th>-</th>
           <td>specify whether the panel be collapsible or the area of collapsible.</td>
       </tr>
+      <tr>
+          <td>changeByClickOnly</td>
+          <td>boolean</td>
+          <th>false</th>
+          <td>If pass true, the collapse will not change open state when keydown enter.</td>
+      </tr>
     </tbody>
 </table>
 
