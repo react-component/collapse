@@ -396,7 +396,13 @@ describe('collapse', () => {
           second
         </Panel>
         <Panel header="collapse 3" key="3" collapsible="disabled">
-          second
+          third
+        </Panel>
+        <Panel header="collapse 4" key="4" collapsible="icon">
+          four
+        </Panel>
+        <Panel header="collapse 5" key="5" changeByClickOnly>
+          five
         </Panel>
       </Collapse>,
     );
@@ -421,6 +427,14 @@ describe('collapse', () => {
     expect(container.querySelector('.rc-collapse-content')!.className).not.toContain(
       'rc-collapse-content-active',
     );
+
+    fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[3], myKeyEvent);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+
+    fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[4], myKeyEvent);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
   });
 
   describe('wrapped in Fragment', () => {
