@@ -33,13 +33,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     items,
   } = props;
 
-  if (process.env.NODE_ENV === 'development') {
-    warning(
-      false,
-      `[Collapse] Please use 'onKeyDown' instead of 'onKeyPress to prevent the event from bubbling.`,
-    );
-  }
-
   const collapseClassName = classNames(prefixCls, className);
 
   const [activeKey, setActiveKey] = useMergedState<React.Key | React.Key[], React.Key[]>([], {
