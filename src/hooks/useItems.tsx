@@ -4,10 +4,7 @@ import type { CollapsePanelProps, CollapseProps, ItemType } from '../interface';
 import CollapsePanel from '../Panel';
 
 type Props = Pick<CollapsePanelProps, 'prefixCls' | 'onItemClick' | 'openMotion' | 'expandIcon'> &
-  Pick<
-    CollapseProps,
-    'accordion' | 'collapsible' | 'destroyInactivePanel' | 'changeByClickOnly'
-  > & {
+  Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyInactivePanel'> & {
     activeKey: React.Key[];
   };
 

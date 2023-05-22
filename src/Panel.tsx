@@ -23,7 +23,6 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     openMotion,
     destroyInactivePanel,
     children,
-    changeByClickOnly = false,
     ...resetProps
   } = props;
 
@@ -77,8 +76,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     className: headerClassName,
     'aria-expanded': isActive,
     'aria-disabled': disabled,
-    onKeyDown:
-      (!collapsible || collapsibleHeader) && !changeByClickOnly ? handleKeyDown : undefined,
+    onKeyDown: handleKeyDown,
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {

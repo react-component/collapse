@@ -31,8 +31,14 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     defaultActiveKey,
     onChange,
     items,
-    changeByClickOnly = false,
   } = props;
+
+  if (process.env.NODE_ENV === 'development') {
+    warning(
+      false,
+      `[Collapse] Please use 'onKeyDown' instead of 'onKeyPress to prevent the event from bubbling.`,
+    );
+  }
 
   const collapseClassName = classNames(prefixCls, className);
 
@@ -73,7 +79,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     destroyInactivePanel,
     onItemClick,
     activeKey,
-    changeByClickOnly,
   });
 
   // ======================== Render ========================

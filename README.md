@@ -190,12 +190,6 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
           <th>-</th>
           <td>specify whether the panel be collapsible or the area of collapsible.</td>
       </tr>
-      <tr>
-          <td>changeByClickOnly</td>
-          <td>boolean</td>
-          <th>false</th>
-          <td>If pass true, the collapse will not change open state when keydown enter.</td>
-      </tr>
     </tbody>
 </table>
 
@@ -204,6 +198,41 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
 #### key
 
 If `key` is not provided, the panel's index will be used instead.
+
+#### KeyBoard Event
+
+By default, Collapse will listen `onKeyDown`(<3.7.0 `onKeyPress`) event with `enter` key to toggle panel's active state when `collapsible` is not `disabled`. If you want to disable this behavior, you can prevent the event from bubbling like this:
+
+```jsx
+const App = () => {
+  const items: CollapseProps['items'] = [
+    {
+      label: <input onKeyDown={(e) => e.stopPropagation()} />,
+      children: 'content',
+    },
+    {
+      label: (
+        <div onKeyDown={(e) => e.stopPropagation()}>
+          <CustomComponent />
+        </div>
+      ),
+      children: 'content',
+    },
+    {
+      label: 'title 2',
+      children: 'content 2',
+      collapsible: 'disabled',
+    },
+    {
+      label: 'title 3',
+      children: 'content 3',
+      onItemClick: console.log,
+    },
+  ];
+
+  return <Collapse items={items} />;
+};
+```
 
 ## Development
 
