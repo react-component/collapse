@@ -6,6 +6,11 @@ import '../../assets/index.less';
 const App = () => {
   const items: CollapseProps['items'] = [
     {
+      label: 'no-icon',
+      children: 'content',
+      showArrow: false,
+    },
+    {
       label: <input onKeyDown={(e) => e.stopPropagation()} />,
       children: 'content',
     },

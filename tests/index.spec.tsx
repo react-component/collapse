@@ -613,6 +613,24 @@ describe('collapse', () => {
     expect(container.querySelectorAll('.rc-collapse-expand-icon')).toHaveLength(0);
   });
 
+  it('!showArrow in items', () => {
+    const { container } = render(
+      <Collapse
+        items={[
+          {
+            label: 'collapse 1',
+            key: '1',
+            children: 'first',
+            showArrow: false,
+          },
+        ]}
+      />,
+    );
+
+    expect(container.querySelectorAll('.rc-collapse-expand-icon')).toHaveLength(0);
+    expect(container.querySelectorAll('.rc-collapse-no-arrow')).toHaveLength(1);
+  });
+
   it('Panel container dom can set event handler', () => {
     const clickHandler = jest.fn();
     const { container } = render(

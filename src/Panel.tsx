@@ -60,6 +60,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       [`${prefixCls}-item`]: true,
       [`${prefixCls}-item-active`]: isActive,
       [`${prefixCls}-item-disabled`]: disabled,
+      [`${prefixCls}-no-arrow`]: !showArrow,
     },
     className,
   );
