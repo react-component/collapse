@@ -36,7 +36,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     onItemClick?.(panelKey!);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
       handleItemClick();
     }
@@ -76,7 +76,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     className: headerClassName,
     'aria-expanded': isActive,
     'aria-disabled': disabled,
-    onKeyPress: handleKeyPress,
+    onKeyDown: handleKeyDown,
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {
