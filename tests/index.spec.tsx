@@ -188,6 +188,24 @@ describe('collapse', () => {
     runNormalTest(element);
   });
 
+  describe('prop: headerClass', () => {
+    it('applies the passed headerClass to the header', () => {
+
+      const element = (
+        <Collapse onChange={onChange} >
+          <Panel header="collapse 1" key="1" headerClass='custom-class'>
+            first
+          </Panel>
+        </Collapse>
+      );
+
+      const {container} = render(element)
+      const header = container.querySelector('.rc-collapse-header');
+
+      expect(header.classList.contains('custom-class')).toBeTruthy();
+    })
+  })
+
   it('shoule support extra whit number 0', () => {
     const { container } = render(
       <Collapse onChange={onChange} activeKey={0}>

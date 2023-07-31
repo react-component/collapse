@@ -64,9 +64,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     className,
   );
 
-  const headerClassName = classNames({
+  const headerClassName = classNames(headerClass, {
     [`${prefixCls}-header`]: true,
-    headerClass,
     [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
     [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
   });
