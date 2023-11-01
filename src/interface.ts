@@ -53,9 +53,9 @@ export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> 
   accordion?: boolean;
   forceRender?: boolean;
   extra?: string | React.ReactNode;
-  onItemClick?: (panelKey: string | number) => void;
+  onItemClick?: (panelKey: React.Key) => void;
   expandIcon?: (props: object) => React.ReactNode;
-  panelKey?: string | number;
+  panelKey?: React.Key;
   role?: string;
   collapsible?: CollapsibleType;
   children?: React.ReactNode;
