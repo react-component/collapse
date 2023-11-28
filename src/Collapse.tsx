@@ -60,7 +60,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   // ======================== Children ========================
   warning(
     !children,
-    '`children` will be removed in next major version. Please use `items` instead.',
+    '[rc-collapse] `children` will be removed in next major version. Please use `items` instead.',
   );
 
   const mergedChildren = useItems(items, children, {
