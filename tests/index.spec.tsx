@@ -203,8 +203,8 @@ describe('collapse', () => {
       const header = container.querySelector('.rc-collapse-header');
 
       expect(header.classList.contains('custom-class')).toBeTruthy();
-    })
-  })
+    });
+  });
 
   it('shoule support extra whit number 0', () => {
     const { container } = render(
