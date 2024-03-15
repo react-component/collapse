@@ -31,6 +31,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     defaultActiveKey,
     onChange,
     items,
+    ...restProps
   } = props;
 
   const collapseClassName = classNames(prefixCls, className);
@@ -81,6 +82,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       className={collapseClassName}
       style={style}
       role={accordion ? 'tablist' : undefined}
+      {...restProps}
     >
       {mergedChildren}
     </div>
