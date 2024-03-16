@@ -55,7 +55,7 @@ describe('collapse', () => {
       expect(collapse.container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
     });
 
-    it('should render custom arrow icon corrctly', () => {
+    it('should render custom arrow icon correctly', () => {
       expect(collapse.container.querySelector('.rc-collapse-header')?.textContent).toContain(
         'test>',
       );
@@ -190,23 +190,22 @@ describe('collapse', () => {
 
   describe('prop: headerClass', () => {
     it('applies the passed headerClass to the header', () => {
-
       const element = (
-        <Collapse onChange={onChange} >
-          <Panel header="collapse 1" key="1" headerClass='custom-class'>
+        <Collapse onChange={onChange}>
+          <Panel header="collapse 1" key="1" headerClass="custom-class">
             first
           </Panel>
         </Collapse>
       );
 
-      const {container} = render(element)
+      const { container } = render(element);
       const header = container.querySelector('.rc-collapse-header');
 
       expect(header.classList.contains('custom-class')).toBeTruthy();
     });
   });
 
-  it('shoule support extra whit number 0', () => {
+  it('should support extra whit number 0', () => {
     const { container } = render(
       <Collapse onChange={onChange} activeKey={0}>
         <Panel header="collapse 0" key={0} extra={0}>
@@ -842,6 +841,23 @@ describe('collapse', () => {
 
       expect(container.querySelectorAll('.custom-icon')).toHaveLength(1);
       expect(container.querySelector('.custom-icon')?.innerHTML).toBe('p');
+    });
+
+    it('should support data- and aria- attributes', () => {
+      const { container } = render(
+        <Collapse
+          data-testid="1234"
+          aria-label="test"
+          items={[
+            {
+              label: 'title',
+            } as any,
+          ]}
+        />,
+      );
+
+      expect(container.querySelector('.rc-collapse')?.getAttribute('data-testid')).toBe('1234');
+      expect(container.querySelector('.rc-collapse')?.getAttribute('aria-label')).toBe('test');
     });
   });
 });
