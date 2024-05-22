@@ -104,12 +104,6 @@ describe('collapse', () => {
       expect(item).toBeTruthy();
       expect(item!.getAttribute('role')).toBe(null);
     });
-
-    it('should set button role on panel title', () => {
-      const item = collapse.container.querySelector('.rc-collapse-header');
-      expect(item).toBeTruthy();
-      expect(item!.getAttribute('role')).toBe('button');
-    });
   }
 
   describe('collapse', () => {
@@ -304,18 +298,6 @@ describe('collapse', () => {
       jest.runAllTimers();
       expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
       expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
-    });
-
-    it('should add tab role on panel title', () => {
-      const item = collapse.container.querySelector('.rc-collapse-header');
-      expect(item).toBeTruthy();
-      expect(item!.getAttribute('role')).toBe('tab');
-    });
-
-    it('should add tablist role on accordion', () => {
-      const item = collapse.container.querySelector('.rc-collapse');
-      expect(item).toBeTruthy();
-      expect(item!.getAttribute('role')).toBe('tablist');
     });
 
     it('should add tablist role on PanelContent', () => {
@@ -858,6 +840,24 @@ describe('collapse', () => {
 
       expect(container.querySelector('.rc-collapse')?.getAttribute('data-testid')).toBe('1234');
       expect(container.querySelector('.rc-collapse')?.getAttribute('aria-label')).toBe('test');
+    });
+
+    it('should has open attribute when active', () => {
+      const { container } = render(
+        <Collapse
+          items={[
+            {
+              key: '1',
+              label: 'collapse 1',
+            },
+          ]}
+        />,
+      );
+
+      expect(container.querySelector('.rc-collapse-item').getAttribute('open')).toBeFalsy();
+
+      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      expect(container.querySelector('.rc-collapse-item').getAttribute('open')).toBe('');
     });
   });
 });
