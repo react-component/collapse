@@ -203,7 +203,7 @@ If `key` is not provided, the panel's index will be used instead.
 
 By default, Collapse will listen `onKeyDown`(<3.7.0 `onKeyPress`) event with `enter` key to toggle panel's active state when `collapsible` is not `disabled`. If you want to disable this behavior, you can prevent the event from bubbling like this:
 
-```jsx
+```tsx
 const App = () => {
   const items: CollapseProps['items'] = [
     {
