@@ -81,7 +81,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       ref={ref}
       className={collapseClassName}
       style={style}
-      role={accordion ? 'tablist' : undefined}
       {...pickAttrs(props, { aria: true, data: true })}
     >
       {mergedChildren}

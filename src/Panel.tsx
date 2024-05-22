@@ -4,8 +4,9 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
+import { mergeRefs } from './utils';
 
-const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((props, ref) => {
+const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((props, ref) => {
   const {
     showArrow = true,
     headerClass,
@@ -26,18 +27,42 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     ...resetProps
   } = props;
 
+  const detailsRef = React.useRef<HTMLDetailsElement>(null);
+
+  React.useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (isActive) {
+      detailsRef.current?.setAttribute('open', '');
+    } else if (openMotion?.motionDeadline) {
+      timer = setTimeout(() => {
+        detailsRef.current?.removeAttribute('open');
+      }, openMotion.motionDeadline);
+    } else {
+      detailsRef.current?.removeAttribute('open');
+    }
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [isActive, openMotion?.motionDeadline]);
+
   const disabled = collapsible === 'disabled';
   const collapsibleHeader = collapsible === 'header';
   const collapsibleIcon = collapsible === 'icon';
 
   const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
-  const handleItemClick = () => {
+  const handleItemClick = (e?: React.MouseEvent<HTMLElement>) => {
+    e?.preventDefault();
+
     onItemClick?.(panelKey!);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
+      e.preventDefault();
+
       handleItemClick();
     }
   };
@@ -70,24 +95,22 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
   });
 
-  // ======================== HeaderProps ========================
-  const headerProps: React.HTMLAttributes<HTMLDivElement> = {
+  // ======================== SummaryProps ========================
+  const summaryProps: React.HTMLAttributes<HTMLElement> = {
     className: headerClassName,
-    'aria-expanded': isActive,
     'aria-disabled': disabled,
     onKeyDown: handleKeyDown,
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {
-    headerProps.onClick = handleItemClick;
-    headerProps.role = accordion ? 'tab' : 'button';
-    headerProps.tabIndex = disabled ? -1 : 0;
+    summaryProps.onClick = handleItemClick;
+    summaryProps.tabIndex = disabled ? -1 : undefined;
   }
 
   // ======================== Render ========================
   return (
-    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
-      <div {...headerProps}>
+    <details {...resetProps} ref={mergeRefs([ref, detailsRef])} className={collapsePanelClassNames}>
+      <summary {...summaryProps}>
         {showArrow && iconNode}
         <span
           className={`${prefixCls}-header-text`}
@@ -96,7 +119,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           {header}
         </span>
         {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
-      </div>
+      </summary>
+
       <CSSMotion
         visible={isActive}
         leavedClassName={`${prefixCls}-content-hidden`}
@@ -120,7 +144,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           );
         }}
       </CSSMotion>
-    </div>
+    </details>
   );
 });
 

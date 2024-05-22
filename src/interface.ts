@@ -16,7 +16,7 @@ export interface ItemType
   > {
   key?: CollapsePanelProps['panelKey'];
   label?: CollapsePanelProps['header'];
-  ref?: React.RefObject<HTMLDivElement>;
+  ref?: React.RefObject<HTMLElement>;
 }
 
 export interface CollapseProps {
@@ -39,7 +39,7 @@ export interface CollapseProps {
   items?: ItemType[];
 }
 
-export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> {
+export interface CollapsePanelProps extends React.DOMAttributes<HTMLElement> {
   id?: string;
   header?: string | React.ReactNode;
   prefixCls?: string;
