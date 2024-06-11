@@ -16,7 +16,7 @@ export interface ItemType
   > {
   key?: CollapsePanelProps['panelKey'];
   label?: CollapsePanelProps['header'];
-  ref?: React.RefObject<HTMLElement>;
+  ref?: React.RefObject<HTMLDetailsElement>;
 }
 
 export interface CollapseProps {
