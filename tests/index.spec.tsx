@@ -868,15 +868,15 @@ describe('collapse', () => {
             {
               key: '1',
               label: 'title',
-              styles: { header: { color: 'red' }, content: { color: 'blue' } },
-              classNames: { header: 'header-class', content: 'content-class' },
+              styles: { header: { color: 'red' }, body: { color: 'blue' } },
+              classNames: { header: 'header-class', body: 'body-class' },
             },
           ]}
         />,
       );
 
       expect(container.querySelector('.rc-collapse-header')).toHaveClass('header-class');
-      expect(container.querySelector('.rc-collapse-content-box')).toHaveClass('content-class');
+      expect(container.querySelector('.rc-collapse-content-box')).toHaveClass('body-class');
 
       expect(container.querySelector('.rc-collapse-header')).toHaveStyle({ color: 'red' });
       expect(container.querySelector('.rc-collapse-content-box')).toHaveStyle({ color: 'blue' });

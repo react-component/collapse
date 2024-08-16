@@ -162,7 +162,7 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
       </tr>
       <tr>
         <td>classNames</td>
-        <td>{ header?: string, content?: string }</td>
+        <td>{ header?: string, body?: string }</td>
         <th></th>
         <td>Semantic structure className</td>
       </tr>
@@ -174,7 +174,7 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
       </tr>
       <tr>
         <td>styles</td>
-        <td>{ header?: React.CSSProperties, content?: React.CSSProperties }</td>
+        <td>{ header?: React.CSSProperties, body?: React.CSSProperties }</td>
         <th></th>
         <td>Semantic structure styles</td>
       </tr>
