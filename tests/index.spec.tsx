@@ -713,7 +713,7 @@ describe('collapse', () => {
         </Panel>
       </Collapse>,
     );
-    expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
+    expect(container.querySelector('.rc-collapse-item')).toHaveStyle({ color: 'red' });
   });
 
   describe('props items', () => {
@@ -858,6 +858,28 @@ describe('collapse', () => {
 
       expect(container.querySelector('.rc-collapse')?.getAttribute('data-testid')).toBe('1234');
       expect(container.querySelector('.rc-collapse')?.getAttribute('aria-label')).toBe('test');
+    });
+
+    it('should support styles and classNames', () => {
+      const { container } = render(
+        <Collapse
+          activeKey={['1']}
+          items={[
+            {
+              key: '1',
+              label: 'title',
+              styles: { header: { color: 'red' }, content: { color: 'blue' } },
+              classNames: { header: 'header-class', content: 'content-class' },
+            },
+          ]}
+        />,
+      );
+
+      expect(container.querySelector('.rc-collapse-header')).toHaveClass('header-class');
+      expect(container.querySelector('.rc-collapse-content-box')).toHaveClass('content-class');
+
+      expect(container.querySelector('.rc-collapse-header')).toHaveStyle({ color: 'red' });
+      expect(container.querySelector('.rc-collapse-content-box')).toHaveStyle({ color: 'blue' });
     });
   });
 });

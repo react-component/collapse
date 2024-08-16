@@ -130,7 +130,7 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
     <thead>
     <tr>
         <th style="width: 100px;">name</th>
-        <th style="width: 50px;">type</th>
+        <th style="width: 200px;">type</th>
         <th>default</th>
         <th>description</th>
     </tr>
@@ -161,10 +161,22 @@ If `accordion` is true, only one panel can be open. Opening another panel will c
         <td>custom className to apply</td>
       </tr>
       <tr>
+        <td>classNames</td>
+        <td>{ header?: string, content?: string }</td>
+        <th></th>
+        <td>Semantic structure className</td>
+      </tr>
+      <tr>
         <td>style</td>
         <td>object</td>
         <th></th>
         <td>custom style</td>
+      </tr>
+      <tr>
+        <td>styles</td>
+        <td>{ header?: React.CSSProperties, content?: React.CSSProperties }</td>
+        <th></th>
+        <td>Semantic structure styles</td>
       </tr>
       <tr>
         <td>openMotion</td>
