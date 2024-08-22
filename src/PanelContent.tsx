@@ -41,9 +41,9 @@ const PanelContent = React.forwardRef<
           [`${prefixCls}-content-inactive`]: !isActive,
         },
         className,
-        customizeClassNames?.body,
+        customizeClassNames.body,
       )}
-      style={{ ...style, ...styles?.body }}
+      style={{ ...style, ...styles.body }}
       role={role}
     >
       {children}

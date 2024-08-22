@@ -13,8 +13,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     onItemClick,
     forceRender,
     className,
-    classNames: customizeClassNames,
-    styles,
+    classNames: customizeClassNames = {},
+    styles = {},
     prefixCls,
     collapsible,
     accordion,
@@ -73,7 +73,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
       [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
     },
-    customizeClassNames?.header,
+    customizeClassNames.header,
   );
 
   // ======================== HeaderProps ========================
@@ -82,7 +82,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     'aria-expanded': isActive,
     'aria-disabled': disabled,
     onKeyDown: handleKeyDown,
-    style: styles?.header,
+    style: styles.header,
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {
