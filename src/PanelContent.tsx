@@ -35,21 +35,18 @@ const PanelContent = React.forwardRef<
       ref={ref}
       className={classnames(
         `${prefixCls}-content`,
+        `${prefixCls}-content-box`,
         {
           [`${prefixCls}-content-active`]: isActive,
           [`${prefixCls}-content-inactive`]: !isActive,
         },
         className,
+        customizeClassNames?.body,
       )}
-      style={style}
+      style={{ ...style, ...styles?.body }}
       role={role}
     >
-      <div
-        className={classnames(`${prefixCls}-content-box`, customizeClassNames?.body)}
-        style={styles?.body}
-      >
-        {children}
-      </div>
+      {children}
     </div>
   );
 });

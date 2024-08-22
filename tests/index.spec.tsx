@@ -86,7 +86,7 @@ describe('collapse', () => {
       fireEvent.click(header);
       jest.runAllTimers();
       expect(collapse.container.querySelector('.rc-collapse-content-inactive')?.innerHTML).toBe(
-        '<div class="rc-collapse-content-box">second</div>',
+        'second',
       );
       expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
     });
@@ -201,7 +201,7 @@ describe('collapse', () => {
       const { container } = render(element);
       const header = container.querySelector('.rc-collapse-header');
 
-      expect(header.classList.contains('custom-class')).toBeTruthy();
+      expect(header?.classList.contains('custom-class')).toBeTruthy();
     });
   });
 
@@ -778,7 +778,7 @@ describe('collapse', () => {
           ]}
         />,
       );
-      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(onItemClick).toHaveBeenCalled();
       expect(onItemClick).lastCalledWith('0');
     });
@@ -800,11 +800,11 @@ describe('collapse', () => {
         />,
       );
 
-      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(onItemClick).not.toHaveBeenCalled();
 
       fireEvent.click(
-        container.querySelector('.rc-collapse-item:nth-child(2) .rc-collapse-expand-icon'),
+        container.querySelector('.rc-collapse-item:nth-child(2) .rc-collapse-expand-icon')!,
       );
       expect(onItemClick).toHaveBeenCalled();
       expect(onChangeFn).toBeCalledTimes(1);
