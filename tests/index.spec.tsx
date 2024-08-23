@@ -86,7 +86,7 @@ describe('collapse', () => {
       fireEvent.click(header);
       jest.runAllTimers();
       expect(collapse.container.querySelector('.rc-collapse-content-inactive')?.innerHTML).toBe(
-        'second',
+        '<div class="rc-collapse-content-box">second</div>',
       );
       expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
     });
