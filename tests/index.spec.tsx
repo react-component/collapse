@@ -201,7 +201,7 @@ describe('collapse', () => {
       const { container } = render(element);
       const header = container.querySelector('.rc-collapse-header');
 
-      expect(header.classList.contains('custom-class')).toBeTruthy();
+      expect(header?.classList.contains('custom-class')).toBeTruthy();
     });
   });
 
@@ -713,7 +713,7 @@ describe('collapse', () => {
         </Panel>
       </Collapse>,
     );
-    expect(container.querySelector('.rc-collapse-item').style.color).toBe('red');
+    expect(container.querySelector('.rc-collapse-item')).toHaveStyle({ color: 'red' });
   });
 
   describe('props items', () => {
@@ -778,7 +778,7 @@ describe('collapse', () => {
           ]}
         />,
       );
-      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(onItemClick).toHaveBeenCalled();
       expect(onItemClick).lastCalledWith('0');
     });
@@ -800,11 +800,11 @@ describe('collapse', () => {
         />,
       );
 
-      fireEvent.click(container.querySelector('.rc-collapse-header'));
+      fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(onItemClick).not.toHaveBeenCalled();
 
       fireEvent.click(
-        container.querySelector('.rc-collapse-item:nth-child(2) .rc-collapse-expand-icon'),
+        container.querySelector('.rc-collapse-item:nth-child(2) .rc-collapse-expand-icon')!,
       );
       expect(onItemClick).toHaveBeenCalled();
       expect(onChangeFn).toBeCalledTimes(1);
@@ -858,6 +858,28 @@ describe('collapse', () => {
 
       expect(container.querySelector('.rc-collapse')?.getAttribute('data-testid')).toBe('1234');
       expect(container.querySelector('.rc-collapse')?.getAttribute('aria-label')).toBe('test');
+    });
+
+    it('should support styles and classNames', () => {
+      const { container } = render(
+        <Collapse
+          activeKey={['1']}
+          items={[
+            {
+              key: '1',
+              label: 'title',
+              styles: { header: { color: 'red' }, body: { color: 'blue' } },
+              classNames: { header: 'header-class', body: 'body-class' },
+            },
+          ]}
+        />,
+      );
+
+      expect(container.querySelector('.rc-collapse-header')).toHaveClass('header-class');
+      expect(container.querySelector('.rc-collapse-content-box')).toHaveClass('body-class');
+
+      expect(container.querySelector('.rc-collapse-header')).toHaveStyle({ color: 'red' });
+      expect(container.querySelector('.rc-collapse-content-box')).toHaveStyle({ color: 'blue' });
     });
   });
 });

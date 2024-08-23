@@ -46,7 +46,9 @@ export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> 
   headerClass?: string;
   showArrow?: boolean;
   className?: string;
+  classNames?: { header?: string; body?: string };
   style?: object;
+  styles?: { header?: React.CSSProperties; body?: React.CSSProperties };
   isActive?: boolean;
   openMotion?: CSSMotionProps;
   destroyInactivePanel?: boolean;

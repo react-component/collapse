@@ -13,6 +13,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     onItemClick,
     forceRender,
     className,
+    classNames: customizeClassNames = {},
+    styles = {},
     prefixCls,
     collapsible,
     accordion,
@@ -64,11 +66,15 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     className,
   );
 
-  const headerClassName = classNames(headerClass, {
-    [`${prefixCls}-header`]: true,
-    [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
-    [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
-  });
+  const headerClassName = classNames(
+    headerClass,
+    {
+      [`${prefixCls}-header`]: true,
+      [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
+      [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
+    },
+    customizeClassNames.header,
+  );
 
   // ======================== HeaderProps ========================
   const headerProps: React.HTMLAttributes<HTMLDivElement> = {
@@ -76,6 +82,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     'aria-expanded': isActive,
     'aria-disabled': disabled,
     onKeyDown: handleKeyDown,
+    style: styles.header,
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {
@@ -110,7 +117,9 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
               ref={motionRef}
               prefixCls={prefixCls}
               className={motionClassName}
+              classNames={customizeClassNames}
               style={motionStyle}
+              styles={styles}
               isActive={isActive}
               forceRender={forceRender}
               role={accordion ? 'tabpanel' : void 0}

@@ -13,5 +13,12 @@
       "rc-collapse": ["src/index.tsx"]
     }
   },
-  "include": [".dumirc.ts", "./src/**/*.ts", "./src/**/*.tsx", "./docs/**/*.tsx"]
+  "include": [
+    ".dumirc.ts",
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./tests/**/*.ts",
+    "./tests/**/*.tsx",
+    "./docs/**/*.tsx"
+  ]
 }

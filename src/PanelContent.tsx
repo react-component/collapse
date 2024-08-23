@@ -6,7 +6,17 @@ const PanelContent = React.forwardRef<
   HTMLDivElement,
   CollapsePanelProps & { children: React.ReactNode }
 >((props, ref) => {
-  const { prefixCls, forceRender, className, style, children, isActive, role } = props;
+  const {
+    prefixCls,
+    forceRender,
+    className,
+    style,
+    children,
+    isActive,
+    role,
+    classNames: customizeClassNames,
+    styles,
+  } = props;
 
   const [rendered, setRendered] = React.useState(isActive || forceRender);
 
@@ -34,7 +44,12 @@ const PanelContent = React.forwardRef<
       style={style}
       role={role}
     >
-      <div className={`${prefixCls}-content-box`}>{children}</div>
+      <div
+        className={classnames(`${prefixCls}-content-box`, customizeClassNames?.body)}
+        style={styles?.body}
+      >
+        {children}
+      </div>
     </div>
   );
 });
