@@ -38,3 +38,4 @@ package-lock.json
 .env.local
 src/.umi
 
+bun.lockb
