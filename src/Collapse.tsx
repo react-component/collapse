@@ -38,7 +38,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
 
   const [activeKey, setActiveKey] = useMergedState<React.Key | React.Key[], React.Key[]>([], {
     value: rawActiveKey,
-    onChange: (v) => onChange?.(v),
+    onChange: (v) => onChange?.(v as React.Key[]),
     defaultValue: defaultActiveKey,
     postState: getActiveKeysArray,
   });
