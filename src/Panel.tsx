@@ -83,11 +83,11 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     'aria-disabled': disabled,
     onKeyDown: handleKeyDown,
     style: styles.header,
+    role: accordion ? 'tab' : 'button',
   };
 
   if (!collapsibleHeader && !collapsibleIcon) {
     headerProps.onClick = handleItemClick;
-    headerProps.role = accordion ? 'tab' : 'button';
     headerProps.tabIndex = disabled ? -1 : 0;
   }
 
