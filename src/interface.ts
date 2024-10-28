@@ -24,7 +24,7 @@ export interface CollapseProps {
   activeKey?: React.Key | React.Key[];
   defaultActiveKey?: React.Key | React.Key[];
   openMotion?: CSSMotionProps;
-  onChange?: (key: React.Key | React.Key[]) => void;
+  onChange?: (key: React.Key[]) => void;
   accordion?: boolean;
   className?: string;
   style?: object;
