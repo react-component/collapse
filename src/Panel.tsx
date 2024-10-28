@@ -29,37 +29,39 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   } = props;
 
   const disabled = collapsible === 'disabled';
-  const collapsibleHeader = collapsible === 'header';
-  const collapsibleIcon = collapsible === 'icon';
 
   const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
-  const handleItemClick = () => {
-    onItemClick?.(panelKey!);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
-      handleItemClick();
-    }
+  const collapsibleProps = {
+    onClick: () => {
+      onItemClick?.(panelKey);
+    },
+    onKeyDown: (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
+        onItemClick?.(panelKey);
+      }
+    },
+    role: accordion ? 'tab' : 'button',
+    ['aria-expanded']: isActive,
+    ['aria-disabled']: disabled,
+    tabIndex: disabled ? -1 : 0,
   };
 
   // ======================== Icon ========================
-  let iconNode = typeof expandIcon === 'function' ? expandIcon(props) : <i className="arrow" />;
-  if (iconNode) {
-    iconNode = (
-      <div
-        className={`${prefixCls}-expand-icon`}
-        onClick={['header', 'icon'].includes(collapsible as string) ? handleItemClick : undefined}
-      >
-        {iconNode}
-      </div>
-    );
-  }
+  const iconNodeInner =
+    typeof expandIcon === 'function' ? expandIcon(props) : <i className="arrow" />;
+  const iconNode = iconNodeInner && (
+    <div
+      className={`${prefixCls}-expand-icon`}
+      {...(['header', 'icon'].includes(collapsible) ? collapsibleProps : {})}
+    >
+      {iconNodeInner}
+    </div>
+  );
 
   const collapsePanelClassNames = classNames(
+    `${prefixCls}-item`,
     {
-      [`${prefixCls}-item`]: true,
       [`${prefixCls}-item-active`]: isActive,
       [`${prefixCls}-item-disabled`]: disabled,
     },
@@ -68,10 +70,10 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   const headerClassName = classNames(
     headerClass,
+    `${prefixCls}-header`,
     {
-      [`${prefixCls}-header`]: true,
-      [`${prefixCls}-header-collapsible-only`]: collapsibleHeader,
-      [`${prefixCls}-icon-collapsible-only`]: collapsibleIcon,
+      [`${prefixCls}-header-collapsible-only`]: collapsible === 'header',
+      [`${prefixCls}-icon-collapsible-only`]: collapsible === 'icon',
     },
     customizeClassNames.header,
   );
@@ -79,17 +81,9 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   // ======================== HeaderProps ========================
   const headerProps: React.HTMLAttributes<HTMLDivElement> = {
     className: headerClassName,
-    'aria-expanded': isActive,
-    'aria-disabled': disabled,
-    onKeyDown: handleKeyDown,
     style: styles.header,
-    role: accordion ? 'tab' : 'button',
+    ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),
   };
-
-  if (!collapsibleHeader && !collapsibleIcon) {
-    headerProps.onClick = handleItemClick;
-    headerProps.tabIndex = disabled ? -1 : 0;
-  }
 
   // ======================== Render ========================
   return (
@@ -98,7 +92,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
         {showArrow && iconNode}
         <span
           className={`${prefixCls}-header-text`}
-          onClick={collapsible === 'header' ? handleItemClick : undefined}
+          {...(collapsible === 'header' ? collapsibleProps : {})}
         >
           {header}
         </span>
