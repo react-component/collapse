@@ -10,7 +10,7 @@ exports[`collapse props items should work with nested 1`] = `
     <div
       aria-disabled="true"
       aria-expanded="false"
-      class="rc-collapse-header"
+      class="rc-collapse-header rc-collapse-collapsible-disabled"
       role="button"
       tabindex="-1"
     >
