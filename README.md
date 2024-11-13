@@ -15,7 +15,7 @@ rc-collapse ui component for react
 
 ## Live Demo
 
-http://react-component.github.io/collapse/
+https://collapse-react-component.vercel.app
 
 ## Install
 
