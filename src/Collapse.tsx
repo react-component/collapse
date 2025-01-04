@@ -22,7 +22,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     style,
     accordion,
     className,
-    children,
     collapsible,
     openMotion,
     expandIcon,
