@@ -86,7 +86,7 @@ describe('collapse', () => {
       fireEvent.click(header);
       jest.runAllTimers();
       expect(collapse.container.querySelector('.rc-collapse-content-inactive')?.innerHTML).toBe(
-        '<div class="rc-collapse-content-box">second</div>',
+        '<div class="rc-collapse-body">second</div>',
       );
       expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
     });
@@ -528,7 +528,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      expect(container.querySelector('.rc-collapse-title')).toBeTruthy();
       fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
@@ -540,10 +540,10 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      expect(container.querySelector('.rc-collapse-title')).toBeTruthy();
       fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
-      fireEvent.click(container.querySelector('.rc-collapse-header-text')!);
+      fireEvent.click(container.querySelector('.rc-collapse-title')!);
       expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
     it('should work when value is icon', () => {
@@ -569,7 +569,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      expect(container.querySelector('.rc-collapse-title')).toBeTruthy();
       expect(container.querySelectorAll('.rc-collapse-item-disabled')).toHaveLength(1);
       fireEvent.click(container.querySelector('.rc-collapse-header')!);
       expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
@@ -583,7 +583,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(container.querySelector('.rc-collapse-header-text')).toBeTruthy();
+      expect(container.querySelector('.rc-collapse-title')).toBeTruthy();
 
       expect(container.querySelectorAll('.rc-collapse-item-disabled')).toHaveLength(1);
 
@@ -613,7 +613,7 @@ describe('collapse', () => {
         </Collapse>,
       );
 
-      fireEvent.click(container.querySelector('.rc-collapse-header-text')!);
+      fireEvent.click(container.querySelector('.rc-collapse-title')!);
       expect(container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
   });
@@ -861,6 +861,21 @@ describe('collapse', () => {
     });
 
     it('should support styles and classNames', () => {
+      const customStyles = {
+        header: { color: 'red' },
+        body: { color: 'blue' },
+        title: { color: 'green' },
+        icon: { color: 'yellow' },
+        content: { color: 'purple' },
+      };
+      const customClassnames = {
+        header: 'custom-header',
+        body: 'custom-body',
+        content: 'custom-content',
+        title: 'custom-title',
+        icon: 'custom-icon',
+      };
+
       const { container } = render(
         <Collapse
           activeKey={['1']}
@@ -868,18 +883,31 @@ describe('collapse', () => {
             {
               key: '1',
               label: 'title',
-              styles: { header: { color: 'red' }, body: { color: 'blue' } },
-              classNames: { header: 'header-class', body: 'body-class' },
+              styles: customStyles,
+              classNames: customClassnames,
             },
           ]}
         />,
       );
+      const headerElement = container.querySelector('.rc-collapse-header') as HTMLElement;
+      const bodyElement = container.querySelector('.rc-collapse-body') as HTMLElement;
+      const contentElement = container.querySelector('.rc-collapse-content') as HTMLElement;
+      const titleElement = container.querySelector('.rc-collapse-title') as HTMLElement;
+      const iconElement = container.querySelector('.rc-collapse-expand-icon') as HTMLElement;
 
-      expect(container.querySelector('.rc-collapse-header')).toHaveClass('header-class');
-      expect(container.querySelector('.rc-collapse-content-box')).toHaveClass('body-class');
+      // check classNames
+      expect(headerElement.classList).toContain('custom-header');
+      expect(bodyElement.classList).toContain('custom-body');
+      expect(contentElement.classList).toContain('custom-content');
+      expect(titleElement.classList).toContain('custom-title');
+      expect(iconElement.classList).toContain('custom-icon');
 
-      expect(container.querySelector('.rc-collapse-header')).toHaveStyle({ color: 'red' });
-      expect(container.querySelector('.rc-collapse-content-box')).toHaveStyle({ color: 'blue' });
+      // check styles
+      expect(headerElement.style.color).toBe('red');
+      expect(bodyElement.style.color).toBe('blue');
+      expect(contentElement.style.color).toBe('purple');
+      expect(titleElement.style.color).toBe('green');
+      expect(iconElement.style.color).toBe('yellow');
     });
   });
 });

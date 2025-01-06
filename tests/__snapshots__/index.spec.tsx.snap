@@ -22,7 +22,7 @@ exports[`collapse props items should work with nested 1`] = `
         />
       </div>
       <span
-        class="rc-collapse-header-text"
+        class="rc-collapse-title"
       >
         collapse 1
       </span>
@@ -46,7 +46,7 @@ exports[`collapse props items should work with nested 1`] = `
         />
       </div>
       <span
-        class="rc-collapse-header-text"
+        class="rc-collapse-title"
       >
         collapse 2
       </span>
@@ -77,7 +77,7 @@ exports[`collapse props items should work with nested 1`] = `
         />
       </div>
       <span
-        class="rc-collapse-header-text"
+        class="rc-collapse-title"
       >
         collapse 3
       </span>
@@ -101,7 +101,7 @@ exports[`collapse props items should work with nested 1`] = `
         />
       </div>
       <span
-        class="rc-collapse-header-text"
+        class="rc-collapse-title"
       >
         title 3
       </span>
