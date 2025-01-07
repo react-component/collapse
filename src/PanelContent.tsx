@@ -35,14 +35,13 @@ const PanelContent = React.forwardRef<
       ref={ref}
       className={classnames(
         `${prefixCls}-content`,
-        customizeClassNames?.content,
         {
           [`${prefixCls}-content-active`]: isActive,
           [`${prefixCls}-content-inactive`]: !isActive,
         },
         className,
       )}
-      style={{ ...style, ...styles?.content }}
+      style={style}
       role={role}
     >
       <div

@@ -866,12 +866,10 @@ describe('collapse', () => {
         body: { color: 'blue' },
         title: { color: 'green' },
         icon: { color: 'yellow' },
-        content: { color: 'purple' },
       };
       const customClassnames = {
         header: 'custom-header',
         body: 'custom-body',
-        content: 'custom-content',
         title: 'custom-title',
         icon: 'custom-icon',
       };
@@ -891,21 +889,18 @@ describe('collapse', () => {
       );
       const headerElement = container.querySelector('.rc-collapse-header') as HTMLElement;
       const bodyElement = container.querySelector('.rc-collapse-body') as HTMLElement;
-      const contentElement = container.querySelector('.rc-collapse-content') as HTMLElement;
       const titleElement = container.querySelector('.rc-collapse-title') as HTMLElement;
       const iconElement = container.querySelector('.rc-collapse-expand-icon') as HTMLElement;
 
       // check classNames
       expect(headerElement.classList).toContain('custom-header');
       expect(bodyElement.classList).toContain('custom-body');
-      expect(contentElement.classList).toContain('custom-content');
       expect(titleElement.classList).toContain('custom-title');
       expect(iconElement.classList).toContain('custom-icon');
 
       // check styles
       expect(headerElement.style.color).toBe('red');
       expect(bodyElement.style.color).toBe('blue');
-      expect(contentElement.style.color).toBe('purple');
       expect(titleElement.style.color).toBe('green');
       expect(iconElement.style.color).toBe('yellow');
     });
