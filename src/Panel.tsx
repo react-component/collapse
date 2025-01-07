@@ -52,7 +52,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     typeof expandIcon === 'function' ? expandIcon(props) : <i className="arrow" />;
   const iconNode = iconNodeInner && (
     <div
-      className={`${prefixCls}-expand-icon`}
+      className={classNames(`${prefixCls}-expand-icon`, customizeClassNames?.icon)}
+      style={styles?.icon}
       {...(['header', 'icon'].includes(collapsible) ? collapsibleProps : {})}
     >
       {iconNodeInner}
@@ -74,13 +75,13 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     {
       [`${prefixCls}-collapsible-${collapsible}`]: !!collapsible,
     },
-    customizeClassNames.header,
+    customizeClassNames?.header,
   );
 
   // ======================== HeaderProps ========================
   const headerProps: React.HTMLAttributes<HTMLDivElement> = {
     className: headerClassName,
-    style: styles.header,
+    style: styles?.header,
     ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),
   };
 
@@ -90,7 +91,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       <div {...headerProps}>
         {showArrow && iconNode}
         <span
-          className={`${prefixCls}-header-text`}
+          className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
+          style={styles?.title}
           {...(collapsible === 'header' ? collapsibleProps : {})}
         >
           {header}
