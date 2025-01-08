@@ -39,7 +39,7 @@ export interface CollapseProps {
   items?: ItemType[];
 }
 
-export type SemanticName = 'header' | 'title' | 'body' | 'icon' | 'content';
+export type SemanticName = 'header' | 'title' | 'body' | 'icon';
 export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> {
   id?: string;
   header?: string | React.ReactNode;
