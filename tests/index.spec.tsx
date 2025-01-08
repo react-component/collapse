@@ -52,7 +52,7 @@ describe('collapse', () => {
 
     it('panel works', () => {
       expect(collapse.container.querySelectorAll('.rc-collapse-item')).toHaveLength(3);
-      expect(collapse.container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel')).toHaveLength(0);
     });
 
     it('should render custom arrow icon correctly', () => {
@@ -82,13 +82,13 @@ describe('collapse', () => {
       const header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelector('.rc-collapse-content-inactive')?.innerHTML).toBe(
+      expect(collapse.container.querySelector('.rc-collapse-panel-inactive')?.innerHTML).toBe(
         '<div class="rc-collapse-body">second</div>',
       );
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active').length).toBeFalsy();
     });
 
     it('click should not toggle disabled panel state', () => {
@@ -96,7 +96,7 @@ describe('collapse', () => {
       expect(header).toBeTruthy();
       fireEvent.click(header!);
       jest.runAllTimers();
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active').length).toBeFalsy();
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active').length).toBeFalsy();
     });
 
     it('should not have role', () => {
@@ -159,12 +159,12 @@ describe('collapse', () => {
 
       const { container } = render(<ControlledCollapse />);
 
-      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       const header = container.querySelector('.rc-collapse-header');
       expect(header).toBeTruthy();
       fireEvent.click(header!);
       jest.runAllTimers();
-      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(2);
+      expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(2);
       expect(onChangeSpy).toBeCalledWith(['2', '1']);
     });
   });
@@ -235,7 +235,7 @@ describe('collapse', () => {
     );
 
     // activeKey number 0, should open one item
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
   });
 
   it('click should toggle panel state', () => {
@@ -255,9 +255,9 @@ describe('collapse', () => {
 
     const header = container.querySelectorAll('.rc-collapse-header')?.[1];
     fireEvent.click(header);
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
     fireEvent.click(header);
-    expect(container.querySelectorAll('.rc-collapse-content-inactive').length).toBeFalsy();
+    expect(container.querySelectorAll('.rc-collapse-panel-inactive').length).toBeFalsy();
   });
 
   function runAccordionTest(element: React.ReactElement) {
@@ -272,7 +272,7 @@ describe('collapse', () => {
     });
 
     it('accordion content, should default open zero item', () => {
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
     });
 
     it('accordion item, should default open zero item', () => {
@@ -283,12 +283,12 @@ describe('collapse', () => {
       let header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
       header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
       expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(0);
     });
 
@@ -297,12 +297,12 @@ describe('collapse', () => {
       expect(header).toBeTruthy();
       fireEvent.click(header!);
       jest.runAllTimers();
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
       header = collapse.container.querySelectorAll('.rc-collapse-header')?.[2];
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+      expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       expect(collapse.container.querySelectorAll('.rc-collapse-item-active')).toHaveLength(1);
     });
 
@@ -322,7 +322,7 @@ describe('collapse', () => {
       const header = collapse.container.querySelector('.rc-collapse-header');
       expect(header).toBeTruthy();
       fireEvent.click(header!);
-      const item = collapse.container.querySelector('.rc-collapse-content');
+      const item = collapse.container.querySelector('.rc-collapse-panel');
       expect(item).toBeTruthy();
       expect(item!.getAttribute('role')).toBe('tabpanel');
     });
@@ -356,7 +356,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
+      expect(container.querySelectorAll('.rc-collapse-panel')).toHaveLength(0);
     });
 
     it('when forceRender is FALSE it should lazy render the panel content', () => {
@@ -370,7 +370,7 @@ describe('collapse', () => {
           </Panel>
         </Collapse>,
       );
-      expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(0);
+      expect(container.querySelectorAll('.rc-collapse-panel')).toHaveLength(0);
     });
 
     it('when forceRender is TRUE then it should render all the panel content to the DOM', () => {
@@ -387,9 +387,9 @@ describe('collapse', () => {
 
       jest.runAllTimers();
 
-      expect(container.querySelectorAll('.rc-collapse-content')).toHaveLength(1);
-      expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-      const inactiveDom = container.querySelector('div.rc-collapse-content-inactive');
+      expect(container.querySelectorAll('.rc-collapse-panel')).toHaveLength(1);
+      expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+      const inactiveDom = container.querySelector('div.rc-collapse-panel-inactive');
       expect(inactiveDom).not.toBeFalsy();
       expect(getComputedStyle(inactiveDom!)).toHaveProperty('display', 'none');
     });
@@ -420,23 +420,21 @@ describe('collapse', () => {
 
     fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
     jest.runAllTimers();
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
 
     fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, myKeyEvent);
     jest.runAllTimers();
 
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
 
-    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
-      'rc-collapse-content-active',
-    );
+    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-active');
 
     fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, myKeyEvent);
     jest.runAllTimers();
 
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-content')!.className).not.toContain(
-      'rc-collapse-content-active',
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+    expect(container.querySelector('.rc-collapse-panel')!.className).not.toContain(
+      'rc-collapse-panel-active',
     );
   });
 
@@ -504,19 +502,15 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(1);
-    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
-      'rc-collapse-content-active',
-    );
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
+    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-active');
     expect(container.querySelector('.rc-collapse-header')?.textContent).toBe('collapse 1');
     expect(container.querySelector('.rc-collapse-header')?.querySelectorAll('.arrow')).toHaveLength(
       1,
     );
     fireEvent.click(container.querySelector('.rc-collapse-header')!);
-    expect(container.querySelectorAll('.rc-collapse-content-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-content')).toHaveClass(
-      'rc-collapse-content-inactive',
-    );
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-inactive');
   });
 
   describe('prop: collapsible', () => {
