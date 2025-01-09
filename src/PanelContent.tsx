@@ -34,10 +34,10 @@ const PanelContent = React.forwardRef<
     <div
       ref={ref}
       className={classnames(
-        `${prefixCls}-content`,
+        `${prefixCls}-panel`,
         {
-          [`${prefixCls}-content-active`]: isActive,
-          [`${prefixCls}-content-inactive`]: !isActive,
+          [`${prefixCls}-panel-active`]: isActive,
+          [`${prefixCls}-panel-inactive`]: !isActive,
         },
         className,
       )}

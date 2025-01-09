@@ -101,7 +101,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       </div>
       <CSSMotion
         visible={isActive}
-        leavedClassName={`${prefixCls}-content-hidden`}
+        leavedClassName={`${prefixCls}-panel-hidden`}
         {...openMotion}
         forceRender={forceRender}
         removeOnLeave={destroyInactivePanel}
