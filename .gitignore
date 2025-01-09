@@ -39,3 +39,4 @@ package-lock.json
 src/.umi
 
 bun.lockb
+.vscode/

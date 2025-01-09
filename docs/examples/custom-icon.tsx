@@ -1,4 +1,4 @@
-import Collapse, { Panel } from 'rc-collapse';
+import Collapse from 'rc-collapse';
 import * as React from 'react';
 import '../../assets/index.less';
 import motion from './_util/motionUtil';
@@ -48,32 +48,56 @@ const App: React.FC = () => {
 
   const time = random();
 
-  const panelItems = Array.from<object, React.ReactNode>({ length: initLength }, (_, i) => {
-    const key = i + 1;
-    return (
-      <Panel header={`This is panel header ${key}`} key={key}>
-        <p>{text.repeat(time)}</p>
-      </Panel>
-    );
-  }).concat(
-    <Panel header={`This is panel header ${initLength + 1}`} key={initLength + 1}>
-      <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-        <Panel header="This is panel nest panel" key="1" id="header-test">
-          <p>{text}</p>
-        </Panel>
-      </Collapse>
-    </Panel>,
-    <Panel header={`This is panel header ${initLength + 2}`} key={initLength + 2}>
-      <Collapse defaultActiveKey="1">
-        <Panel header="This is panel nest panel" key="1" id="another-test">
-          <form>
-            <label htmlFor="test">Name:&nbsp;</label>
-            <input type="text" id="test" />
-          </form>
-        </Panel>
-      </Collapse>
-    </Panel>,
-  );
+  const items = [
+    ...Array.from({ length: initLength }, (_, i) => {
+      const key = i + 1;
+      return {
+        key,
+        label: `This is panel header ${key}`,
+        children: <p>{text.repeat(time)}</p>,
+      };
+    }),
+    {
+      key: initLength + 1,
+      label: `This is panel header ${initLength + 1}`,
+      children: (
+        <Collapse
+          defaultActiveKey="1"
+          expandIcon={expandIcon}
+          items={[
+            {
+              key: '1',
+              label: 'This is panel nest panel',
+              id: 'header-test',
+              children: <p>{text}</p>,
+            },
+          ]}
+        />
+      ),
+    },
+    {
+      key: initLength + 2,
+      label: `This is panel header ${initLength + 2}`,
+      children: (
+        <Collapse
+          defaultActiveKey="1"
+          items={[
+            {
+              key: '1',
+              label: 'This is panel nest panel',
+              id: 'another-test',
+              children: (
+                <form>
+                  <label htmlFor="test">Name:&nbsp;</label>
+                  <input type="text" id="test" />
+                </form>
+              ),
+            },
+          ]}
+        />
+      ),
+    },
+  ];
 
   const tools = (
     <>
@@ -104,9 +128,8 @@ const App: React.FC = () => {
         activeKey={activeKey}
         expandIcon={expandIcon}
         openMotion={motion}
-      >
-        {panelItems}
-      </Collapse>
+        items={items}
+      />
     </>
   );
 };

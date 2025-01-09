@@ -1,10 +1,8 @@
 import classNames from 'classnames';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
-import warning from 'rc-util/lib/warning';
 import React from 'react';
 import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
-import CollapsePanel from './Panel';
 import pickAttrs from 'rc-util/lib/pickAttrs';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
@@ -24,7 +22,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     style,
     accordion,
     className,
-    children,
     collapsible,
     openMotion,
     expandIcon,
@@ -59,12 +56,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     });
 
   // ======================== Children ========================
-  warning(
-    !children,
-    '[rc-collapse] `children` will be removed in next major version. Please use `items` instead.',
-  );
-
-  const mergedChildren = useItems(items, children, {
+  const mergedChildren = useItems(items, {
     prefixCls,
     accordion,
     openMotion,
@@ -89,9 +81,4 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   );
 });
 
-export default Object.assign(Collapse, {
-  /**
-   * @deprecated use `items` instead, will be removed in `v4.0.0`
-   */
-  Panel: CollapsePanel,
-});
+export default Collapse;

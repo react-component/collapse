@@ -1,4 +1,3 @@
-import toArray from 'rc-util/lib/Children/toArray';
 import React from 'react';
 import type { CollapsePanelProps, CollapseProps, ItemType } from '../interface';
 import CollapsePanel from '../Panel';
@@ -71,92 +70,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
   });
 };
 
-/**
- * @deprecated The next major version will be removed
- */
-const getNewChild = (
-  child: React.ReactElement<CollapsePanelProps>,
-  index: number,
-  props: Props,
-) => {
-  if (!child) return null;
-
-  const {
-    prefixCls,
-    accordion,
-    collapsible,
-    destroyInactivePanel,
-    onItemClick,
-    activeKey,
-    openMotion,
-    expandIcon,
-  } = props;
-
-  const key = child.key || String(index);
-
-  const {
-    header,
-    headerClass,
-    destroyInactivePanel: childDestroyInactivePanel,
-    collapsible: childCollapsible,
-    onItemClick: childOnItemClick,
-  } = child.props;
-
-  let isActive = false;
-  if (accordion) {
-    isActive = activeKey[0] === key;
-  } else {
-    isActive = activeKey.indexOf(key) > -1;
-  }
-
-  const mergeCollapsible = childCollapsible ?? collapsible;
-
-  const handleItemClick = (value: React.Key) => {
-    if (mergeCollapsible === 'disabled') return;
-    onItemClick(value);
-    childOnItemClick?.(value);
-  };
-
-  const childProps = {
-    key,
-    panelKey: key,
-    header,
-    headerClass,
-    isActive,
-    prefixCls,
-    destroyInactivePanel: childDestroyInactivePanel ?? destroyInactivePanel,
-    openMotion,
-    accordion,
-    children: child.props.children,
-    onItemClick: handleItemClick,
-    expandIcon,
-    collapsible: mergeCollapsible,
-  };
-
-  // https://github.com/ant-design/ant-design/issues/20479
-  if (typeof child.type === 'string') {
-    return child;
-  }
-
-  Object.keys(childProps).forEach((propName) => {
-    if (typeof childProps[propName] === 'undefined') {
-      delete childProps[propName];
-    }
-  });
-
-  return React.cloneElement(child, childProps);
-};
-
-function useItems(
-  items?: ItemType[],
-  rawChildren?: React.ReactNode,
-  props?: Props,
-): React.ReactElement<CollapsePanelProps>[] {
-  if (Array.isArray(items)) {
-    return convertItemsToNodes(items, props);
-  }
-
-  return toArray(rawChildren).map((child, index) => getNewChild(child, index, props));
+function useItems(items?: ItemType[], props?: Props): React.ReactElement<CollapsePanelProps>[] {
+  return convertItemsToNodes(items, props);
 }
 
 export default useItems;
