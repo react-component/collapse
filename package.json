@@ -1,6 +1,6 @@
 {
-  "name": "rc-collapse",
-  "version": "4.0.0",
+  "name": "@rc-component/collapse",
+  "version": "1.0.0-0",
   "description": "rc-collapse ui component for react",
   "keywords": [
     "react",
@@ -46,12 +46,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
+    "@rc-component/util": "^1.0.1",
     "classnames": "2.x",
-    "rc-motion": "^2.3.4",
-    "rc-util": "^5.27.0"
+    "rc-motion": "^2.3.4"
   },
   "devDependencies": {
-    "@rc-component/father-plugin": "^1.0.1",
+    "@rc-component/father-plugin": "^2.0.1",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
