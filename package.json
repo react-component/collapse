@@ -48,8 +48,7 @@
     "@babel/runtime": "^7.10.1",
     "@rc-component/util": "^1.0.1",
     "classnames": "2.x",
-    "rc-motion": "^2.3.4",
-    "rc-util": "^5.27.0"
+    "rc-motion": "^2.3.4"
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^2.0.1",
