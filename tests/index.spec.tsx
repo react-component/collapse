@@ -871,12 +871,12 @@ describe('collapse', () => {
       const { container } = render(
         <Collapse
           activeKey={['1']}
+          styles={customStyles}
+          classNames={customClassnames}
           items={[
             {
               key: '1',
               label: 'title',
-              styles: customStyles,
-              classNames: customClassnames,
             },
           ]}
         />,
@@ -885,6 +885,7 @@ describe('collapse', () => {
       const bodyElement = container.querySelector('.rc-collapse-body') as HTMLElement;
       const titleElement = container.querySelector('.rc-collapse-title') as HTMLElement;
       const iconElement = container.querySelector('.rc-collapse-expand-icon') as HTMLElement;
+      console.log(container.innerHTML);
 
       // check classNames
       expect(headerElement.classList).toContain('custom-header');

@@ -21,6 +21,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     activeKey,
     openMotion,
     expandIcon,
+    classNames: collapseClassNames,
+    styles,
   } = props;
 
   return items.map((item, index) => {
@@ -56,6 +58,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     return (
       <CollapsePanel
         {...restProps}
+        classNames={collapseClassNames}
+        styles={styles}
         prefixCls={prefixCls}
         key={key}
         panelKey={key}
