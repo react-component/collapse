@@ -871,12 +871,12 @@ describe('collapse', () => {
       const { container } = render(
         <Collapse
           activeKey={['1']}
+          styles={customStyles}
+          classNames={customClassnames}
           items={[
             {
               key: '1',
               label: 'title',
-              styles: customStyles,
-              classNames: customClassnames,
             },
           ]}
         />,

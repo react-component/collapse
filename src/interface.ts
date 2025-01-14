@@ -37,6 +37,8 @@ export interface CollapseProps {
    * @since 3.6.0
    */
   items?: ItemType[];
+  classNames?: Partial<Record<SemanticName, string>>;
+  styles?: Partial<Record<SemanticName, React.CSSProperties>>;
 }
 
 export type SemanticName = 'header' | 'title' | 'body' | 'icon';
