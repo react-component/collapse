@@ -3,7 +3,10 @@ import React from 'react';
 import type { CollapsePanelProps, CollapseProps, ItemType } from '../interface';
 import CollapsePanel from '../Panel';
 
-type Props = Pick<CollapsePanelProps, 'prefixCls' | 'onItemClick' | 'openMotion' | 'expandIcon'> &
+type Props = Pick<
+  CollapsePanelProps,
+  'prefixCls' | 'onItemClick' | 'openMotion' | 'expandIcon' | 'classNames' | 'styles'
+> &
   Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyInactivePanel'> & {
     activeKey: React.Key[];
   };
@@ -90,6 +93,8 @@ const getNewChild = (
     activeKey,
     openMotion,
     expandIcon,
+    classNames: collapseClassNames,
+    styles,
   } = props;
 
   const key = child.key || String(index);
@@ -122,6 +127,8 @@ const getNewChild = (
     panelKey: key,
     header,
     headerClass,
+    classNames: collapseClassNames,
+    styles,
     isActive,
     prefixCls,
     destroyInactivePanel: childDestroyInactivePanel ?? destroyInactivePanel,
