@@ -29,6 +29,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     const {
       children,
       label,
+      wrapper,
       key: rawKey,
       collapsible: rawCollapsible,
       onItemClick: rawOnItemClick,
@@ -55,7 +56,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       isActive = activeKey.indexOf(key) > -1;
     }
 
-    return (
+    const collapsePanel = (
       <CollapsePanel
         {...restProps}
         classNames={collapseClassNames}
@@ -75,6 +76,12 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
         {children}
       </CollapsePanel>
     );
+
+    if (wrapper) {
+      return wrapper(collapsePanel);
+    }
+
+    return collapsePanel;
   });
 };
 
