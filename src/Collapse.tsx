@@ -46,18 +46,21 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   });
 
   const onItemClick = (key: React.Key) =>
-    setActiveKey(() => {
-      if (accordion) {
-        return activeKey[0] === key ? [] : [key];
-      }
+    // ? 为了解决https://github.com/facebook/react/issues/15486
+    React.startTransition(() => {
+      setActiveKey(() => {
+        if (accordion) {
+          return activeKey[0] === key ? [] : [key];
+        }
 
-      const index = activeKey.indexOf(key);
-      const isActive = index > -1;
-      if (isActive) {
-        return activeKey.filter((item) => item !== key);
-      }
+        const index = activeKey.indexOf(key);
+        const isActive = index > -1;
+        if (isActive) {
+          return activeKey.filter((item) => item !== key);
+        }
 
-      return [...activeKey, key];
+        return [...activeKey, key];
+      });
     });
 
   // ======================== Children ========================

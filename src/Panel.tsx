@@ -5,7 +5,7 @@ import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
 
-const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((props, ref) => {
+const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((props, ref) => {
   const {
     showArrow = true,
     headerClass,
@@ -87,8 +87,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   // ======================== Render ========================
   return (
-    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
-      <div {...headerProps}>
+    <details {...resetProps} ref={ref} className={collapsePanelClassNames} open={isActive}>
+      <summary {...headerProps}>
         {showArrow && iconNode}
         <span
           className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
@@ -98,7 +98,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           {header}
         </span>
         {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
-      </div>
+      </summary>
       <CSSMotion
         visible={isActive}
         leavedClassName={`${prefixCls}-panel-hidden`}
@@ -124,7 +124,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           );
         }}
       </CSSMotion>
-    </div>
+    </details>
   );
 });
 
