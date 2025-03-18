@@ -79,7 +79,7 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
   );
 
   // ======================== HeaderProps ========================
-  const headerProps: React.HTMLAttributes<HTMLDivElement> = {
+  const headerProps: React.HTMLAttributes<HTMLElement> = {
     className: headerClassName,
     style: styles?.header,
     ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),

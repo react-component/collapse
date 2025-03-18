@@ -4,10 +4,10 @@ exports[`collapse props items should work with nested 1`] = `
 <div
   class="rc-collapse"
 >
-  <div
+  <details
     class="rc-collapse-item rc-collapse-item-disabled"
   >
-    <div
+    <summary
       aria-disabled="true"
       aria-expanded="false"
       class="rc-collapse-header rc-collapse-collapsible-disabled"
@@ -26,12 +26,12 @@ exports[`collapse props items should work with nested 1`] = `
       >
         collapse 1
       </span>
-    </div>
-  </div>
-  <div
+    </summary>
+  </details>
+  <details
     class="rc-collapse-item"
   >
-    <div
+    <summary
       aria-disabled="false"
       aria-expanded="false"
       class="rc-collapse-header"
@@ -57,12 +57,12 @@ exports[`collapse props items should work with nested 1`] = `
           ExtraSpan
         </span>
       </div>
-    </div>
-  </div>
-  <div
+    </summary>
+  </details>
+  <details
     class="rc-collapse-item important"
   >
-    <div
+    <summary
       aria-disabled="false"
       aria-expanded="false"
       class="rc-collapse-header"
@@ -81,12 +81,12 @@ exports[`collapse props items should work with nested 1`] = `
       >
         collapse 3
       </span>
-    </div>
-  </div>
-  <div
+    </summary>
+  </details>
+  <details
     class="rc-collapse-item"
   >
-    <div
+    <summary
       aria-disabled="false"
       aria-expanded="false"
       class="rc-collapse-header"
@@ -105,7 +105,7 @@ exports[`collapse props items should work with nested 1`] = `
       >
         title 3
       </span>
-    </div>
-  </div>
+    </summary>
+  </details>
 </div>
 `;
