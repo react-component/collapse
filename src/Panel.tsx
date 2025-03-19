@@ -33,8 +33,9 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
   const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
   const collapsibleProps = {
-    onClick: () => {
+    onClick: (e: React.MouseEvent) => {
       onItemClick?.(panelKey);
+      e.stopPropagation();
     },
     onKeyDown: (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
