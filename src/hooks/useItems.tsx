@@ -5,7 +5,15 @@ import CollapsePanel from '../Panel';
 
 type Props = Pick<
   CollapsePanelProps,
-  'prefixCls' | 'onItemClick' | 'openMotion' | 'expandIcon' | 'classNames' | 'styles'
+  | 'prefixCls'
+  | 'onItemClick'
+  | 'openMotion'
+  | 'expandIcon'
+  | 'classNames'
+  | 'styles'
+  | 'contentRole'
+  | 'headingLevel'
+  | 'id'
 > &
   Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyInactivePanel'> & {
     activeKey: React.Key[];
@@ -23,6 +31,9 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     expandIcon,
     classNames: collapseClassNames,
     styles,
+    contentRole,
+    headingLevel,
+    id,
   } = props;
 
   return items.map((item, index) => {
@@ -71,6 +82,9 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
         collapsible={mergeCollapsible}
         onItemClick={handleItemClick}
         destroyInactivePanel={mergeDestroyInactivePanel}
+        contentRole={contentRole}
+        headingLevel={headingLevel}
+        id={id ? `${id}__item-${index}` : undefined}
       >
         {children}
       </CollapsePanel>
@@ -99,6 +113,9 @@ const getNewChild = (
     expandIcon,
     classNames: collapseClassNames,
     styles,
+    contentRole,
+    headingLevel,
+    id,
   } = props;
 
   const key = child.key || String(index);
@@ -142,6 +159,9 @@ const getNewChild = (
     onItemClick: handleItemClick,
     expandIcon,
     collapsible: mergeCollapsible,
+    contentRole,
+    headingLevel,
+    id: id ? `${id}__item-${index}` : undefined,
   };
 
   // https://github.com/ant-design/ant-design/issues/20479

@@ -34,6 +34,9 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     items,
     classNames: customizeClassNames,
     styles,
+    panelContentRole,
+    headingLevel,
+    id,
   } = props;
 
   const collapseClassName = classNames(prefixCls, className);
@@ -77,6 +80,9 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     activeKey,
     classNames: customizeClassNames,
     styles,
+    contentRole: panelContentRole,
+    headingLevel,
+    id: id,
   });
 
   // ======================== Render ========================
@@ -87,6 +93,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       style={style}
       role={accordion ? 'tablist' : undefined}
       {...pickAttrs(props, { aria: true, data: true })}
+      id={id}
     >
       {mergedChildren}
     </div>

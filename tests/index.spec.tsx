@@ -3,7 +3,12 @@ import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
-import type { CollapseProps, ItemType } from '../src/interface';
+import type {
+  CollapseProps,
+  HeadingLevelType,
+  ItemType,
+  PanelContentRoleType,
+} from '../src/interface';
 
 describe('collapse', () => {
   let changeHook: jest.Mock<any, any> | null;
@@ -79,11 +84,11 @@ describe('collapse', () => {
     });
 
     it('click should toggle panel state', () => {
-      const header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
-      fireEvent.click(header);
+      const getHeader = () => collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
+      fireEvent.click(getHeader());
       jest.runAllTimers();
       expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
-      fireEvent.click(header);
+      fireEvent.click(getHeader());
       jest.runAllTimers();
       expect(collapse.container.querySelector('.rc-collapse-panel-inactive')?.innerHTML).toBe(
         '<div class="rc-collapse-body">second</div>',
@@ -203,6 +208,148 @@ describe('collapse', () => {
 
       expect(header?.classList.contains('custom-class')).toBeTruthy();
     });
+  });
+
+  describe('prop: id', () => {
+    const runIdTest = (element: any) => {
+      const { container } = render(element);
+      expect(container.querySelector('#collapse-test-id')).toHaveClass('rc-collapse');
+      expect(container.querySelector('#collapse-test-id__item-0')).toHaveClass('rc-collapse-item');
+
+      const header = container.querySelector('#collapse-test-id__item-0__header');
+      expect(header).toHaveClass('rc-collapse-header');
+      expect(header).toHaveAttribute('aria-controls', 'collapse-test-id__item-0__content');
+      fireEvent.click(header);
+      jest.runAllTimers();
+      const panelContent = container.querySelector('#collapse-test-id__item-0__content');
+      expect(panelContent).toHaveClass('rc-collapse-panel');
+      expect(panelContent).toHaveAttribute('aria-labelledby', 'collapse-test-id__item-0__header');
+    };
+
+    it('applies the passed id to subcomponents - using composition', () => {
+      const element = (
+        <Collapse id="collapse-test-id">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>
+      );
+
+      runIdTest(element);
+    });
+
+    it('applies the passed id to subcomponents - using items prop', () => {
+      const element = (
+        <Collapse
+          id="collapse-test-id"
+          items={[
+            {
+              key: '1',
+              label: 'collapse 1',
+              children: 'first',
+            },
+          ]}
+        />
+      );
+
+      runIdTest(element);
+    });
+  });
+
+  describe('prop: headingLevel', () => {
+    const runHeadingLevelTest = (element: any, headingLevel: HeadingLevelType) => {
+      const { container } = render(element);
+      const header = container.querySelector('.rc-collapse-header');
+      if (headingLevel) {
+        expect(header.parentElement.tagName).toEqual(headingLevel.toUpperCase());
+      } else {
+        expect(header.parentElement.tagName).toEqual('DIV');
+      }
+    };
+
+    const headingElements: HeadingLevelType[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', undefined];
+    test.each(headingElements)(
+      'correctly creates element when headingLevel=%p - using composition',
+      (headingLevel) => {
+        const element = (
+          <Collapse headingLevel={headingLevel}>
+            <Panel header="collapse 1" key="1">
+              first
+            </Panel>
+          </Collapse>
+        );
+
+        runHeadingLevelTest(element, headingLevel);
+      },
+    );
+
+    test.each(headingElements)(
+      'correctly creates element when headingLevel=%p - using items prop',
+      (headingLevel) => {
+        const element = (
+          <Collapse
+            headingLevel={headingLevel}
+            items={[
+              {
+                key: '1',
+                label: 'collapse 1',
+                children: 'first',
+              },
+            ]}
+          />
+        );
+
+        runHeadingLevelTest(element, headingLevel);
+      },
+    );
+  });
+
+  describe('prop: panelContentRole', () => {
+    const runPanelContentRoleTest = (element: any, role: PanelContentRoleType) => {
+      const { container } = render(element);
+      const header = container.querySelector('.rc-collapse-header');
+      fireEvent.click(header);
+      const panel = container.querySelector('.rc-collapse-panel');
+      if (role) {
+        expect(panel.getAttribute('role')).toEqual(role);
+      } else {
+        expect(panel.getAttribute('role')).toEqual(null);
+      }
+    };
+
+    const panelRoles: PanelContentRoleType[] = ['region', 'none', undefined];
+    test.each(panelRoles)(
+      'correctly applies role when panelContentRole=%p - using composition',
+      (role) => {
+        const element = (
+          <Collapse panelContentRole={role}>
+            <Panel header="collapse 1" key="1">
+              first
+            </Panel>
+          </Collapse>
+        );
+        runPanelContentRoleTest(element, role);
+      },
+    );
+
+    test.each(panelRoles)(
+      'correctly applies role when panelContentRole=%p - using items prop',
+      (role) => {
+        const element = (
+          <Collapse
+            panelContentRole={role}
+            items={[
+              {
+                key: '1',
+                label: 'collapse 1',
+                children: 'first',
+              },
+            ]}
+          />
+        );
+        runPanelContentRoleTest(element, role);
+      },
+    );
   });
 
   it('should support extra whit number 0', () => {
