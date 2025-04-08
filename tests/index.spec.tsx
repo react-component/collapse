@@ -211,20 +211,41 @@ describe('collapse', () => {
   });
 
   describe('prop: id', () => {
-    const runIdTest = (element: any) => {
+    const runIdTest = (element: any, id?: string) => {
       const { container } = render(element);
-      expect(container.querySelector('#collapse-test-id')).toHaveClass('rc-collapse');
-      expect(container.querySelector('#collapse-test-id__item-0')).toHaveClass('rc-collapse-item');
+      let testId = id;
+      if (!testId) {
+        testId = container.querySelector('.rc-collapse').getAttribute('id');
+        expect(testId).toBeTruthy();
+      } else {
+        expect(container.querySelector(`[id="${testId}"]`)).toHaveClass('rc-collapse');
+      }
 
-      const header = container.querySelector('#collapse-test-id__item-0__header');
+      expect(container.querySelector(`[id="${testId}__item-0"]`)).toHaveClass('rc-collapse-item');
+
+      const header = container.querySelector(`[id="${testId}__item-0__header"]`);
       expect(header).toHaveClass('rc-collapse-header');
-      expect(header).toHaveAttribute('aria-controls', 'collapse-test-id__item-0__content');
+      expect(header).toHaveAttribute('aria-controls', `${testId}__item-0__content`);
+
       fireEvent.click(header);
       jest.runAllTimers();
-      const panelContent = container.querySelector('#collapse-test-id__item-0__content');
+
+      const panelContent = container.querySelector(`[id="${testId}__item-0__content"]`);
       expect(panelContent).toHaveClass('rc-collapse-panel');
-      expect(panelContent).toHaveAttribute('aria-labelledby', 'collapse-test-id__item-0__header');
+      expect(panelContent).toHaveAttribute('aria-labelledby', `${testId}__item-0__header`);
     };
+
+    it('applies default id to subcomponents - using composition', () => {
+      const element = (
+        <Collapse>
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>
+      );
+
+      runIdTest(element);
+    });
 
     it('applies the passed id to subcomponents - using composition', () => {
       const element = (
@@ -233,6 +254,22 @@ describe('collapse', () => {
             first
           </Panel>
         </Collapse>
+      );
+
+      runIdTest(element, 'collapse-test-id');
+    });
+
+    it('applies default id to subcomponents - using items prop', () => {
+      const element = (
+        <Collapse
+          items={[
+            {
+              key: '1',
+              label: 'collapse 1',
+              children: 'first',
+            },
+          ]}
+        />
       );
 
       runIdTest(element);
@@ -252,7 +289,7 @@ describe('collapse', () => {
         />
       );
 
-      runIdTest(element);
+      runIdTest(element, 'collapse-test-id');
     });
   });
 
@@ -955,6 +992,7 @@ describe('collapse', () => {
     it('should work with nested', () => {
       const { container } = render(
         <Collapse
+          id="collapse-test-id"
           items={[
             ...items,
             {

@@ -6,6 +6,7 @@ import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
 import CollapsePanel from './Panel';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
+import { v4 as uuid4 } from 'uuid';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
@@ -38,6 +39,8 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     headingLevel,
     id,
   } = props;
+
+  const [collapseId] = React.useState<string>(id ?? uuid4());
 
   const collapseClassName = classNames(prefixCls, className);
 
@@ -82,7 +85,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     styles,
     contentRole: panelContentRole,
     headingLevel,
-    id: id,
+    id: collapseId,
   });
 
   // ======================== Render ========================
@@ -93,7 +96,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
       style={style}
       role={accordion ? 'tablist' : undefined}
       {...pickAttrs(props, { aria: true, data: true })}
-      id={id}
+      id={collapseId}
     >
       {mergedChildren}
     </div>
