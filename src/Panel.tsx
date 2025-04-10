@@ -26,7 +26,6 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     openMotion,
     destroyInactivePanel,
     children,
-    contentRole,
     headingLevel,
     id,
     ...resetProps
@@ -92,8 +91,13 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   const HeaderWrapper = ({ children: headerWrapperChildren }: PropsWithChildren) => {
     if (!headingLevel) {
       return <>{headerWrapperChildren}</>;
+    } else {
+      return (
+        <div className={`${prefixCls}-header-wrapper`} role="heading" aria-level={headingLevel}>
+          {headerWrapperChildren}
+        </div>
+      );
     }
-    return React.createElement(headingLevel, { style: { all: 'unset' } }, headerWrapperChildren);
   };
 
   // ======================== Render ========================
@@ -136,7 +140,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
               styles={styles}
               isActive={isActive}
               forceRender={forceRender}
-              role={contentRole ? contentRole : accordion ? 'tabpanel' : void 0}
+              role={accordion ? 'tabpanel' : void 0}
             >
               {children}
             </PanelContent>

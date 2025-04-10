@@ -35,7 +35,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     items,
     classNames: customizeClassNames,
     styles,
-    panelContentRole,
     headingLevel,
     id,
   } = props;
@@ -83,7 +82,6 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     activeKey,
     classNames: customizeClassNames,
     styles,
-    contentRole: panelContentRole,
     headingLevel,
     id: collapseId,
   });

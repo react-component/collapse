@@ -40,7 +40,7 @@
     }
 
     > .@{prefixCls}-header,
-    > :is(h1, h2, h3, h4, h5, h6) > .@{prefixCls}-header {
+    > .@{prefixCls}-header-wrapper > .@{prefixCls}-header {
       display: flex;
       align-items: center;
       line-height: 22px;
@@ -80,7 +80,7 @@
 
   & > &-item-disabled {
     > .@{prefixCls}-header,
-    > :is(h1,h2,h3,h4,h5,h6) > .@{prefixCls}-header {
+    > .@{prefixCls}-header-wrapper > .@{prefixCls}-header {
       cursor: not-allowed;
       color: #999;
       background-color: #f3f3f3;
@@ -111,7 +111,7 @@
 
   & > &-item-active {
     > .@{prefixCls}-header,
-    > :is(h1,h2,h3,h4,h5,h6) > .@{prefixCls}-header {
+    > .@{prefixCls}-header-wrapper > .@{prefixCls}-header {
       .arrow {
         position: relative;
         top: 2px;

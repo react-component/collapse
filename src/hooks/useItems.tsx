@@ -11,7 +11,6 @@ type Props = Pick<
   | 'expandIcon'
   | 'classNames'
   | 'styles'
-  | 'contentRole'
   | 'headingLevel'
   | 'id'
 > &
@@ -31,7 +30,6 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     expandIcon,
     classNames: collapseClassNames,
     styles,
-    contentRole,
     headingLevel,
     id,
   } = props;
@@ -82,7 +80,6 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
         collapsible={mergeCollapsible}
         onItemClick={handleItemClick}
         destroyInactivePanel={mergeDestroyInactivePanel}
-        contentRole={contentRole}
         headingLevel={headingLevel}
         id={id ? `${id}__item-${index}` : undefined}
       >
@@ -113,7 +110,6 @@ const getNewChild = (
     expandIcon,
     classNames: collapseClassNames,
     styles,
-    contentRole,
     headingLevel,
     id,
   } = props;
@@ -159,7 +155,6 @@ const getNewChild = (
     onItemClick: handleItemClick,
     expandIcon,
     collapsible: mergeCollapsible,
-    contentRole,
     headingLevel,
     id: id ? `${id}__item-${index}` : undefined,
   };

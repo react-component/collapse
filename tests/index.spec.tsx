@@ -3,12 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import KeyCode from 'rc-util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
-import type {
-  CollapseProps,
-  HeadingLevelType,
-  ItemType,
-  PanelContentRoleType,
-} from '../src/interface';
+import type { CollapseProps, HeadingLevelType, ItemType } from '../src/interface';
 
 describe('collapse', () => {
   let changeHook: jest.Mock<any, any> | null;
@@ -297,14 +292,13 @@ describe('collapse', () => {
     const runHeadingLevelTest = (element: any, headingLevel: HeadingLevelType) => {
       const { container } = render(element);
       const header = container.querySelector('.rc-collapse-header');
+      expect(header.parentElement.tagName).toEqual('DIV');
       if (headingLevel) {
-        expect(header.parentElement.tagName).toEqual(headingLevel.toUpperCase());
-      } else {
-        expect(header.parentElement.tagName).toEqual('DIV');
+        expect(Number(header.parentElement.getAttribute('aria-level'))).toEqual(headingLevel);
       }
     };
 
-    const headingElements: HeadingLevelType[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', undefined];
+    const headingElements: HeadingLevelType[] = [1, 2, 3, 4, 5, 6, undefined];
     test.each(headingElements)(
       'correctly creates element when headingLevel=%p - using composition',
       (headingLevel) => {
@@ -337,54 +331,6 @@ describe('collapse', () => {
         );
 
         runHeadingLevelTest(element, headingLevel);
-      },
-    );
-  });
-
-  describe('prop: panelContentRole', () => {
-    const runPanelContentRoleTest = (element: any, role: PanelContentRoleType) => {
-      const { container } = render(element);
-      const header = container.querySelector('.rc-collapse-header');
-      fireEvent.click(header);
-      const panel = container.querySelector('.rc-collapse-panel');
-      if (role) {
-        expect(panel.getAttribute('role')).toEqual(role);
-      } else {
-        expect(panel.getAttribute('role')).toEqual(null);
-      }
-    };
-
-    const panelRoles: PanelContentRoleType[] = ['region', 'none', undefined];
-    test.each(panelRoles)(
-      'correctly applies role when panelContentRole=%p - using composition',
-      (role) => {
-        const element = (
-          <Collapse panelContentRole={role}>
-            <Panel header="collapse 1" key="1">
-              first
-            </Panel>
-          </Collapse>
-        );
-        runPanelContentRoleTest(element, role);
-      },
-    );
-
-    test.each(panelRoles)(
-      'correctly applies role when panelContentRole=%p - using items prop',
-      (role) => {
-        const element = (
-          <Collapse
-            panelContentRole={role}
-            items={[
-              {
-                key: '1',
-                label: 'collapse 1',
-                children: 'first',
-              },
-            ]}
-          />
-        );
-        runPanelContentRoleTest(element, role);
       },
     );
   });
