@@ -6,6 +6,7 @@ import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
 import CollapsePanel from './Panel';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
+import useId from '@rc-component/util/lib/hooks/useId';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
   let currentActiveKey = activeKey;
@@ -38,9 +39,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     id,
   } = props;
 
-  const defaultId = React.useId();
-  const [collapseId] = React.useState<string>(id ?? defaultId);
-
+  const collapseId = useId(id);
   const collapseClassName = classNames(prefixCls, className);
 
   const [activeKey, setActiveKey] = useMergedState<React.Key | React.Key[], React.Key[]>([], {
