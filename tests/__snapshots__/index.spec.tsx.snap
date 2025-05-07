@@ -3,14 +3,18 @@
 exports[`collapse props items should work with nested 1`] = `
 <div
   class="rc-collapse"
+  id="collapse-test-id"
 >
   <div
     class="rc-collapse-item rc-collapse-item-disabled"
+    id="collapse-test-id__item-0"
   >
     <div
+      aria-controls="collapse-test-id__item-0__content"
       aria-disabled="true"
       aria-expanded="false"
       class="rc-collapse-header rc-collapse-collapsible-disabled"
+      id="collapse-test-id__item-0__header"
       role="button"
       tabindex="-1"
     >
@@ -30,11 +34,14 @@ exports[`collapse props items should work with nested 1`] = `
   </div>
   <div
     class="rc-collapse-item"
+    id="collapse-test-id__item-1"
   >
     <div
+      aria-controls="collapse-test-id__item-1__content"
       aria-disabled="false"
       aria-expanded="false"
       class="rc-collapse-header"
+      id="collapse-test-id__item-1__header"
       role="button"
       tabindex="0"
     >
@@ -61,11 +68,14 @@ exports[`collapse props items should work with nested 1`] = `
   </div>
   <div
     class="rc-collapse-item important"
+    id="collapse-test-id__item-2"
   >
     <div
+      aria-controls="collapse-test-id__item-2__content"
       aria-disabled="false"
       aria-expanded="false"
       class="rc-collapse-header"
+      id="collapse-test-id__item-2__header"
       role="button"
       tabindex="0"
     >
@@ -85,11 +95,14 @@ exports[`collapse props items should work with nested 1`] = `
   </div>
   <div
     class="rc-collapse-item"
+    id="collapse-test-id__item-3"
   >
     <div
+      aria-controls="collapse-test-id__item-3__content"
       aria-disabled="false"
       aria-expanded="false"
       class="rc-collapse-header"
+      id="collapse-test-id__item-3__header"
       role="button"
       tabindex="0"
     >

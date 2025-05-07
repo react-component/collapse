@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
+import type { PropsWithChildren } from 'react';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
@@ -25,6 +26,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     openMotion,
     destroyInactivePanel,
     children,
+    headingLevel,
+    id,
     ...resetProps
   } = props;
 
@@ -85,20 +88,38 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),
   };
 
+  const HeaderWrapper = ({ children: headerWrapperChildren }: PropsWithChildren) => {
+    if (!headingLevel) {
+      return <>{headerWrapperChildren}</>;
+    } else {
+      return (
+        <div className={`${prefixCls}-header-wrapper`} role="heading" aria-level={headingLevel}>
+          {headerWrapperChildren}
+        </div>
+      );
+    }
+  };
+
   // ======================== Render ========================
   return (
-    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
-      <div {...headerProps}>
-        {showArrow && iconNode}
-        <span
-          className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
-          style={styles?.title}
-          {...(collapsible === 'header' ? collapsibleProps : {})}
+    <div {...resetProps} ref={ref} className={collapsePanelClassNames} id={id}>
+      <HeaderWrapper>
+        <div
+          {...headerProps}
+          id={id ? `${id}__header` : undefined}
+          aria-controls={id ? `${id}__content` : undefined}
         >
-          {header}
-        </span>
-        {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
-      </div>
+          {showArrow && iconNode}
+          <span
+            className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
+            style={styles?.title}
+            {...(collapsible === 'header' ? collapsibleProps : {})}
+          >
+            {header}
+          </span>
+          {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
+        </div>
+      </HeaderWrapper>
       <CSSMotion
         visible={isActive}
         leavedClassName={`${prefixCls}-panel-hidden`}
@@ -110,6 +131,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           return (
             <PanelContent
               ref={motionRef}
+              id={id ? `${id}__content` : undefined}
+              aria-labelledby={id ? `${id}__header` : undefined}
               prefixCls={prefixCls}
               className={motionClassName}
               classNames={customizeClassNames}
