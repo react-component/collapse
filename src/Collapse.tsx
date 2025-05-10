@@ -46,7 +46,8 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   });
 
   const onItemClick = (key: React.Key) =>
-    // ? 为了解决https://github.com/facebook/react/issues/15486
+    // ? 用于解决react状态与details[open]状态不一致的问题
+    // ? 具体参考issue https://github.com/facebook/react/issues/15486
     React.startTransition(() => {
       setActiveKey(() => {
         if (accordion) {

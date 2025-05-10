@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import CSSMotion from 'rc-motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
 
@@ -31,6 +31,15 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
   const disabled = collapsible === 'disabled';
 
   const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
+
+  // ? 用于判断浏览器是否支持::details-content 否则使用CSSMotion
+  const supportsDetailsContentSelector = useMemo(
+    () =>
+      typeof document !== 'undefined' && typeof document.createElement === 'function'
+        ? CSS.supports('selector(details::details-content)')
+        : false,
+    [],
+  );
 
   const collapsibleProps = {
     onClick: (e: React.MouseEvent) => {
@@ -68,6 +77,8 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
       [`${prefixCls}-item-disabled`]: disabled,
     },
     className,
+    // ? 修改为details实现后动画是作用在details元素上 需要将motionName设置在details上
+    supportsDetailsContentSelector && openMotion?.motionName,
   );
 
   const headerClassName = classNames(
@@ -87,6 +98,68 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
   };
 
   // ======================== Render ========================
+
+  const leavedClassName = `${prefixCls}-panel-hidden`;
+  const createPanelContent = (
+    props: Partial<{
+      className: string;
+      style: React.CSSProperties;
+      motionRef: (node: HTMLDivElement) => void;
+    }>,
+  ) => {
+    const { className, style, motionRef } = props;
+
+    return (
+      <PanelContent
+        ref={motionRef}
+        prefixCls={prefixCls}
+        className={className}
+        classNames={customizeClassNames}
+        style={style}
+        styles={styles}
+        isActive={isActive}
+        forceRender={forceRender}
+        role={accordion ? 'tabpanel' : void 0}
+      >
+        {children}
+      </PanelContent>
+    );
+  };
+  let detailsChildren = (
+    <CSSMotion
+      visible={isActive}
+      leavedClassName={leavedClassName}
+      {...openMotion}
+      forceRender={forceRender}
+      removeOnLeave={destroyInactivePanel}
+    >
+      {({ className, style }, motionRef) =>
+        createPanelContent({
+          className,
+          style,
+          motionRef,
+        })
+      }
+    </CSSMotion>
+  );
+
+  // ? 模拟CSSMotion子元素生命周期管理
+  if (supportsDetailsContentSelector) {
+    if (isActive) {
+      detailsChildren = createPanelContent({});
+    } else if (!destroyInactivePanel && leavedClassName) {
+      detailsChildren = createPanelContent({
+        className: leavedClassName,
+      });
+    } else if (forceRender || (!destroyInactivePanel && !leavedClassName)) {
+      detailsChildren = createPanelContent({
+        style: { display: 'none' },
+      });
+    } else {
+      detailsChildren = null;
+    }
+  }
+
   return (
     <details {...resetProps} ref={ref} className={collapsePanelClassNames} open={isActive}>
       <summary {...headerProps}>
@@ -100,31 +173,7 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
         </span>
         {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
       </summary>
-      <CSSMotion
-        visible={isActive}
-        leavedClassName={`${prefixCls}-panel-hidden`}
-        {...openMotion}
-        forceRender={forceRender}
-        removeOnLeave={destroyInactivePanel}
-      >
-        {({ className: motionClassName, style: motionStyle }, motionRef) => {
-          return (
-            <PanelContent
-              ref={motionRef}
-              prefixCls={prefixCls}
-              className={motionClassName}
-              classNames={customizeClassNames}
-              style={motionStyle}
-              styles={styles}
-              isActive={isActive}
-              forceRender={forceRender}
-              role={accordion ? 'tabpanel' : void 0}
-            >
-              {children}
-            </PanelContent>
-          );
-        }}
-      </CSSMotion>
+      {detailsChildren}
     </details>
   );
 });
