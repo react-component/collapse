@@ -46,9 +46,9 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
+    "@rc-component/motion": "^1.1.4",
     "@rc-component/util": "^1.0.1",
-    "classnames": "2.x",
-    "rc-motion": "^2.3.4"
+    "classnames": "2.x"
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^2.0.1",
@@ -57,8 +57,9 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/classnames": "^2.2.9",
     "@types/jest": "^29.4.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
+    "@types/node": "^22.15.18",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
     "@umijs/fabric": "^4.0.0",
     "dumi": "^2.1.1",
     "eslint": "^8.55.0",
@@ -73,12 +74,12 @@
     "np": "^9.1.0",
     "prettier": "^3.0.3",
     "rc-test": "^7.0.14",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.9.0",
-    "react-dom": ">=16.9.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   }
 }
