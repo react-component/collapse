@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@rc-component/father-plugin": "^2.0.1",
+    "@rc-component/np": "^1.0.4",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.5.2",
@@ -71,7 +72,6 @@
     "jest": "^29.1.2",
     "less": "^4.2.0",
     "lint-staged": "^15.0.2",
-    "np": "^9.1.0",
     "prettier": "^3.0.3",
     "rc-test": "^7.0.14",
     "react": "^19.1.0",
