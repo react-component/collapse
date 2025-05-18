@@ -101,13 +101,13 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
 
   const leavedClassName = `${prefixCls}-panel-hidden`;
   const createPanelContent = (
-    props: Partial<{
+    options: Partial<{
       className: string;
       style: React.CSSProperties;
       motionRef: (node: HTMLDivElement) => void;
     }>,
   ) => {
-    const { className, style, motionRef } = props;
+    const { className, style, motionRef } = options;
 
     return (
       <PanelContent
