@@ -31,7 +31,7 @@
     "compile": "father build && lessc assets/index.less assets/index.css",
     "coverage": "rc-test --coverage",
     "docs:build": "dumi build",
-    "docs:deploy": "npm run docs:build && gh-pages -d .doc",
+    "docs:deploy": "npm run docs:build && gh-pages -d dist",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "prepare": "husky",
     "now-build": "npm run docs:build",
