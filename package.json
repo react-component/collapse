@@ -35,7 +35,7 @@
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "prepare": "husky",
     "now-build": "npm run docs:build",
-    "prepublishOnly": "npm run compile && np --yolo --no-publish",
+    "prepublishOnly": "npm run compile && rc-np",
     "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "postpublish": "npm run docs:deploy",
     "start": "dumi dev",
