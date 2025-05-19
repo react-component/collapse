@@ -1,4 +1,8 @@
-import type { CSSMotionProps, MotionEndEventHandler, MotionEventHandler } from 'rc-motion';
+import type {
+  CSSMotionProps,
+  MotionEndEventHandler,
+  MotionEventHandler,
+} from '@rc-component/motion';
 
 const getCollapsedHeight: MotionEventHandler = () => ({ height: 0, opacity: 0 });
 const getRealHeight: MotionEventHandler = (node) => ({ height: node.scrollHeight, opacity: 1 });

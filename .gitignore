@@ -28,6 +28,7 @@ coverage
 es
 yarn.lock
 package-lock.json
+pnpm-lock.yaml
 .storybook
 .doc
 
