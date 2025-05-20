@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
+import CSSMotion from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { useMemo } from 'react';
 import type { CollapsePanelProps } from './interface';
@@ -23,7 +23,7 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
     header,
     expandIcon,
     openMotion,
-    destroyInactivePanel,
+    destroyOnHidden,
     children,
     ...resetProps
   } = props;
@@ -104,7 +104,7 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
     options: Partial<{
       motionClassName: string;
       style: React.CSSProperties;
-      motionRef: (node: HTMLDivElement) => void;
+      motionRef: React.Ref<any>;
     }>,
   ) => {
     const { motionClassName, style, motionRef } = options;
@@ -131,7 +131,7 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
       leavedClassName={leavedClassName}
       {...openMotion}
       forceRender={forceRender}
-      removeOnLeave={destroyInactivePanel}
+      removeOnLeave={destroyOnHidden}
     >
       {({ className: motionClassName, style }, motionRef) =>
         createPanelContent({
@@ -147,11 +147,11 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
   if (supportsDetailsContentSelector) {
     if (isActive) {
       detailsChildren = createPanelContent({});
-    } else if (!destroyInactivePanel && leavedClassName) {
+    } else if (!destroyOnHidden && leavedClassName) {
       detailsChildren = createPanelContent({
         motionClassName: leavedClassName,
       });
-    } else if (forceRender || (!destroyInactivePanel && !leavedClassName)) {
+    } else if (forceRender || (!destroyOnHidden && !leavedClassName)) {
       detailsChildren = createPanelContent({
         style: { display: 'none' },
       });

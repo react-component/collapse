@@ -20,7 +20,7 @@ function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
 const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
   const {
     prefixCls = 'rc-collapse',
-    destroyInactivePanel = false,
+    destroyOnHidden = false,
     style,
     accordion,
     className,
@@ -76,7 +76,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     openMotion,
     expandIcon,
     collapsible,
-    destroyInactivePanel,
+    destroyOnHidden,
     onItemClick,
     activeKey,
     classNames: customizeClassNames,
