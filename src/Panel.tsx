@@ -102,18 +102,18 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
   const leavedClassName = `${prefixCls}-panel-hidden`;
   const createPanelContent = (
     options: Partial<{
-      className: string;
+      motionClassName: string;
       style: React.CSSProperties;
       motionRef: (node: HTMLDivElement) => void;
     }>,
   ) => {
-    const { className, style, motionRef } = options;
+    const { motionClassName, style, motionRef } = options;
 
     return (
       <PanelContent
         ref={motionRef}
         prefixCls={prefixCls}
-        className={className}
+        className={motionClassName}
         classNames={customizeClassNames}
         style={style}
         styles={styles}
@@ -133,9 +133,9 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
       forceRender={forceRender}
       removeOnLeave={destroyInactivePanel}
     >
-      {({ className, style }, motionRef) =>
+      {({ className: motionClassName, style }, motionRef) =>
         createPanelContent({
-          className,
+          motionClassName,
           style,
           motionRef,
         })
@@ -149,7 +149,7 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
       detailsChildren = createPanelContent({});
     } else if (!destroyInactivePanel && leavedClassName) {
       detailsChildren = createPanelContent({
-        className: leavedClassName,
+        motionClassName: leavedClassName,
       });
     } else if (forceRender || (!destroyInactivePanel && !leavedClassName)) {
       detailsChildren = createPanelContent({
