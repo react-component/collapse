@@ -82,7 +82,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     classNames: customizeClassNames,
     styles,
     headingLevel,
-    id: collapseId,
+    parentId: collapseId,
   });
 
   // ======================== Render ========================

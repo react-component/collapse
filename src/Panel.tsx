@@ -88,22 +88,14 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),
   };
 
-  const HeaderWrapper = ({ children: headerWrapperChildren }: PropsWithChildren) => {
-    if (!headingLevel) {
-      return <>{headerWrapperChildren}</>;
-    } else {
-      return (
-        <div className={`${prefixCls}-header-wrapper`} role="heading" aria-level={headingLevel}>
-          {headerWrapperChildren}
-        </div>
-      );
-    }
-  };
-
   // ======================== Render ========================
   return (
     <div {...resetProps} ref={ref} className={collapsePanelClassNames} id={id}>
-      <HeaderWrapper>
+      <div
+        className={`${prefixCls}-header-wrapper`}
+        role={headingLevel ? 'heading' : undefined}
+        aria-level={headingLevel}
+      >
         <div
           {...headerProps}
           id={id ? `${id}__header` : undefined}
@@ -119,7 +111,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           </span>
           {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
         </div>
-      </HeaderWrapper>
+      </div>
       <CSSMotion
         visible={isActive}
         leavedClassName={`${prefixCls}-panel-hidden`}

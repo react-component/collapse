@@ -216,18 +216,18 @@ describe('collapse', () => {
         expect(container.querySelector(`[id="${testId}"]`)).toHaveClass('rc-collapse');
       }
 
-      expect(container.querySelector(`[id="${testId}__item-0"]`)).toHaveClass('rc-collapse-item');
+      expect(container.querySelector(`[id="${testId}__item-1"]`)).toHaveClass('rc-collapse-item');
 
-      const header = container.querySelector(`[id="${testId}__item-0__header"]`);
+      const header = container.querySelector(`[id="${testId}__item-1__header"]`);
       expect(header).toHaveClass('rc-collapse-header');
-      expect(header).toHaveAttribute('aria-controls', `${testId}__item-0__content`);
+      expect(header).toHaveAttribute('aria-controls', `${testId}__item-1__content`);
 
       fireEvent.click(header);
       jest.runAllTimers();
 
-      const panelContent = container.querySelector(`[id="${testId}__item-0__content"]`);
+      const panelContent = container.querySelector(`[id="${testId}__item-1__content"]`);
       expect(panelContent).toHaveClass('rc-collapse-panel');
-      expect(panelContent).toHaveAttribute('aria-labelledby', `${testId}__item-0__header`);
+      expect(panelContent).toHaveAttribute('aria-labelledby', `${testId}__item-1__header`);
     };
 
     it('applies default id to subcomponents - using composition', () => {

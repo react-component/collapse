@@ -12,10 +12,10 @@ type Props = Pick<
   | 'classNames'
   | 'styles'
   | 'headingLevel'
-  | 'id'
 > &
   Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyInactivePanel'> & {
     activeKey: React.Key[];
+    parentId?: string;
   };
 
 const convertItemsToNodes = (items: ItemType[], props: Props) => {
@@ -31,7 +31,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     classNames: collapseClassNames,
     styles,
     headingLevel,
-    id,
+    parentId,
   } = props;
 
   return items.map((item, index) => {
@@ -81,7 +81,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
         onItemClick={handleItemClick}
         destroyInactivePanel={mergeDestroyInactivePanel}
         headingLevel={headingLevel}
-        id={id ? `${id}__item-${index}` : undefined}
+        id={parentId ? `${parentId}__item-${key}` : undefined}
       >
         {children}
       </CollapsePanel>
@@ -111,7 +111,7 @@ const getNewChild = (
     classNames: collapseClassNames,
     styles,
     headingLevel,
-    id,
+    parentId,
   } = props;
 
   const key = child.key || String(index);
@@ -156,7 +156,7 @@ const getNewChild = (
     expandIcon,
     collapsible: mergeCollapsible,
     headingLevel,
-    id: id ? `${id}__item-${index}` : undefined,
+    id: parentId ? `${parentId}__item-${key}` : undefined,
   };
 
   // https://github.com/ant-design/ant-design/issues/20479
