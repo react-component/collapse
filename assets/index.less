@@ -35,6 +35,20 @@
 
   & > &-item {
     border-top: @borderStyle;
+    list-style-position: outside;
+    interpolate-size: allow-keywords;
+    overflow: hidden;
+    
+    &::details-content {
+      block-size: 0;
+      transition: block-size 0.6s, content-visibility 0.6s;
+      transition-behavior: allow-discrete;
+    }
+    
+    &[open]::details-content {
+      block-size: auto;
+    }
+    
     &:first-child {
       border-top: none;
     }
