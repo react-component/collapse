@@ -79,7 +79,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     destroyOnHidden,
     onItemClick:
       'startViewTransition' in document && typeof React.startTransition === 'function'
-        ? (key: React.Key) => document.startViewTransition(() => onItemClick(key))
+        ? (key) => document.startViewTransition(() => onItemClick(key))
         : onItemClick,
     activeKey,
     classNames: customizeClassNames,
