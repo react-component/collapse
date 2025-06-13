@@ -1,4 +1,4 @@
-import type { CSSMotionProps } from 'rc-motion';
+import type { CSSMotionProps } from '@rc-component/motion';
 import type * as React from 'react';
 
 export type CollapsibleType = 'header' | 'icon' | 'disabled';
@@ -28,7 +28,7 @@ export interface CollapseProps {
   accordion?: boolean;
   className?: string;
   style?: object;
-  destroyInactivePanel?: boolean;
+  destroyOnHidden?: boolean;
   expandIcon?: (props: object) => React.ReactNode;
   collapsible?: CollapsibleType;
   children?: React.ReactNode;
@@ -44,7 +44,7 @@ export interface CollapseProps {
 export type SemanticName = 'header' | 'title' | 'body' | 'icon';
 export interface CollapsePanelProps extends React.DOMAttributes<HTMLDetailsElement> {
   id?: string;
-  header?: string | React.ReactNode;
+  header?: React.ReactNode;
   prefixCls?: string;
   headerClass?: string;
   showArrow?: boolean;
@@ -54,10 +54,10 @@ export interface CollapsePanelProps extends React.DOMAttributes<HTMLDetailsEleme
   styles?: Partial<Record<SemanticName, React.CSSProperties>>;
   isActive?: boolean;
   openMotion?: CSSMotionProps;
-  destroyInactivePanel?: boolean;
+  destroyOnHidden?: boolean;
   accordion?: boolean;
   forceRender?: boolean;
-  extra?: string | React.ReactNode;
+  extra?: React.ReactNode;
   onItemClick?: (panelKey: React.Key) => void;
   expandIcon?: (props: object) => React.ReactNode;
   panelKey?: React.Key;

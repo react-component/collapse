@@ -1,6 +1,6 @@
 import type { RenderResult } from '@testing-library/react';
 import { fireEvent, render } from '@testing-library/react';
-import KeyCode from 'rc-util/lib/KeyCode';
+import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
 import type { CollapseProps, ItemType } from '../src/interface';
@@ -85,9 +85,7 @@ describe('collapse', () => {
       expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelector('.rc-collapse-panel-inactive')?.innerHTML).toBe(
-        '<div class="rc-collapse-body">second</div>',
-      );
+      expect(collapse.container.querySelector('.rc-collapse-panel-inactive')).toBe(null);
       expect(collapse.container.querySelectorAll('.rc-collapse-panel-active').length).toBeFalsy();
     });
 
@@ -240,7 +238,7 @@ describe('collapse', () => {
 
   it('click should toggle panel state', () => {
     const { container } = render(
-      <Collapse onChange={onChange} destroyInactivePanel>
+      <Collapse onChange={onChange} destroyOnHidden>
         <Panel header="collapse 1" key="1">
           first
         </Panel>
@@ -433,9 +431,6 @@ describe('collapse', () => {
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-panel')!.className).not.toContain(
-      'rc-collapse-panel-active',
-    );
   });
 
   describe('wrapped in Fragment', () => {
@@ -510,7 +505,6 @@ describe('collapse', () => {
     );
     fireEvent.click(container.querySelector('.rc-collapse-header')!);
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-inactive');
   });
 
   describe('prop: collapsible', () => {

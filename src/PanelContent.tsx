@@ -4,7 +4,7 @@ import type { CollapsePanelProps } from './interface';
 
 const PanelContent = React.forwardRef<
   HTMLDivElement,
-  CollapsePanelProps & { children: React.ReactNode }
+  React.PropsWithChildren<Readonly<CollapsePanelProps>>
 >((props, ref) => {
   const {
     prefixCls,
@@ -35,7 +35,10 @@ const PanelContent = React.forwardRef<
         },
         className,
       )}
-      style={style}
+      style={{
+        display: isActive ? 'block' : 'none',
+        ...style,
+      }}
       role={role}
     >
       <div
