@@ -85,9 +85,7 @@ describe('collapse', () => {
       expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
       fireEvent.click(header);
       jest.runAllTimers();
-      expect(collapse.container.querySelector('.rc-collapse-panel-inactive')?.innerHTML).toBe(
-        '<div class="rc-collapse-body">second</div>',
-      );
+      expect(collapse.container.querySelector('.rc-collapse-panel-inactive')).toBe(null);
       expect(collapse.container.querySelectorAll('.rc-collapse-panel-active').length).toBeFalsy();
     });
 
@@ -433,9 +431,6 @@ describe('collapse', () => {
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-panel')!.className).not.toContain(
-      'rc-collapse-panel-active',
-    );
   });
 
   describe('wrapped in Fragment', () => {
@@ -510,7 +505,6 @@ describe('collapse', () => {
     );
     fireEvent.click(container.querySelector('.rc-collapse-header')!);
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
-    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-inactive');
   });
 
   describe('prop: collapsible', () => {

@@ -1,11 +1,10 @@
 import classNames from 'classnames';
-import CSSMotion from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
 
-const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((props, ref) => {
+const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((props, ref) => {
   const {
     showArrow = true,
     headerClass,
@@ -33,8 +32,10 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
   const collapsibleProps = {
-    onClick: () => {
+    onClick: (e: React.MouseEvent) => {
       onItemClick?.(panelKey);
+      e.preventDefault();
+      e.stopPropagation();
     },
     onKeyDown: (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
@@ -67,6 +68,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       [`${prefixCls}-item-disabled`]: disabled,
     },
     className,
+    // ? 修改为details实现后动画是作用在details元素上 需要将motionName设置在details上
+    openMotion?.motionName,
   );
 
   const headerClassName = classNames(
@@ -79,7 +82,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   );
 
   // ======================== HeaderProps ========================
-  const headerProps: React.HTMLAttributes<HTMLDivElement> = {
+  const headerProps: React.HTMLAttributes<HTMLElement> = {
     className: headerClassName,
     style: styles?.header,
     ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),
@@ -87,8 +90,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   // ======================== Render ========================
   return (
-    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
-      <div {...headerProps}>
+    <details {...resetProps} ref={ref} className={collapsePanelClassNames} open={isActive}>
+      <summary {...headerProps}>
         {showArrow && iconNode}
         <span
           className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
@@ -98,33 +101,18 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           {header}
         </span>
         {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
-      </div>
-      <CSSMotion
-        visible={isActive}
-        leavedClassName={`${prefixCls}-panel-hidden`}
-        {...openMotion}
+      </summary>
+      <PanelContent
+        prefixCls={prefixCls}
+        classNames={customizeClassNames}
+        styles={styles}
+        isActive={isActive}
         forceRender={forceRender}
-        removeOnLeave={destroyOnHidden}
+        role={accordion ? 'tabpanel' : undefined}
       >
-        {({ className: motionClassName, style: motionStyle }, motionRef) => {
-          return (
-            <PanelContent
-              ref={motionRef}
-              prefixCls={prefixCls}
-              className={motionClassName}
-              classNames={customizeClassNames}
-              style={motionStyle}
-              styles={styles}
-              isActive={isActive}
-              forceRender={forceRender}
-              role={accordion ? 'tabpanel' : undefined}
-            >
-              {children}
-            </PanelContent>
-          );
-        }}
-      </CSSMotion>
-    </div>
+        {children}
+      </PanelContent>
+    </details>
   );
 });
 
