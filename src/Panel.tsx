@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import CSSMotion from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
+import CSSMotion from '@rc-component/motion';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
 
-const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((props, ref) => {
+const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((props, ref) => {
   const {
     showArrow = true,
     headerClass,
@@ -33,8 +33,10 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
 
   const collapsibleProps = {
-    onClick: () => {
+    onClick: (e: React.MouseEvent) => {
       onItemClick?.(panelKey);
+      e.preventDefault();
+      e.stopPropagation();
     },
     onKeyDown: (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
@@ -79,7 +81,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   );
 
   // ======================== HeaderProps ========================
-  const headerProps: React.HTMLAttributes<HTMLDivElement> = {
+  const headerProps: React.HTMLAttributes<HTMLElement> = {
     className: headerClassName,
     style: styles?.header,
     ...(['header', 'icon'].includes(collapsible) ? {} : collapsibleProps),
@@ -87,8 +89,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   // ======================== Render ========================
   return (
-    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
-      <div {...headerProps}>
+    <details {...resetProps} ref={ref} className={collapsePanelClassNames} open={isActive}>
+      <summary {...headerProps}>
         {showArrow && iconNode}
         <span
           className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
@@ -98,7 +100,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           {header}
         </span>
         {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
-      </div>
+      </summary>
       <CSSMotion
         visible={isActive}
         leavedClassName={`${prefixCls}-panel-hidden`}
@@ -124,7 +126,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           );
         }}
       </CSSMotion>
-    </div>
+    </details>
   );
 });
 
