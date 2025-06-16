@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import KeyCode from '@rc-component/util/lib/KeyCode';
+import CSSMotion from '@rc-component/motion';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
@@ -68,8 +69,6 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
       [`${prefixCls}-item-disabled`]: disabled,
     },
     className,
-    // ? 修改为details实现后动画是作用在details元素上 需要将motionName设置在details上
-    openMotion?.motionName,
   );
 
   const headerClassName = classNames(
@@ -102,16 +101,31 @@ const CollapsePanel = React.forwardRef<HTMLDetailsElement, CollapsePanelProps>((
         </span>
         {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
       </summary>
-      <PanelContent
-        prefixCls={prefixCls}
-        classNames={customizeClassNames}
-        styles={styles}
-        isActive={isActive}
+      <CSSMotion
+        visible={isActive}
+        leavedClassName={`${prefixCls}-panel-hidden`}
+        {...openMotion}
         forceRender={forceRender}
-        role={accordion ? 'tabpanel' : undefined}
+        removeOnLeave={destroyOnHidden}
       >
-        {children}
-      </PanelContent>
+        {({ className: motionClassName, style: motionStyle }, motionRef) => {
+          return (
+            <PanelContent
+              ref={motionRef}
+              prefixCls={prefixCls}
+              className={motionClassName}
+              classNames={customizeClassNames}
+              style={motionStyle}
+              styles={styles}
+              isActive={isActive}
+              forceRender={forceRender}
+              role={accordion ? 'tabpanel' : undefined}
+            >
+              {children}
+            </PanelContent>
+          );
+        }}
+      </CSSMotion>
     </details>
   );
 });
