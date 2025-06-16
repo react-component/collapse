@@ -35,10 +35,7 @@ const PanelContent = React.forwardRef<
         },
         className,
       )}
-      style={{
-        display: isActive ? 'block' : 'none',
-        ...style,
-      }}
+      style={style}
       role={role}
     >
       <div
