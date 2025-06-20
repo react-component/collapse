@@ -3,7 +3,7 @@ import { fireEvent, render } from '@testing-library/react';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
-import type { CollapseProps, ItemType } from '../src/interface';
+import type { CollapseProps, HeadingLevelType, ItemType } from '../src/interface';
 
 describe('collapse', () => {
   let changeHook: jest.Mock<any, any> | null;
@@ -79,11 +79,11 @@ describe('collapse', () => {
     });
 
     it('click should toggle panel state', () => {
-      const header = collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
-      fireEvent.click(header);
+      const getHeader = () => collapse.container.querySelectorAll('.rc-collapse-header')?.[1];
+      fireEvent.click(getHeader());
       jest.runAllTimers();
       expect(collapse.container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
-      fireEvent.click(header);
+      fireEvent.click(getHeader());
       jest.runAllTimers();
       expect(collapse.container.querySelector('.rc-collapse-panel-inactive')?.innerHTML).toBe(
         '<div class="rc-collapse-body">second</div>',
@@ -203,6 +203,136 @@ describe('collapse', () => {
 
       expect(header?.classList.contains('custom-class')).toBeTruthy();
     });
+  });
+
+  describe('prop: id', () => {
+    const runIdTest = (element: any, id?: string) => {
+      const { container } = render(element);
+      let testId = id;
+      if (!testId) {
+        testId = container.querySelector('.rc-collapse').getAttribute('id');
+        expect(testId).toBeTruthy();
+      } else {
+        expect(container.querySelector(`[id="${testId}"]`)).toHaveClass('rc-collapse');
+      }
+
+      expect(container.querySelector(`[id="${testId}__item-1"]`)).toHaveClass('rc-collapse-item');
+
+      const header = container.querySelector(`[id="${testId}__item-1__header"]`);
+      expect(header).toHaveClass('rc-collapse-header');
+      expect(header).toHaveAttribute('aria-controls', `${testId}__item-1__content`);
+
+      fireEvent.click(header);
+      jest.runAllTimers();
+
+      const panelContent = container.querySelector(`[id="${testId}__item-1__content"]`);
+      expect(panelContent).toHaveClass('rc-collapse-panel');
+      expect(panelContent).toHaveAttribute('aria-labelledby', `${testId}__item-1__header`);
+    };
+
+    it('applies default id to subcomponents - using composition', () => {
+      const element = (
+        <Collapse>
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>
+      );
+
+      runIdTest(element);
+    });
+
+    it('applies the passed id to subcomponents - using composition', () => {
+      const element = (
+        <Collapse id="collapse-test-id">
+          <Panel header="collapse 1" key="1">
+            first
+          </Panel>
+        </Collapse>
+      );
+
+      runIdTest(element, 'collapse-test-id');
+    });
+
+    it('applies default id to subcomponents - using items prop', () => {
+      const element = (
+        <Collapse
+          items={[
+            {
+              key: '1',
+              label: 'collapse 1',
+              children: 'first',
+            },
+          ]}
+        />
+      );
+
+      runIdTest(element);
+    });
+
+    it('applies the passed id to subcomponents - using items prop', () => {
+      const element = (
+        <Collapse
+          id="collapse-test-id"
+          items={[
+            {
+              key: '1',
+              label: 'collapse 1',
+              children: 'first',
+            },
+          ]}
+        />
+      );
+
+      runIdTest(element, 'collapse-test-id');
+    });
+  });
+
+  describe('prop: headingLevel', () => {
+    const runHeadingLevelTest = (element: any, headingLevel: HeadingLevelType) => {
+      const { container } = render(element);
+      const header = container.querySelector('.rc-collapse-header');
+      expect(header.parentElement.tagName).toEqual('DIV');
+      if (headingLevel) {
+        expect(Number(header.parentElement.getAttribute('aria-level'))).toEqual(headingLevel);
+      }
+    };
+
+    const headingElements: HeadingLevelType[] = [1, 2, 3, 4, 5, 6, undefined];
+    test.each(headingElements)(
+      'correctly creates element when headingLevel=%p - using composition',
+      (headingLevel) => {
+        const element = (
+          <Collapse headingLevel={headingLevel}>
+            <Panel header="collapse 1" key="1">
+              first
+            </Panel>
+          </Collapse>
+        );
+
+        runHeadingLevelTest(element, headingLevel);
+      },
+    );
+
+    test.each(headingElements)(
+      'correctly creates element when headingLevel=%p - using items prop',
+      (headingLevel) => {
+        const element = (
+          <Collapse
+            headingLevel={headingLevel}
+            items={[
+              {
+                key: '1',
+                label: 'collapse 1',
+                children: 'first',
+              },
+            ]}
+          />
+        );
+
+        runHeadingLevelTest(element, headingLevel);
+      },
+    );
   });
 
   it('should support extra whit number 0', () => {
@@ -808,6 +938,7 @@ describe('collapse', () => {
     it('should work with nested', () => {
       const { container } = render(
         <Collapse
+          id="collapse-test-id"
           items={[
             ...items,
             {
