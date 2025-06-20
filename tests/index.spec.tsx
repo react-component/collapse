@@ -1,6 +1,6 @@
 import type { RenderResult } from '@testing-library/react';
 import { fireEvent, render } from '@testing-library/react';
-import KeyCode from 'rc-util/lib/KeyCode';
+import KeyCode from '@rc-component/util/lib/KeyCode';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
 import type { CollapseProps, HeadingLevelType, ItemType } from '../src/interface';
@@ -370,7 +370,7 @@ describe('collapse', () => {
 
   it('click should toggle panel state', () => {
     const { container } = render(
-      <Collapse onChange={onChange} destroyInactivePanel>
+      <Collapse onChange={onChange} destroyOnHidden>
         <Panel header="collapse 1" key="1">
           first
         </Panel>

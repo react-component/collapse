@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import CSSMotion from 'rc-motion';
+import CSSMotion from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
@@ -24,7 +24,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     header,
     expandIcon,
     openMotion,
-    destroyInactivePanel,
+    destroyOnHidden,
     children,
     headingLevel,
     id,
@@ -117,7 +117,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
         leavedClassName={`${prefixCls}-panel-hidden`}
         {...openMotion}
         forceRender={forceRender}
-        removeOnLeave={destroyInactivePanel}
+        removeOnLeave={destroyOnHidden}
       >
         {({ className: motionClassName, style: motionStyle }, motionRef) => {
           return (
@@ -132,7 +132,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
               styles={styles}
               isActive={isActive}
               forceRender={forceRender}
-              role={accordion ? 'tabpanel' : void 0}
+              role={accordion ? 'tabpanel' : undefined}
             >
               {children}
             </PanelContent>

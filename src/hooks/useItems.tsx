@@ -13,7 +13,7 @@ type Props = Pick<
   | 'styles'
   | 'headingLevel'
 > &
-  Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyInactivePanel'> & {
+  Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyOnHidden'> & {
     activeKey: React.Key[];
     parentId?: string;
   };
@@ -23,7 +23,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     prefixCls,
     accordion,
     collapsible,
-    destroyInactivePanel,
+    destroyOnHidden,
     onItemClick,
     activeKey,
     openMotion,
@@ -41,7 +41,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       key: rawKey,
       collapsible: rawCollapsible,
       onItemClick: rawOnItemClick,
-      destroyInactivePanel: rawDestroyInactivePanel,
+      destroyOnHidden: rawDestroyOnHidden,
       ...restProps
     } = item;
 
@@ -49,10 +49,12 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     // Maybe: https://github.com/react-component/collapse/blob/aac303a8b6ff30e35060b4f8fecde6f4556fcbe2/src/Collapse.tsx#L15
     const key = String(rawKey ?? index);
     const mergeCollapsible = rawCollapsible ?? collapsible;
-    const mergeDestroyInactivePanel = rawDestroyInactivePanel ?? destroyInactivePanel;
+    const mergedDestroyOnHidden = rawDestroyOnHidden ?? destroyOnHidden;
 
     const handleItemClick = (value: React.Key) => {
-      if (mergeCollapsible === 'disabled') return;
+      if (mergeCollapsible === 'disabled') {
+        return;
+      }
       onItemClick(value);
       rawOnItemClick?.(value);
     };
@@ -79,7 +81,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
         header={label}
         collapsible={mergeCollapsible}
         onItemClick={handleItemClick}
-        destroyInactivePanel={mergeDestroyInactivePanel}
+        destroyOnHidden={mergedDestroyOnHidden}
         headingLevel={headingLevel}
         id={parentId ? `${parentId}__item-${key}` : undefined}
       >
@@ -97,13 +99,15 @@ const getNewChild = (
   index: number,
   props: Props,
 ) => {
-  if (!child) return null;
+  if (!child) {
+    return null;
+  }
 
   const {
     prefixCls,
     accordion,
     collapsible,
-    destroyInactivePanel,
+    destroyOnHidden,
     onItemClick,
     activeKey,
     openMotion,
@@ -119,7 +123,7 @@ const getNewChild = (
   const {
     header,
     headerClass,
-    destroyInactivePanel: childDestroyInactivePanel,
+    destroyOnHidden: childDestroyOnHidden,
     collapsible: childCollapsible,
     onItemClick: childOnItemClick,
   } = child.props;
@@ -134,7 +138,9 @@ const getNewChild = (
   const mergeCollapsible = childCollapsible ?? collapsible;
 
   const handleItemClick = (value: React.Key) => {
-    if (mergeCollapsible === 'disabled') return;
+    if (mergeCollapsible === 'disabled') {
+      return;
+    }
     onItemClick(value);
     childOnItemClick?.(value);
   };
@@ -148,7 +154,7 @@ const getNewChild = (
     styles,
     isActive,
     prefixCls,
-    destroyInactivePanel: childDestroyInactivePanel ?? destroyInactivePanel,
+    destroyOnHidden: childDestroyOnHidden ?? destroyOnHidden,
     openMotion,
     accordion,
     children: child.props.children,
@@ -170,7 +176,7 @@ const getNewChild = (
     }
   });
 
-  return React.cloneElement(child, childProps);
+  return React.cloneElement<CollapsePanelProps>(child, childProps);
 };
 
 function useItems(
@@ -181,8 +187,9 @@ function useItems(
   if (Array.isArray(items)) {
     return convertItemsToNodes(items, props);
   }
-
-  return toArray(rawChildren).map((child, index) => getNewChild(child, index, props));
+  return toArray(rawChildren).map((child, index) =>
+    getNewChild(child as React.ReactElement<CollapsePanelProps>, index, props),
+  );
 }
 
 export default useItems;
