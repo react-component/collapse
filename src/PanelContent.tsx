@@ -18,13 +18,7 @@ const PanelContent = React.forwardRef<
     styles,
   } = props;
 
-  const [rendered, setRendered] = React.useState(isActive || forceRender);
-
-  React.useEffect(() => {
-    if (forceRender || isActive) {
-      setRendered(true);
-    }
-  }, [forceRender, isActive]);
+  const rendered = isActive || forceRender;
 
   if (!rendered) {
     return null;
