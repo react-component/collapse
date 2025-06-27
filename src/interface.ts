@@ -2,6 +2,7 @@ import type { CSSMotionProps } from '@rc-component/motion';
 import type * as React from 'react';
 
 export type CollapsibleType = 'header' | 'icon' | 'disabled';
+export type HeadingLevelType = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface ItemType
   extends Omit<
@@ -39,6 +40,8 @@ export interface CollapseProps {
   items?: ItemType[];
   classNames?: Partial<Record<SemanticName, string>>;
   styles?: Partial<Record<SemanticName, React.CSSProperties>>;
+  headingLevel?: HeadingLevelType;
+  id?: string;
 }
 
 export type SemanticName = 'header' | 'title' | 'body' | 'icon';
@@ -65,4 +68,5 @@ export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> 
   role?: string;
   collapsible?: CollapsibleType;
   children?: React.ReactNode;
+  headingLevel?: HeadingLevelType;
 }
