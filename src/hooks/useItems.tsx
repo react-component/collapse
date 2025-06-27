@@ -83,7 +83,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
         onItemClick={handleItemClick}
         destroyOnHidden={mergedDestroyOnHidden}
         headingLevel={headingLevel}
-        id={parentId ? `${parentId}__item-${key}` : undefined}
+        id={`${parentId}__item-${key}`}
       >
         {children}
       </CollapsePanel>
@@ -162,7 +162,7 @@ const getNewChild = (
     expandIcon,
     collapsible: mergeCollapsible,
     headingLevel,
-    id: parentId ? `${parentId}__item-${key}` : undefined,
+    id: `${parentId}__item-${key}`,
   };
 
   // https://github.com/ant-design/ant-design/issues/20479

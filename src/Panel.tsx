@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import CSSMotion from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
-import type { PropsWithChildren } from 'react';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
@@ -96,11 +95,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
         role={headingLevel ? 'heading' : undefined}
         aria-level={headingLevel}
       >
-        <div
-          {...headerProps}
-          id={id ? `${id}__header` : undefined}
-          aria-controls={id ? `${id}__content` : undefined}
-        >
+        <div {...headerProps} id={`${id}__header`} aria-controls={`${id}__content`}>
           {showArrow && iconNode}
           <span
             className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
@@ -123,8 +118,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           return (
             <PanelContent
               ref={motionRef}
-              id={id ? `${id}__content` : undefined}
-              aria-labelledby={id ? `${id}__header` : undefined}
+              id={`${id}__content`}
+              aria-labelledby={`${id}__header`}
               prefixCls={prefixCls}
               className={motionClassName}
               classNames={customizeClassNames}
