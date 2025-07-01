@@ -63,7 +63,7 @@
     "@types/react-dom": "^19.1.5",
     "@umijs/fabric": "^4.0.0",
     "dumi": "^2.1.1",
-    "eslint": "^8.55.0",
+    "eslint": "^9.30.1",
     "eslint-plugin-jest": "^28.11.0",
     "eslint-plugin-unicorn": "^49.0.0",
     "father": "^4.1.3",
