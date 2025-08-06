@@ -16,6 +16,8 @@ const PanelContent = React.forwardRef<
     role,
     classNames: customizeClassNames,
     styles,
+    id,
+    ...restProps
   } = props;
 
   const [rendered, setRendered] = React.useState(isActive || forceRender);
@@ -33,6 +35,7 @@ const PanelContent = React.forwardRef<
   return (
     <div
       ref={ref}
+      id={id}
       className={classnames(
         `${prefixCls}-panel`,
         {
@@ -43,6 +46,7 @@ const PanelContent = React.forwardRef<
       )}
       style={style}
       role={role}
+      {...restProps}
     >
       <div
         className={classnames(`${prefixCls}-body`, customizeClassNames?.body)}
