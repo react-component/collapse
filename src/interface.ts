@@ -16,7 +16,7 @@ export interface ItemType
   > {
   key?: CollapsePanelProps['panelKey'];
   label?: CollapsePanelProps['header'];
-  ref?: React.RefObject<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDetailsElement>;
 }
 
 export interface CollapseProps {
@@ -42,8 +42,7 @@ export interface CollapseProps {
 }
 
 export type SemanticName = 'header' | 'title' | 'body' | 'icon';
-
-export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> {
+export interface CollapsePanelProps extends React.DOMAttributes<HTMLDetailsElement> {
   id?: string;
   header?: React.ReactNode;
   prefixCls?: string;
@@ -51,7 +50,7 @@ export interface CollapsePanelProps extends React.DOMAttributes<HTMLDivElement> 
   showArrow?: boolean;
   className?: string;
   classNames?: Partial<Record<SemanticName, string>>;
-  style?: object;
+  style?: React.CSSProperties;
   styles?: Partial<Record<SemanticName, React.CSSProperties>>;
   isActive?: boolean;
   openMotion?: CSSMotionProps;
