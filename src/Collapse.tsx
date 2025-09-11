@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import useMergedState from '@rc-component/util/lib/hooks/useMergedState';
+import { useControlledState, useEvent } from '@rc-component/util';
 import warning from '@rc-component/util/lib/warning';
 import React from 'react';
 import useItems from './hooks/useItems';
@@ -7,7 +7,7 @@ import type { CollapseProps } from './interface';
 import CollapsePanel from './Panel';
 import pickAttrs from '@rc-component/util/lib/pickAttrs';
 
-function getActiveKeysArray(activeKey: React.Key | React.Key[]) {
+function getActiveKeysArray(activeKey: React.Key | React.Key[]): React.Key[] {
   let currentActiveKey = activeKey;
   if (!Array.isArray(currentActiveKey)) {
     const activeKeyType = typeof currentActiveKey;
@@ -38,27 +38,31 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
 
   const collapseClassName = classNames(prefixCls, className);
 
-  const [activeKey, setActiveKey] = useMergedState<React.Key | React.Key[], React.Key[]>([], {
-    value: rawActiveKey,
-    onChange: (v) => onChange?.(v as React.Key[]),
-    defaultValue: defaultActiveKey,
-    postState: getActiveKeysArray,
+  const [internalActiveKey, setActiveKey] = useControlledState<React.Key[] | React.Key>(
+    defaultActiveKey,
+    rawActiveKey,
+  );
+  const activeKey = getActiveKeysArray(internalActiveKey);
+
+  const triggerActiveKey = useEvent((next) => {
+    setActiveKey(next);
+    if (next !== activeKey) {
+      onChange?.(next);
+    }
   });
 
-  const onItemClick = (key: React.Key) =>
-    setActiveKey(() => {
-      if (accordion) {
-        return activeKey[0] === key ? [] : [key];
-      }
-
-      const index = activeKey.indexOf(key);
-      const isActive = index > -1;
-      if (isActive) {
-        return activeKey.filter((item) => item !== key);
-      }
-
-      return [...activeKey, key];
-    });
+  const onItemClick = (key: React.Key) => {
+    let keys = [...activeKey, key];
+    if (accordion) {
+      keys = activeKey[0] === key ? [] : [key];
+    }
+    const index = activeKey.indexOf(key);
+    const isActive = index > -1;
+    if (isActive) {
+      keys = activeKey.filter((item) => item !== key);
+    }
+    triggerActiveKey(keys);
+  };
 
   // ======================== Children ========================
   warning(
