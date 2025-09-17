@@ -47,9 +47,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   const triggerActiveKey = useEvent((next) => {
     setActiveKey(next);
     const nextKeys = getActiveKeysArray(next);
-    if (JSON.stringify(nextKeys) !== JSON.stringify(activeKey)) {
-      onChange?.(nextKeys);
-    }
+    onChange?.(nextKeys);
   });
 
   const onItemClick = (key: React.Key) => {
