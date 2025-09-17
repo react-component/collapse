@@ -45,8 +45,8 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   const activeKey = getActiveKeysArray(internalActiveKey);
 
   const triggerActiveKey = useEvent((next) => {
-    setActiveKey(next);
     const nextKeys = getActiveKeysArray(next);
+    setActiveKey(nextKeys);
     onChange?.(nextKeys);
   });
 
