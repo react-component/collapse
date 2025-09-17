@@ -47,30 +47,19 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
   const triggerActiveKey = useEvent((next) => {
     setActiveKey(next);
     const nextKeys = getActiveKeysArray(next);
-    const hasChanged =
-      nextKeys.length !== activeKey.length ||
-      nextKeys.some((key, index) => key !== activeKey[index]);
-    if (hasChanged) {
+    if (JSON.stringify(nextKeys) !== JSON.stringify(activeKey)) {
       onChange?.(nextKeys);
     }
   });
 
   const onItemClick = (key: React.Key) => {
-    let newKeys: React.Key[];
-
     if (accordion) {
-      newKeys = activeKey[0] === key ? [] : [key];
+      triggerActiveKey(activeKey[0] === key ? [] : [key]);
     } else {
-      const index = activeKey.indexOf(key);
-      const isActive = index > -1;
-      if (isActive) {
-        newKeys = activeKey.filter((item) => item !== key);
-      } else {
-        newKeys = [...activeKey, key];
-      }
+      triggerActiveKey(
+        activeKey.includes(key) ? activeKey.filter((item) => item !== key) : [...activeKey, key],
+      );
     }
-
-    triggerActiveKey(newKeys);
   };
 
   // ======================== Children ========================
