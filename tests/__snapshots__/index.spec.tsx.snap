@@ -3,108 +3,137 @@
 exports[`collapse props items should work with nested 1`] = `
 <div
   class="rc-collapse"
+  id="collapse-test-id"
 >
   <div
     class="rc-collapse-item rc-collapse-item-disabled"
+    id="collapse-test-id__item-1"
   >
     <div
-      aria-disabled="true"
-      aria-expanded="false"
-      class="rc-collapse-header rc-collapse-collapsible-disabled"
-      role="button"
-      tabindex="-1"
+      class="rc-collapse-header-wrapper"
     >
       <div
-        class="rc-collapse-expand-icon"
+        aria-controls="collapse-test-id__item-1__content"
+        aria-disabled="true"
+        aria-expanded="false"
+        class="rc-collapse-header rc-collapse-collapsible-disabled"
+        id="collapse-test-id__item-1__header"
+        role="button"
+        tabindex="-1"
       >
-        <i
-          class="arrow"
-        />
-      </div>
-      <span
-        class="rc-collapse-title"
-      >
-        collapse 1
-      </span>
-    </div>
-  </div>
-  <div
-    class="rc-collapse-item"
-  >
-    <div
-      aria-disabled="false"
-      aria-expanded="false"
-      class="rc-collapse-header"
-      role="button"
-      tabindex="0"
-    >
-      <div
-        class="rc-collapse-expand-icon"
-      >
-        <i
-          class="arrow"
-        />
-      </div>
-      <span
-        class="rc-collapse-title"
-      >
-        collapse 2
-      </span>
-      <div
-        class="rc-collapse-extra"
-      >
-        <span>
-          ExtraSpan
+        <div
+          class="rc-collapse-expand-icon"
+        >
+          <i
+            class="arrow"
+          />
+        </div>
+        <span
+          class="rc-collapse-title"
+        >
+          collapse 1
         </span>
       </div>
     </div>
   </div>
   <div
-    class="rc-collapse-item important"
+    class="rc-collapse-item"
+    id="collapse-test-id__item-2"
   >
     <div
-      aria-disabled="false"
-      aria-expanded="false"
-      class="rc-collapse-header"
-      role="button"
-      tabindex="0"
+      class="rc-collapse-header-wrapper"
     >
       <div
-        class="rc-collapse-expand-icon"
+        aria-controls="collapse-test-id__item-2__content"
+        aria-disabled="false"
+        aria-expanded="false"
+        class="rc-collapse-header"
+        id="collapse-test-id__item-2__header"
+        role="button"
+        tabindex="0"
       >
-        <i
-          class="arrow"
-        />
+        <div
+          class="rc-collapse-expand-icon"
+        >
+          <i
+            class="arrow"
+          />
+        </div>
+        <span
+          class="rc-collapse-title"
+        >
+          collapse 2
+        </span>
+        <div
+          class="rc-collapse-extra"
+        >
+          <span>
+            ExtraSpan
+          </span>
+        </div>
       </div>
-      <span
-        class="rc-collapse-title"
+    </div>
+  </div>
+  <div
+    class="rc-collapse-item important"
+    id="collapse-test-id__item-3"
+  >
+    <div
+      class="rc-collapse-header-wrapper"
+    >
+      <div
+        aria-controls="collapse-test-id__item-3__content"
+        aria-disabled="false"
+        aria-expanded="false"
+        class="rc-collapse-header"
+        id="collapse-test-id__item-3__header"
+        role="button"
+        tabindex="0"
       >
-        collapse 3
-      </span>
+        <div
+          class="rc-collapse-expand-icon"
+        >
+          <i
+            class="arrow"
+          />
+        </div>
+        <span
+          class="rc-collapse-title"
+        >
+          collapse 3
+        </span>
+      </div>
     </div>
   </div>
   <div
     class="rc-collapse-item"
+    id="collapse-test-id__item-3"
   >
     <div
-      aria-disabled="false"
-      aria-expanded="false"
-      class="rc-collapse-header"
-      role="button"
-      tabindex="0"
+      class="rc-collapse-header-wrapper"
     >
       <div
-        class="rc-collapse-expand-icon"
+        aria-controls="collapse-test-id__item-3__content"
+        aria-disabled="false"
+        aria-expanded="false"
+        class="rc-collapse-header"
+        id="collapse-test-id__item-3__header"
+        role="button"
+        tabindex="0"
       >
-        <i
-          class="arrow"
-        />
+        <div
+          class="rc-collapse-expand-icon"
+        >
+          <i
+            class="arrow"
+          />
+        </div>
+        <span
+          class="rc-collapse-title"
+        >
+          title 3
+        </span>
       </div>
-      <span
-        class="rc-collapse-title"
-      >
-        title 3
-      </span>
     </div>
   </div>
 </div>

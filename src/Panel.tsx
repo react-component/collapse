@@ -25,6 +25,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     openMotion,
     destroyOnHidden,
     children,
+    headingLevel,
+    id,
     ...resetProps
   } = props;
 
@@ -87,17 +89,23 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   // ======================== Render ========================
   return (
-    <div {...resetProps} ref={ref} className={collapsePanelClassNames}>
-      <div {...headerProps}>
-        {showArrow && iconNode}
-        <span
-          className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
-          style={styles?.title}
-          {...(collapsible === 'header' ? collapsibleProps : {})}
-        >
-          {header}
-        </span>
-        {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
+    <div {...resetProps} ref={ref} className={collapsePanelClassNames} id={id}>
+      <div
+        className={`${prefixCls}-header-wrapper`}
+        role={headingLevel ? 'heading' : undefined}
+        aria-level={headingLevel}
+      >
+        <div {...headerProps} id={`${id}__header`} aria-controls={`${id}__content`}>
+          {showArrow && iconNode}
+          <span
+            className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
+            style={styles?.title}
+            {...(collapsible === 'header' ? collapsibleProps : {})}
+          >
+            {header}
+          </span>
+          {ifExtraExist && <div className={`${prefixCls}-extra`}>{extra}</div>}
+        </div>
       </div>
       <CSSMotion
         visible={isActive}
@@ -110,6 +118,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
           return (
             <PanelContent
               ref={motionRef}
+              id={`${id}__content`}
+              aria-labelledby={`${id}__header`}
               prefixCls={prefixCls}
               className={motionClassName}
               classNames={customizeClassNames}
