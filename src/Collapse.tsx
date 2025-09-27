@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import { useControlledState, useEvent } from '@rc-component/util';
 import warning from '@rc-component/util/lib/warning';
 import React from 'react';
@@ -36,12 +36,13 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
     styles,
   } = props;
 
-  const collapseClassName = classNames(prefixCls, className);
+  const collapseClassName = clsx(prefixCls, className);
 
   const [internalActiveKey, setActiveKey] = useControlledState<React.Key[] | React.Key>(
     defaultActiveKey,
     rawActiveKey,
   );
+
   const activeKey = getActiveKeysArray(internalActiveKey);
 
   const triggerActiveKey = useEvent((next) => {
