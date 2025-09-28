@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { clsx } from 'clsx';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 
@@ -33,7 +33,7 @@ const PanelContent = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={classnames(
+      className={clsx(
         `${prefixCls}-panel`,
         {
           [`${prefixCls}-panel-active`]: isActive,
@@ -44,16 +44,15 @@ const PanelContent = React.forwardRef<
       style={style}
       role={role}
     >
-      <div
-        className={classnames(`${prefixCls}-body`, customizeClassNames?.body)}
-        style={styles?.body}
-      >
+      <div className={clsx(`${prefixCls}-body`, customizeClassNames?.body)} style={styles?.body}>
         {children}
       </div>
     </div>
   );
 });
 
-PanelContent.displayName = 'PanelContent';
+if (process.env.NODE_ENV !== 'production') {
+  PanelContent.displayName = 'PanelContent';
+}
 
 export default PanelContent;

@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
 import KeyCode from '@rc-component/util/lib/KeyCode';
 import React from 'react';
@@ -52,7 +52,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     typeof expandIcon === 'function' ? expandIcon(props) : <i className="arrow" />;
   const iconNode = iconNodeInner && (
     <div
-      className={classNames(`${prefixCls}-expand-icon`, customizeClassNames?.icon)}
+      className={clsx(`${prefixCls}-expand-icon`, customizeClassNames?.icon)}
       style={styles?.icon}
       {...(['header', 'icon'].includes(collapsible) ? collapsibleProps : {})}
     >
@@ -60,7 +60,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     </div>
   );
 
-  const collapsePanelClassNames = classNames(
+  const collapsePanelClassNames = clsx(
     `${prefixCls}-item`,
     {
       [`${prefixCls}-item-active`]: isActive,
@@ -69,7 +69,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     className,
   );
 
-  const headerClassName = classNames(
+  const headerClassName = clsx(
     headerClass,
     `${prefixCls}-header`,
     {
@@ -91,7 +91,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       <div {...headerProps}>
         {showArrow && iconNode}
         <span
-          className={classNames(`${prefixCls}-title`, customizeClassNames?.title)}
+          className={clsx(`${prefixCls}-title`, customizeClassNames?.title)}
           style={styles?.title}
           {...(collapsible === 'header' ? collapsibleProps : {})}
         >
