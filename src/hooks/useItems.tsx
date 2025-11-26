@@ -22,7 +22,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     openMotion,
     expandIcon,
     classNames: collapseClassNames,
-    styles,
+    styles: collapseStyles,
   } = props;
 
   return items.map((item, index) => {
@@ -33,6 +33,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       collapsible: rawCollapsible,
       onItemClick: rawOnItemClick,
       destroyOnHidden: rawDestroyOnHidden,
+      classNames,
+      styles,
       ...restProps
     } = item;
 
@@ -60,8 +62,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     return (
       <CollapsePanel
         {...restProps}
-        classNames={collapseClassNames}
-        styles={styles}
+        classNames={classNames || collapseClassNames}
+        styles={styles || collapseStyles}
         prefixCls={prefixCls}
         key={key}
         panelKey={key}
