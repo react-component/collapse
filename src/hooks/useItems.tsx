@@ -62,8 +62,14 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     return (
       <CollapsePanel
         {...restProps}
-        classNames={classNames || collapseClassNames}
-        styles={styles || collapseStyles}
+        classNames={{
+          ...collapseClassNames,
+          ...classNames,
+        }}
+        styles={{
+          ...collapseStyles,
+          ...styles,
+        }}
         prefixCls={prefixCls}
         key={key}
         panelKey={key}
