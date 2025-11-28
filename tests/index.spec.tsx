@@ -898,5 +898,59 @@ describe('collapse', () => {
       expect(titleElement.style.color).toBe('green');
       expect(iconElement.style.color).toBe('yellow');
     });
+
+    it('should support styles and classNames in panel', () => {
+      const customStyles = {
+        header: { color: 'red' },
+        body: { color: 'blue' },
+        title: { color: 'green' },
+        icon: { color: 'yellow' },
+      };
+      const customClassnames = {
+        header: 'custom-header',
+        body: 'custom-body',
+      };
+
+      const { container } = render(
+        <Collapse
+          activeKey={['1']}
+          styles={customStyles}
+          classNames={customClassnames}
+          items={[
+            {
+              key: '1',
+              styles: {
+                header: {
+                  color: 'blue',
+                  fontSize: 20,
+                },
+                body: {
+                  fontSize: 20,
+                },
+              },
+              classNames: {
+                header: 'custom-header-panel',
+                body: 'custom-body-panel',
+              },
+              label: 'title',
+            },
+          ]}
+        />,
+      );
+      const headerElement = container.querySelector('.rc-collapse-header') as HTMLElement;
+      const bodyElement = container.querySelector('.rc-collapse-body') as HTMLElement;
+
+      // check classNames
+      expect(headerElement.classList).toContain('custom-header');
+      expect(headerElement.classList).toContain('custom-header-panel');
+      expect(bodyElement.classList).toContain('custom-body');
+      expect(bodyElement.classList).toContain('custom-body-panel');
+
+      // check styles
+      expect(headerElement.style.color).toBe('blue');
+      expect(headerElement.style.fontSize).toBe('20px');
+      expect(bodyElement.style.color).toBe('blue');
+      expect(bodyElement.style.fontSize).toBe('20px');
+    });
   });
 });

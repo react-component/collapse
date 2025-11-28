@@ -1,7 +1,8 @@
 import toArray from '@rc-component/util/lib/Children/toArray';
 import React from 'react';
-import type { CollapsePanelProps, CollapseProps, ItemType } from '../interface';
+import type { CollapsePanelProps, CollapseProps, ItemType, SemanticName } from '../interface';
 import CollapsePanel from '../Panel';
+import clsx from 'clsx';
 
 type Props = Pick<
   CollapsePanelProps,
@@ -22,7 +23,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     openMotion,
     expandIcon,
     classNames: collapseClassNames,
-    styles,
+    styles: collapseStyles,
   } = props;
 
   return items.map((item, index) => {
@@ -33,6 +34,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       collapsible: rawCollapsible,
       onItemClick: rawOnItemClick,
       destroyOnHidden: rawDestroyOnHidden,
+      classNames,
+      styles,
       ...restProps
     } = item;
 
@@ -57,11 +60,29 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       isActive = activeKey.indexOf(key) > -1;
     }
 
+    const mergeClassNames: Partial<Record<SemanticName, string>> = {
+      ...collapseClassNames,
+      header: clsx(collapseClassNames?.header, classNames?.header),
+      body: clsx(collapseClassNames?.body, classNames?.body),
+    };
+
+    const mergeStyles: Partial<Record<SemanticName, React.CSSProperties>> = {
+      ...collapseStyles,
+      header: {
+        ...collapseStyles?.header,
+        ...styles?.header,
+      },
+      body: {
+        ...collapseStyles?.body,
+        ...styles?.body,
+      },
+    };
+
     return (
       <CollapsePanel
         {...restProps}
-        classNames={collapseClassNames}
-        styles={styles}
+        classNames={mergeClassNames}
+        styles={mergeStyles}
         prefixCls={prefixCls}
         key={key}
         panelKey={key}
