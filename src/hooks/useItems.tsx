@@ -64,6 +64,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       ...collapseClassNames,
       header: clsx(collapseClassNames?.header, classNames?.header),
       body: clsx(collapseClassNames?.body, classNames?.body),
+      title: clsx(collapseClassNames?.title, classNames?.title),
+      icon: clsx(collapseClassNames?.icon, classNames?.icon),
     };
 
     const mergeStyles: Partial<Record<SemanticName, React.CSSProperties>> = {
@@ -75,6 +77,14 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       body: {
         ...collapseStyles?.body,
         ...styles?.body,
+      },
+      title: {
+        ...collapseStyles?.title,
+        ...styles?.title,
+      },
+      icon: {
+        ...collapseStyles?.icon,
+        ...styles?.icon,
       },
     };
 

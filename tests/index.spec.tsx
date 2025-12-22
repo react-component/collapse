@@ -927,6 +927,12 @@ describe('collapse', () => {
                 body: {
                   fontSize: 20,
                 },
+                title: {
+                  color: 'red',
+                },
+                icon: {
+                  color: 'blue',
+                },
               },
               classNames: {
                 header: 'custom-header-panel',
@@ -939,6 +945,8 @@ describe('collapse', () => {
       );
       const headerElement = container.querySelector('.rc-collapse-header') as HTMLElement;
       const bodyElement = container.querySelector('.rc-collapse-body') as HTMLElement;
+      const titleElement = container.querySelector('.rc-collapse-title') as HTMLElement;
+      const iconElement = container.querySelector('.rc-collapse-expand-icon') as HTMLElement;
 
       // check classNames
       expect(headerElement.classList).toContain('custom-header');
@@ -947,10 +955,10 @@ describe('collapse', () => {
       expect(bodyElement.classList).toContain('custom-body-panel');
 
       // check styles
-      expect(headerElement.style.color).toBe('blue');
-      expect(headerElement.style.fontSize).toBe('20px');
-      expect(bodyElement.style.color).toBe('blue');
-      expect(bodyElement.style.fontSize).toBe('20px');
+      expect(headerElement).toHaveStyle({ color: 'blue', fontSize: '20px' });
+      expect(bodyElement).toHaveStyle({ color: 'blue', fontSize: '20px' });
+      expect(titleElement).toHaveStyle({ color: 'red' });
+      expect(iconElement).toHaveStyle({ color: 'blue' });
     });
   });
 });
