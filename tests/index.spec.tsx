@@ -898,5 +898,67 @@ describe('collapse', () => {
       expect(titleElement.style.color).toBe('green');
       expect(iconElement.style.color).toBe('yellow');
     });
+
+    it('should support styles and classNames in panel', () => {
+      const customStyles = {
+        header: { color: 'red' },
+        body: { color: 'blue' },
+        title: { color: 'green' },
+        icon: { color: 'yellow' },
+      };
+      const customClassnames = {
+        header: 'custom-header',
+        body: 'custom-body',
+      };
+
+      const { container } = render(
+        <Collapse
+          activeKey={['1']}
+          styles={customStyles}
+          classNames={customClassnames}
+          items={[
+            {
+              key: '1',
+              styles: {
+                header: {
+                  color: 'blue',
+                  fontSize: 20,
+                },
+                body: {
+                  fontSize: 20,
+                },
+                title: {
+                  color: 'red',
+                },
+                icon: {
+                  color: 'blue',
+                },
+              },
+              classNames: {
+                header: 'custom-header-panel',
+                body: 'custom-body-panel',
+              },
+              label: 'title',
+            },
+          ]}
+        />,
+      );
+      const headerElement = container.querySelector('.rc-collapse-header') as HTMLElement;
+      const bodyElement = container.querySelector('.rc-collapse-body') as HTMLElement;
+      const titleElement = container.querySelector('.rc-collapse-title') as HTMLElement;
+      const iconElement = container.querySelector('.rc-collapse-expand-icon') as HTMLElement;
+
+      // check classNames
+      expect(headerElement.classList).toContain('custom-header');
+      expect(headerElement.classList).toContain('custom-header-panel');
+      expect(bodyElement.classList).toContain('custom-body');
+      expect(bodyElement.classList).toContain('custom-body-panel');
+
+      // check styles
+      expect(headerElement).toHaveStyle({ color: 'blue', fontSize: '20px' });
+      expect(bodyElement).toHaveStyle({ color: 'blue', fontSize: '20px' });
+      expect(titleElement).toHaveStyle({ color: 'red' });
+      expect(iconElement).toHaveStyle({ color: 'blue' });
+    });
   });
 });

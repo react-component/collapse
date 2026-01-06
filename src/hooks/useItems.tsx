@@ -2,6 +2,7 @@ import toArray from '@rc-component/util/lib/Children/toArray';
 import React from 'react';
 import type { CollapsePanelProps, CollapseProps, ItemType } from '../interface';
 import CollapsePanel from '../Panel';
+import clsx from 'clsx';
 
 type Props = Pick<
   CollapsePanelProps,
@@ -10,6 +11,30 @@ type Props = Pick<
   Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyOnHidden'> & {
     activeKey: React.Key[];
   };
+
+function mergeSemantic<T>(src: T, tgt: T, mergeFn: (a: any, b: any) => any) {
+  if (!src || !tgt) {
+    return src || tgt;
+  }
+
+  const keys = Array.from(new Set([...Object.keys(src), ...Object.keys(tgt)]));
+  const result = {};
+  keys.forEach((key) => {
+    result[key] = mergeFn(src[key], tgt[key]);
+  });
+  return result;
+}
+
+function mergeSemanticClassNames<T>(src: T, tgt: T) {
+  return mergeSemantic(src, tgt, (a: string, b: string) => clsx(a, b));
+}
+
+function mergeSemanticStyles<T>(src: T, tgt: T) {
+  return mergeSemantic(src, tgt, (a: React.CSSProperties, b: React.CSSProperties) => ({
+    ...a,
+    ...b,
+  }));
+}
 
 const convertItemsToNodes = (items: ItemType[], props: Props) => {
   const {
@@ -22,7 +47,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     openMotion,
     expandIcon,
     classNames: collapseClassNames,
-    styles,
+    styles: collapseStyles,
   } = props;
 
   return items.map((item, index) => {
@@ -33,6 +58,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       collapsible: rawCollapsible,
       onItemClick: rawOnItemClick,
       destroyOnHidden: rawDestroyOnHidden,
+      classNames,
+      styles,
       ...restProps
     } = item;
 
@@ -60,8 +87,8 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
     return (
       <CollapsePanel
         {...restProps}
-        classNames={collapseClassNames}
-        styles={styles}
+        classNames={mergeSemanticClassNames(collapseClassNames, classNames)}
+        styles={mergeSemanticStyles(collapseStyles, styles)}
         prefixCls={prefixCls}
         key={key}
         panelKey={key}
