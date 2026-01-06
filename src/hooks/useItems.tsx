@@ -1,6 +1,6 @@
 import toArray from '@rc-component/util/lib/Children/toArray';
 import React from 'react';
-import type { CollapsePanelProps, CollapseProps, ItemType, SemanticName } from '../interface';
+import type { CollapsePanelProps, CollapseProps, ItemType } from '../interface';
 import CollapsePanel from '../Panel';
 import clsx from 'clsx';
 
@@ -11,6 +11,30 @@ type Props = Pick<
   Pick<CollapseProps, 'accordion' | 'collapsible' | 'destroyOnHidden'> & {
     activeKey: React.Key[];
   };
+
+function mergeSemantic<T>(src: T, tgt: T, mergeFn: (a: any, b: any) => any) {
+  if (!src || !tgt) {
+    return src || tgt;
+  }
+
+  const keys = Array.from(new Set([...Object.keys(src), ...Object.keys(tgt)]));
+  const result = {};
+  keys.forEach((key) => {
+    result[key] = mergeFn(src[key], tgt[key]);
+  });
+  return result;
+}
+
+function mergeSemanticClassNames<T>(src: T, tgt: T) {
+  return mergeSemantic(src, tgt, (a: string, b: string) => clsx(a, b));
+}
+
+function mergeSemanticStyles<T>(src: T, tgt: T) {
+  return mergeSemantic(src, tgt, (a: React.CSSProperties, b: React.CSSProperties) => ({
+    ...a,
+    ...b,
+  }));
+}
 
 const convertItemsToNodes = (items: ItemType[], props: Props) => {
   const {
@@ -60,39 +84,11 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       isActive = activeKey.indexOf(key) > -1;
     }
 
-    const mergeClassNames: Partial<Record<SemanticName, string>> = {
-      ...collapseClassNames,
-      header: clsx(collapseClassNames?.header, classNames?.header),
-      body: clsx(collapseClassNames?.body, classNames?.body),
-      title: clsx(collapseClassNames?.title, classNames?.title),
-      icon: clsx(collapseClassNames?.icon, classNames?.icon),
-    };
-
-    const mergeStyles: Partial<Record<SemanticName, React.CSSProperties>> = {
-      ...collapseStyles,
-      header: {
-        ...collapseStyles?.header,
-        ...styles?.header,
-      },
-      body: {
-        ...collapseStyles?.body,
-        ...styles?.body,
-      },
-      title: {
-        ...collapseStyles?.title,
-        ...styles?.title,
-      },
-      icon: {
-        ...collapseStyles?.icon,
-        ...styles?.icon,
-      },
-    };
-
     return (
       <CollapsePanel
         {...restProps}
-        classNames={mergeClassNames}
-        styles={mergeStyles}
+        classNames={mergeSemanticClassNames(collapseClassNames, classNames)}
+        styles={mergeSemanticStyles(collapseStyles, styles)}
         prefixCls={prefixCls}
         key={key}
         panelKey={key}
