@@ -1,6 +1,6 @@
 import type { RenderResult } from '@testing-library/react';
 import { fireEvent, render } from '@testing-library/react';
-import KeyCode from '@rc-component/util/lib/KeyCode';
+import { KeyCode } from '@rc-component/util';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
 import type { CollapseProps, ItemType } from '../src/interface';
