@@ -9,7 +9,7 @@ const disabledTypeScriptRules = {
 
 module.exports = {
   ...base,
-  overrides: base.overrides.map((override) => ({
+  overrides: (base.overrides || []).map((override) => ({
     ...override,
     rules: {
       ...override.rules,

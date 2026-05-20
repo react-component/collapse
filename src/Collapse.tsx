@@ -1,6 +1,5 @@
 import { clsx } from 'clsx';
-import { useControlledState, useEvent } from '@rc-component/util';
-import { pickAttrs, warning } from '@rc-component/util';
+import { pickAttrs, useControlledState, useEvent, warning } from '@rc-component/util';
 import React from 'react';
 import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
