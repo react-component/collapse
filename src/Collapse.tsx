@@ -1,11 +1,9 @@
 import { clsx } from 'clsx';
-import { useControlledState, useEvent } from '@rc-component/util';
-import warning from '@rc-component/util/lib/warning';
+import { pickAttrs, useControlledState, useEvent, warning } from '@rc-component/util';
 import React from 'react';
 import useItems from './hooks/useItems';
 import type { CollapseProps } from './interface';
 import CollapsePanel from './Panel';
-import pickAttrs from '@rc-component/util/lib/pickAttrs';
 
 function getActiveKeysArray(activeKey: React.Key | React.Key[]): React.Key[] {
   let currentActiveKey = activeKey;

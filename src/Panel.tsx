@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
-import KeyCode from '@rc-component/util/lib/KeyCode';
+import { KeyCode } from '@rc-component/util';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
