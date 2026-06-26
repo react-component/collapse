@@ -28,6 +28,7 @@
     "assets/*.css"
   ],
   "scripts": {
+    "build": "npm run docs:build",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "coverage": "rc-test --coverage",
     "docs:build": "dumi build",
@@ -36,10 +37,11 @@
     "prepare": "husky",
     "now-build": "npm run docs:build",
     "prepublishOnly": "npm run compile && rc-np",
-    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "prettier": "prettier --write --ignore-unknown .",
     "postpublish": "npm run docs:deploy",
     "start": "dumi dev",
-    "test": "rc-test"
+    "test": "rc-test",
+    "tsc": "tsc --noEmit"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,json,md}": "npm run prettier"

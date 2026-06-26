@@ -2,8 +2,13 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 
-const basePath = process.env.GITHUB_ACTIONS ? '/collapse/' : '/';
-const publicPath = process.env.GITHUB_ACTIONS ? '/collapse/' : '/';
+const isProdSite =
+  process.env.PREVIEW !== 'true' &&
+  process.env.VERCEL !== '1' &&
+  process.env.NODE_ENV === 'production';
+
+const basePath = isProdSite ? '/collapse/' : '/';
+const publicPath = isProdSite ? '/collapse/' : '/';
 
 export default defineConfig({
   alias: {
