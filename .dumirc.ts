@@ -3,9 +3,7 @@ import { defineConfig } from 'dumi';
 import path from 'path';
 
 const isProdSite =
-  process.env.PREVIEW !== 'true' &&
-  process.env.VERCEL !== '1' &&
-  process.env.NODE_ENV === 'production';
+  process.env.GITHUB_ACTIONS === 'true' && process.env.PREVIEW !== 'true';
 
 const basePath = isProdSite ? '/collapse/' : '/';
 const publicPath = isProdSite ? '/collapse/' : '/';

@@ -44,7 +44,7 @@
     "tsc": "tsc --noEmit"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,json,md}": "npm run prettier"
+    "**/*.{ts,tsx,js,jsx,json,md}": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
