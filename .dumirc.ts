@@ -2,12 +2,11 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 
-const isProdSite = process.env.GH_PAGES === '1';
-
-const basePath = isProdSite ? '/collapse/' : '/';
-const publicPath = isProdSite ? '/collapse/' : '/';
+const basePath = process.env.GH_PAGES ? '/collapse/' : '/';
+const publicPath = basePath;
 
 export default defineConfig({
+  outputPath: 'docs-dist',
   alias: {
     'rc-collapse$': path.resolve('src'),
     'rc-collapse/es': path.resolve('src'),

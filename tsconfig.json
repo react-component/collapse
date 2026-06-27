@@ -8,10 +8,17 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": ["src/*"],
-      "@@/*": ["src/.dumi/*"],
-      "rc-collapse": ["src/index.tsx"]
-    }
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        "src/.dumi/*"
+      ],
+      "rc-collapse": [
+        "src/index.tsx"
+      ]
+    },
+    "ignoreDeprecations": "5.0"
   },
   "include": [
     ".dumirc.ts",
