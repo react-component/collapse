@@ -1,13 +1,9 @@
 <div align="center">
   <h1>@rc-component/collapse</h1>
+  <p><sub>Part of the Ant Design ecosystem.</sub></p>
   <p>🪗 A flexible collapse and accordion component for React.</p>
-
-  <a href="https://ant.design">
-    <img width="32" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" alt="Ant Design" />
-  </a>
-
-  <p>Part of the Ant Design ecosystem.</p>
 </div>
+
 
 <div align="center">
 
