@@ -1,6 +1,7 @@
 <div align="center">
   <h1>@rc-component/collapse</h1>
   <p><sub>Ant Design 生态的一部分。</sub></p>
+  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
   <p>🪗 灵活的 React 折叠面板和手风琴组件。</p>
 </div>
 
