@@ -2,8 +2,7 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 
-const isProdSite =
-  process.env.GITHUB_ACTIONS === 'true' && process.env.PREVIEW !== 'true';
+const isProdSite = process.env.GH_PAGES === '1';
 
 const basePath = isProdSite ? '/collapse/' : '/';
 const publicPath = isProdSite ? '/collapse/' : '/';
