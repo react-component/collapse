@@ -1,7 +1,6 @@
 <div align="center">
   <h1>@rc-component/collapse</h1>
-  <p><sub>Ant Design 生态的一部分。</sub></p>
-  <img alt="Ant Design" height="32" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+  <p><sub><img alt="Ant Design" height="14" src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" style="vertical-align: -0.125em;" /> Ant Design 生态的一部分。</sub></p>
   <p>🪗 灵活的 React 折叠面板和手风琴组件。</p>
 </div>
 
@@ -29,10 +28,10 @@
 
 ## 特性
 
-- 支持 accordion and multi-panel collapse modes.
+- 支持手风琴和多面板折叠模式。
 - 推荐使用 `items` API 声明式配置面板。
-- 保留 `Collapse.Panel` for compatibility. It is deprecated and will be removed in v4.
-- 支持 custom expand icons, semantic class names, semantic styles, and motion.
+- 保留 `Collapse.Panel` 以实现兼容性。它已被弃用，并将在 v4 中删除。
+- 支持自定义展开图标、语义className称、语义样式和动作。
 
 ## 安装
 
@@ -84,42 +83,42 @@ npm start
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| accordion | Only one panel can be opened at a time | boolean | false |
-| activeKey | Current active panel key | `React.Key \| React.Key[]` | - |
-| className | Additional class name | string | - |
-| classNames | Semantic class names | `Partial<Record<SemanticName, string>>` | - |
-| collapsible | Specify whether panel trigger area is collapsible | `header` \| `icon` \| `disabled` | - |
-| defaultActiveKey | Initial active panel key | `React.Key \| React.Key[]` | - |
-| destroyOnHidden | Destroy inactive panel content | boolean | false |
-| expandIcon | Custom expand icon | `(props: object) => React.ReactNode` | - |
-| items | Collapse items content | `ItemType[]` | - |
-| openMotion | Custom open motion | `CSSMotionProps` | - |
-| prefixCls | Component class name prefix | string | `rc-collapse` |
-| style | Inline style | object | - |
+| accordion | 一次只能打开一个面板 | boolean | false |
+| activeKey | 当前活动面板键 | `React.Key \| React.Key[]` | - |
+| className | 附加className | string | - |
+| classNames | 语义className | `Partial<Record<SemanticName, string>>` | - |
+| collapsible | 指定面板触发区域是否可折叠 | `header` \| `icon` \| `disabled` | - |
+| defaultActiveKey | 初始活动面板键 | `React.Key \| React.Key[]` | - |
+| destroyOnHidden | 销毁非活动面板内容 | boolean | false |
+| expandIcon | 自定义展开图标 | `(props: object) => React.ReactNode` | - |
+| 项目 | 折叠项目内容 | `ItemType[]` | - |
+| openMotion | 自定义打开动作 | `CSSMotionProps` | - |
+| prefixCls | 组件className前缀 | string | `rc-collapse` |
+| 风格 | 内联样式 | object | - |
 | styles | Semantic styles | `Partial<Record<SemanticName, React.CSSProperties>>` | - |
-| onChange | Callback when active panels change | `(key: React.Key[]) => void` | - |
+| onChange | 活动面板更改时的回调 | `(key: React.Key[]) => void` | - |
 
 ### ItemType
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| key | Panel key | `React.Key` | - |
-| label | Panel header content | `React.ReactNode` | - |
-| children | Panel body content | `React.ReactNode` | - |
-| className | Additional panel class name | string | - |
-| classNames | Semantic class names | `Partial<Record<SemanticName, string>>` | - |
-| collapsible | Specify whether the panel is collapsible | `header` \| `icon` \| `disabled` | - |
-| destroyOnHidden | Destroy inactive panel content | boolean | false |
-| extra | Extra content in the panel header | `React.ReactNode` | - |
-| forceRender | Render panel content before it is opened | boolean | false |
-| showArrow | Show arrow beside header | boolean | true |
-| style | Inline panel style | object | - |
+| key | 面板按键 | `React.Key` | - |
+| label | 面板标题内容 | `React.ReactNode` | - |
+| 孩子们 | 面板主体内容 | `React.ReactNode` | - |
+| className | 附加面板className | string | - |
+| classNames | 语义className | `Partial<Record<SemanticName, string>>` | - |
+| collapsible | 指定面板是否可折叠 | `header` \| `icon` \| `disabled` | - |
+| destroyOnHidden | 销毁非活动面板内容 | boolean | false |
+| 额外的 | 面板标题中的额外内容 | `React.ReactNode` | - |
+| forceRender | 在打开面板之前渲染面板内容 | boolean | false |
+| showArrow | 在标题旁边显示箭头 | boolean | true |
+| 风格 | 内联面板样式 | object | - |
 | styles | Semantic styles | `Partial<Record<SemanticName, React.CSSProperties>>` | - |
-| onItemClick | Callback when this panel is clicked | `(panelKey: React.Key) => void` | - |
+| onItemClick | 点击该面板时的回调 | `(panelKey: React.Key) => void` | - |
 
-### Collapse.Panel
+### 折叠面板
 
-`Collapse.Panel` is deprecated. Use `items` instead.
+`Collapse.Panel` 已弃用。请改用 `items`。
 
 ## 本地开发
 
@@ -142,8 +141,8 @@ npm run build
 npm run prepublishOnly
 ```
 
-The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
+包构建完成后，发布流程由 `@rc-component/np` 通过 `rc-np` 命令处理。
 
 ## 许可证
 
-@rc-component/collapse is released under the [MIT](./LICENSE.md) license.
+@rc-component/collapse 基于 [MIT](./LICENSE.md) 许可证发布。
