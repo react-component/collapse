@@ -1,10 +1,10 @@
 <div align="center">
   <h1>@rc-component/collapse</h1>
-  <p><sub>Part of the Ant Design ecosystem.</sub></p>
-  <p>🪗 A flexible collapse and accordion component for React.</p>
+  <p><sub>Ant Design 生态的一部分。</sub></p>
+  <p>🪗 灵活的 React 折叠面板和手风琴组件。</p>
 </div>
 
-<p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
+<p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
 
 <div align="center">
@@ -26,20 +26,20 @@
 [dumi-image]: https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square
 [dumi-url]: https://github.com/umijs/dumi
 
-## Highlights
+## 特性
 
-- Supports accordion and multi-panel collapse modes.
-- Prefer the `items` API for declarative panel configuration.
-- Keeps `Collapse.Panel` for compatibility. It is deprecated and will be removed in v4.
-- Supports custom expand icons, semantic class names, semantic styles, and motion.
+- 支持 accordion and multi-panel collapse modes.
+- 推荐使用 `items` API 声明式配置面板。
+- 保留 `Collapse.Panel` for compatibility. It is deprecated and will be removed in v4.
+- 支持 custom expand icons, semantic class names, semantic styles, and motion.
 
-## Install
+## 安装
 
 ```bash
 npm install @rc-component/collapse
 ```
 
-## Usage
+## 使用
 
 ```tsx | pure
 import Collapse from '@rc-component/collapse';
@@ -66,22 +66,22 @@ export default function App() {
 }
 ```
 
-## Examples
+## 示例
 
 ```bash
 npm install
 npm start
 ```
 
-Then open `http://localhost:8000`.
+然后打开 `http://localhost:8000`。
 
-Online demo: https://collapse-react-component.vercel.app
+在线演示： https://collapse-react-component.vercel.app
 
 ## API
 
 ### Collapse
 
-| Property | Description | Type | Default |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | accordion | Only one panel can be opened at a time | boolean | false |
 | activeKey | Current active panel key | `React.Key \| React.Key[]` | - |
@@ -100,7 +100,7 @@ Online demo: https://collapse-react-component.vercel.app
 
 ### ItemType
 
-| Property | Description | Type | Default |
+| 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
 | key | Panel key | `React.Key` | - |
 | label | Panel header content | `React.ReactNode` | - |
@@ -120,7 +120,7 @@ Online demo: https://collapse-react-component.vercel.app
 
 `Collapse.Panel` is deprecated. Use `items` instead.
 
-## Development
+## 本地开发
 
 ```bash
 npm install
@@ -135,7 +135,7 @@ npm run compile
 npm run build
 ```
 
-## Release
+## 发布
 
 ```bash
 npm run prepublishOnly
@@ -143,6 +143,6 @@ npm run prepublishOnly
 
 The release flow is handled by `@rc-component/np` through the `rc-np` command after the package build.
 
-## License
+## 许可证
 
 @rc-component/collapse is released under the [MIT](./LICENSE.md) license.
