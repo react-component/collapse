@@ -31,7 +31,7 @@
 - 支持手风琴和多面板折叠模式。
 - 推荐使用 `items` API 声明式配置面板。
 - 保留 `Collapse.Panel` 以实现兼容性。它已被弃用，并将在 v4 中删除。
-- 支持自定义展开图标、语义className称、语义样式和动作。
+- 支持自定义展开图标、语义化类名、语义样式和动画。
 
 ## 安装
 
@@ -85,35 +85,36 @@ npm start
 | --- | --- | --- | --- |
 | accordion | 一次只能打开一个面板 | boolean | false |
 | activeKey | 当前活动面板键 | `React.Key \| React.Key[]` | - |
-| className | 附加className | string | - |
-| classNames | 语义className | `Partial<Record<SemanticName, string>>` | - |
+| className | 附加 className | string | - |
+| classNames | 语义化类名 | `Partial<Record<SemanticName, string>>` | - |
 | collapsible | 指定面板触发区域是否可折叠 | `header` \| `icon` \| `disabled` | - |
 | defaultActiveKey | 初始活动面板键 | `React.Key \| React.Key[]` | - |
 | destroyOnHidden | 销毁非活动面板内容 | boolean | false |
 | expandIcon | 自定义展开图标 | `(props: object) => React.ReactNode` | - |
-| 项目 | 折叠项目内容 | `ItemType[]` | - |
-| openMotion | 自定义打开动作 | `CSSMotionProps` | - |
-| prefixCls | 组件className前缀 | string | `rc-collapse` |
-| 风格 | 内联样式 | object | - |
-| styles | Semantic styles | `Partial<Record<SemanticName, React.CSSProperties>>` | - |
+| items | 折叠条目内容 | `ItemType[]` | - |
+| openMotion | 自定义展开动画 | `CSSMotionProps` | - |
+| prefixCls | 组件 className 前缀 | string | `rc-collapse` |
+| style | 内联样式 | object | - |
+| styles | 语义化样式 | `Partial<Record<SemanticName, React.CSSProperties>>` | - |
 | onChange | 活动面板更改时的回调 | `(key: React.Key[]) => void` | - |
 
 ### ItemType
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| key | 面板按键 | `React.Key` | - |
+| key | 面板键值 | `React.Key` | - |
 | label | 面板标题内容 | `React.ReactNode` | - |
-| 孩子们 | 面板主体内容 | `React.ReactNode` | - |
-| className | 附加面板className | string | - |
-| classNames | 语义className | `Partial<Record<SemanticName, string>>` | - |
+| ref | 面板 DOM 引用 | `React.RefObject<HTMLDivElement>` | - |
+| children | 面板主体内容 | `React.ReactNode` | - |
+| className | 附加面板 className | string | - |
+| classNames | 语义化类名 | `Partial<Record<SemanticName, string>>` | - |
 | collapsible | 指定面板是否可折叠 | `header` \| `icon` \| `disabled` | - |
 | destroyOnHidden | 销毁非活动面板内容 | boolean | false |
-| 额外的 | 面板标题中的额外内容 | `React.ReactNode` | - |
+| extra | 面板标题中的额外内容 | `React.ReactNode` | - |
 | forceRender | 在打开面板之前渲染面板内容 | boolean | false |
 | showArrow | 在标题旁边显示箭头 | boolean | true |
-| 风格 | 内联面板样式 | object | - |
-| styles | Semantic styles | `Partial<Record<SemanticName, React.CSSProperties>>` | - |
+| style | 内联面板样式 | object | - |
+| styles | 语义化样式 | `Partial<Record<SemanticName, React.CSSProperties>>` | - |
 | onItemClick | 点击该面板时的回调 | `(panelKey: React.Key) => void` | - |
 
 ### 折叠面板

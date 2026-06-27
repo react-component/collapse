@@ -104,6 +104,7 @@ Then open `http://localhost:8000`.
 | --- | --- | --- | --- |
 | key | Panel key | `React.Key` | - |
 | label | Panel header content | `React.ReactNode` | - |
+| ref | Panel DOM ref | `React.RefObject<HTMLDivElement>` | - |
 | children | Panel body content | `React.ReactNode` | - |
 | className | Additional panel class name | string | - |
 | classNames | Semantic class names | `Partial<Record<SemanticName, string>>` | - |
