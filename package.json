@@ -10,13 +10,13 @@
     "collapse",
     "accordion"
   ],
-  "homepage": "http://github.com/react-component/collapse",
+  "homepage": "https://react-component.github.io/collapse",
   "bugs": {
-    "url": "http://github.com/react-component/collapse/issues"
+    "url": "https://github.com/react-component/collapse/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/collapse.git"
+    "url": "https://github.com/react-component/collapse.git"
   },
   "license": "MIT",
   "main": "./lib/index",
@@ -81,5 +81,8 @@
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
