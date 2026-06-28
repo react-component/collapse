@@ -146,4 +146,4 @@ npm run prepublishOnly
 
 ## 许可证
 
-@rc-component/collapse 基于 [MIT](./LICENSE.md) 许可证发布。
+@rc-component/collapse 基于 [MIT](./LICENSE) 许可证发布。
