@@ -44,7 +44,7 @@
     "docs:build:gh-pages": "GH_PAGES=1 npm run docs:build"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,json,md}": "prettier --write --ignore-unknown"
+    "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
