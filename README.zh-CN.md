@@ -14,6 +14,7 @@
 </div>
 
 <p align="center"><a href="./README.md">English</a> | 简体中文</p>
+
 ## 特性
 
 - 支持手风琴和多面板折叠模式。

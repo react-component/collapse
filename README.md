@@ -14,6 +14,7 @@
 </div>
 
 <p align="center">English | <a href="./README.zh-CN.md">简体中文</a></p>
+
 ## Highlights
 
 - Supports accordion and multi-panel collapse modes.
