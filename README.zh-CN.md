@@ -6,7 +6,6 @@
 
 <p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
-
 <div align="center">
 
 [![NPM version][npm-image]][npm-url] [![npm download][download-image]][download-url] [![build status][github-actions-image]][github-actions-url] [![Codecov][codecov-image]][codecov-url] [![bundle size][bundlephobia-image]][bundlephobia-url] [![dumi][dumi-image]][dumi-url]
@@ -127,6 +126,8 @@ npm start
 npm install
 npm start
 ```
+
+dumi 站点默认运行在 `http://localhost:8000`。
 
 ```bash
 npm test
