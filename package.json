@@ -21,7 +21,6 @@
   "license": "MIT",
   "main": "./lib/index",
   "module": "./es/index",
-  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
@@ -84,5 +83,6 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "types": "./es/index.d.ts"
 }
