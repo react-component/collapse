@@ -10,39 +10,40 @@
     "collapse",
     "accordion"
   ],
-  "homepage": "http://github.com/react-component/collapse",
+  "homepage": "https://react-component.github.io/collapse",
   "bugs": {
-    "url": "http://github.com/react-component/collapse/issues"
+    "url": "https://github.com/react-component/collapse/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-component/collapse.git"
+    "url": "https://github.com/react-component/collapse.git"
   },
   "license": "MIT",
   "main": "./lib/index",
   "module": "./es/index",
-  "typings": "es/index.d.ts",
   "files": [
     "lib",
     "es",
     "assets/*.css"
   ],
   "scripts": {
+    "build": "npm run docs:build",
     "compile": "father build && lessc assets/index.less assets/index.css",
     "coverage": "rc-test --coverage",
     "docs:build": "dumi build",
-    "docs:deploy": "npm run docs:build && gh-pages -d dist",
+    "docs:deploy": "gh-pages -d docs-dist",
     "lint": "eslint src/ --ext .ts,.tsx,.jsx,.js,.md",
     "prepare": "husky",
-    "now-build": "npm run docs:build",
     "prepublishOnly": "npm run compile && rc-np",
-    "prettier": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "postpublish": "npm run docs:deploy",
+    "prettier": "prettier --write --ignore-unknown .",
+    "postpublish": "npm run docs:build:gh-pages && npm run docs:deploy",
     "start": "dumi dev",
-    "test": "rc-test"
+    "test": "rc-test",
+    "tsc": "tsc --noEmit",
+    "docs:build:gh-pages": "GH_PAGES=1 npm run docs:build"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx,json,md}": "npm run prettier"
+    "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@babel/runtime": "^7.10.1",
@@ -53,31 +54,35 @@
   "devDependencies": {
     "@rc-component/father-plugin": "^2.2.0",
     "@rc-component/np": "^1.0.4",
-    "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/react": "^16.3.0",
-    "@types/jest": "^29.4.0",
-    "@types/node": "^24.2.0",
-    "@types/react": "^19.1.4",
-    "@types/react-dom": "^19.1.5",
-    "@umijs/fabric": "^4.0.0",
-    "dumi": "^2.1.1",
-    "eslint": "^8.55.0",
-    "eslint-plugin-jest": "^29.0.1",
-    "eslint-plugin-unicorn": "^49.0.0",
-    "father": "^4.1.3",
-    "gh-pages": "^6.2.0",
-    "husky": "^9.0.0",
-    "jest": "^30.0.3",
-    "less": "^4.2.0",
-    "lint-staged": "^16.0.0",
-    "prettier": "^3.0.3",
-    "rc-test": "^7.0.14",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "typescript": "^5.0.0"
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^15.0.7",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^26.0.1",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@umijs/fabric": "^4.0.1",
+    "dumi": "^2.4.35",
+    "eslint": "^8.57.1",
+    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "father": "^4.6.23",
+    "gh-pages": "^6.3.0",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "less": "^4.6.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.9.0",
+    "rc-test": "^7.1.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.9.3"
   },
   "peerDependencies": {
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "./es/index.d.ts"
 }

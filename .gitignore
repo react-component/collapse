@@ -36,6 +36,7 @@ pnpm-lock.yaml
 .dumi/tmp
 .dumi/tmp-production
 .dumi/tmp-test
+docs-dist
 .env.local
 src/.umi
 
