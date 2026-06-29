@@ -46,7 +46,7 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.1",
+    "@babel/runtime": "^8.0.0",
     "@rc-component/motion": "^1.1.4",
     "@rc-component/util": "^1.11.1",
     "clsx": "^2.1.1"
