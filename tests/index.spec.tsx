@@ -1,5 +1,6 @@
+import { fireEvent } from '@testing-library/dom';
 import type { RenderResult } from '@testing-library/react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { KeyCode } from '@rc-component/util';
 import React, { Fragment } from 'react';
 import Collapse, { Panel } from '../src/index';
