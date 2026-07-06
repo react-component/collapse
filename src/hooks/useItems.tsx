@@ -77,12 +77,7 @@ const convertItemsToNodes = (items: ItemType[], props: Props) => {
       rawOnItemClick?.(value);
     };
 
-    let isActive = false;
-    if (accordion) {
-      isActive = activeKey[0] === key;
-    } else {
-      isActive = activeKey.indexOf(key) > -1;
-    }
+    const isActive = accordion ? activeKey[0] === key : activeKey.indexOf(key) > -1;
 
     return (
       <CollapsePanel
@@ -142,12 +137,7 @@ const getNewChild = (
     onItemClick: childOnItemClick,
   } = child.props;
 
-  let isActive = false;
-  if (accordion) {
-    isActive = activeKey[0] === key;
-  } else {
-    isActive = activeKey.indexOf(key) > -1;
-  }
+  const isActive = accordion ? activeKey[0] === key : activeKey.indexOf(key) > -1;
 
   const mergeCollapsible = childCollapsible ?? collapsible;
 
