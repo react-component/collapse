@@ -395,13 +395,19 @@ describe('collapse', () => {
     });
   });
 
-  it('should toggle panel when press enter', () => {
-    const myKeyEvent = {
+  it('should toggle panel when press Enter or Space', () => {
+    const enterKeyEvent = {
       key: 'Enter',
       keyCode: KeyCode.ENTER,
       which: KeyCode.ENTER,
       // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-455854112
       charCode: KeyCode.ENTER,
+    };
+    const spaceKeyEvent = {
+      key: ' ',
+      keyCode: KeyCode.SPACE,
+      which: KeyCode.SPACE,
+      charCode: KeyCode.SPACE,
     };
 
     const { container } = render(
@@ -418,24 +424,37 @@ describe('collapse', () => {
       </Collapse>,
     );
 
-    fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[2], myKeyEvent);
+    fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[2], enterKeyEvent);
+    fireEvent.keyDown(container.querySelectorAll('.rc-collapse-header')?.[2], spaceKeyEvent);
     jest.runAllTimers();
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
 
-    fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, myKeyEvent);
+    fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, enterKeyEvent);
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
 
     expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-active');
 
-    fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, myKeyEvent);
+    fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, enterKeyEvent);
     jest.runAllTimers();
 
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
     expect(container.querySelector('.rc-collapse-panel')!.className).not.toContain(
       'rc-collapse-panel-active',
     );
+
+    expect(fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, spaceKeyEvent)).toBe(
+      false,
+    );
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
+
+    expect(fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, spaceKeyEvent)).toBe(
+      false,
+    );
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
   });
 
   describe('wrapped in Fragment', () => {
