@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
-import { KeyCode } from '@rc-component/util';
+import { isNonNullable, isReactRenderable, KeyCode } from '@rc-component/util';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
@@ -30,7 +30,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   const disabled = collapsible === 'disabled';
 
-  const ifExtraExist = extra !== null && extra !== undefined && typeof extra !== 'boolean';
+  const ifExtraExist = isNonNullable(extra) && typeof extra !== 'boolean';
 
   const collapsibleProps = {
     onClick: () => {
@@ -50,7 +50,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
   // ======================== Icon ========================
   const iconNodeInner =
     typeof expandIcon === 'function' ? expandIcon(props) : <i className="arrow" />;
-  const iconNode = iconNodeInner && (
+  const iconNode = isReactRenderable(iconNodeInner) && (
     <div
       className={clsx(`${prefixCls}-expand-icon`, customizeClassNames?.icon)}
       style={styles?.icon}

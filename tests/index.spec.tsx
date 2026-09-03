@@ -205,18 +205,25 @@ describe('collapse', () => {
     });
   });
 
-  it('should support extra whit number 0', () => {
+  it.each([
+    { name: 'number zero', extra: 0, expected: true, content: '0' },
+    { name: 'empty string', extra: '', expected: true, content: '' },
+    { name: 'true', extra: true, expected: false },
+    { name: 'false', extra: false, expected: false },
+  ])('should preserve extra semantics for $name', ({ extra, expected, content }) => {
     const { container } = render(
       <Collapse onChange={onChange} activeKey={0}>
-        <Panel header="collapse 0" key={0} extra={0}>
+        <Panel header="collapse 0" key={0} extra={extra}>
           zero
         </Panel>
       </Collapse>,
     );
 
     const extraNodes = container.querySelectorAll('.rc-collapse-extra');
-    expect(extraNodes).toHaveLength(1);
-    expect(extraNodes[0].innerHTML).toBe('0');
+    expect(extraNodes).toHaveLength(expected ? 1 : 0);
+    if (expected) {
+      expect(extraNodes[0].innerHTML).toBe(content);
+    }
   });
 
   it('should support activeKey number 0', () => {

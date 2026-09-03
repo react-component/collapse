@@ -48,7 +48,7 @@
   "dependencies": {
     "@babel/runtime": "^8.0.0",
     "@rc-component/motion": "^1.1.4",
-    "@rc-component/util": "^1.11.1",
+    "@rc-component/util": "^1.13.0",
     "clsx": "^2.1.1"
   },
   "devDependencies": {
