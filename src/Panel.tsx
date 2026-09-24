@@ -37,7 +37,16 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       onItemClick?.(panelKey);
     },
     onKeyDown: (e: React.KeyboardEvent) => {
-      if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
+      if (
+        !disabled &&
+        (e.key === 'Enter' ||
+          e.key === ' ' ||
+          e.keyCode === KeyCode.ENTER ||
+          e.keyCode === KeyCode.SPACE ||
+          e.which === KeyCode.ENTER ||
+          e.which === KeyCode.SPACE)
+      ) {
+        e.preventDefault();
         onItemClick?.(panelKey);
       }
     },
