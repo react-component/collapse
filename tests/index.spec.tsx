@@ -445,6 +445,47 @@ describe('collapse', () => {
     );
   });
 
+  it('should toggle panel and prevent default when press space', () => {
+    const spaceKeyEvent = {
+      key: ' ',
+      keyCode: KeyCode.SPACE,
+      which: KeyCode.SPACE,
+      charCode: KeyCode.SPACE,
+    };
+
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3" collapsible="disabled">
+          third
+        </Panel>
+      </Collapse>,
+    );
+
+    const headers = container.querySelectorAll('.rc-collapse-header');
+    fireEvent.keyDown(headers[2], spaceKeyEvent);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+
+    const header = headers[0];
+    const defaultPrevented = !fireEvent.keyDown(header, spaceKeyEvent);
+    jest.runAllTimers();
+
+    expect(defaultPrevented).toBeTruthy();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
+    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-active');
+
+    fireEvent.keyDown(header, spaceKeyEvent);
+    jest.runAllTimers();
+
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+  });
+
   describe('wrapped in Fragment', () => {
     const expandIcon = () => <span>test{'>'}</span>;
     const element = (
