@@ -486,6 +486,18 @@ describe('collapse', () => {
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
   });
 
+  it('should leave space on a nested extra button to the button', () => {
+    const { getByRole, container } = render(
+      <Collapse
+        items={[{ key: '1', label: 'Header', extra: <button>Action</button>, children: 'Content' }]}
+      />,
+    );
+
+    expect(fireEvent.keyDown(getByRole('button', { name: 'Action' }), { key: ' ' })).toBe(true);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+  });
+
   describe('wrapped in Fragment', () => {
     const expandIcon = () => <span>test{'>'}</span>;
     const element = (
