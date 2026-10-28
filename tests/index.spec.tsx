@@ -445,6 +445,75 @@ describe('collapse', () => {
     );
   });
 
+  it('should toggle panel and prevent default when press space', () => {
+    const spaceKeyEvent = {
+      key: ' ',
+      keyCode: KeyCode.SPACE,
+      which: KeyCode.SPACE,
+      charCode: KeyCode.SPACE,
+    };
+
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2">
+          second
+        </Panel>
+        <Panel header="collapse 3" key="3" collapsible="disabled">
+          third
+        </Panel>
+      </Collapse>,
+    );
+
+    const headers = container.querySelectorAll('.rc-collapse-header');
+    expect(fireEvent.keyDown(headers[2], spaceKeyEvent)).toBe(true);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+
+    const header = headers[0];
+    const defaultPrevented = !fireEvent.keyDown(header, spaceKeyEvent);
+    jest.runAllTimers();
+
+    expect(defaultPrevented).toBeTruthy();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
+    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-active');
+
+    fireEvent.keyDown(header, spaceKeyEvent);
+    jest.runAllTimers();
+
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+  });
+
+  it.each([{ key: 'Spacebar' }, { key: '', keyCode: KeyCode.SPACE }])(
+    'should toggle for a normalized legacy space event: %o',
+    event => {
+      const { container } = render(
+        <Collapse items={[{ key: '1', label: 'Header', children: 'Content' }]} />,
+      );
+      expect(fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, event)).toBe(false);
+      jest.runAllTimers();
+      expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
+    },
+  );
+
+  it('should leave space on a nested extra button to the button', () => {
+    const { getByRole, container } = render(
+      <Collapse
+        items={[{ key: '1', label: 'Header', extra: <button>Action</button>, children: 'Content' }]}
+      />,
+    );
+
+    expect(fireEvent.keyDown(getByRole('button', { name: 'Action' }), { key: ' ' })).toBe(true);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+
+    expect(fireEvent.keyDown(getByRole('button', { name: 'Action' }), { key: 'Enter' })).toBe(true);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+  });
+
   it('should link the header to its panel with aria-controls', () => {
     const { container } = render(
       <Collapse defaultActiveKey="1">
