@@ -508,6 +508,10 @@ describe('collapse', () => {
     expect(fireEvent.keyDown(getByRole('button', { name: 'Action' }), { key: ' ' })).toBe(true);
     jest.runAllTimers();
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+
+    expect(fireEvent.keyDown(getByRole('button', { name: 'Action' }), { key: 'Enter' })).toBe(true);
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
   });
 
   it('should link the header to its panel with aria-controls', () => {
