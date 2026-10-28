@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
-import { isNonNullable, isReactRenderable, KeyCode } from '@rc-component/util';
+import { isNonNullable, isReactRenderable, KeyCode, useId } from '@rc-component/util';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
@@ -32,7 +32,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   const ifExtraExist = isNonNullable(extra) && typeof extra !== 'boolean';
 
-  const panelId = React.useId();
+  const panelId = useId();
 
   const collapsibleProps = {
     onClick: () => {
