@@ -468,7 +468,7 @@ describe('collapse', () => {
     );
 
     const headers = container.querySelectorAll('.rc-collapse-header');
-    fireEvent.keyDown(headers[2], spaceKeyEvent);
+    expect(fireEvent.keyDown(headers[2], spaceKeyEvent)).toBe(true);
     jest.runAllTimers();
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
 
@@ -485,6 +485,18 @@ describe('collapse', () => {
 
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
   });
+
+  it.each([{ key: 'Spacebar' }, { key: '', keyCode: KeyCode.SPACE }])(
+    'should toggle for a normalized legacy space event: %o',
+    event => {
+      const { container } = render(
+        <Collapse items={[{ key: '1', label: 'Header', children: 'Content' }]} />,
+      );
+      expect(fireEvent.keyDown(container.querySelector('.rc-collapse-header')!, event)).toBe(false);
+      jest.runAllTimers();
+      expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(1);
+    },
+  );
 
   it('should leave space on a nested extra button to the button', () => {
     const { getByRole, container } = render(
