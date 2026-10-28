@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import CSSMotion from '@rc-component/motion';
-import { isNonNullable, isReactRenderable, KeyCode } from '@rc-component/util';
+import { isNonNullable, isReactRenderable, KeyCode, useId } from '@rc-component/util';
 import React from 'react';
 import type { CollapsePanelProps } from './interface';
 import PanelContent from './PanelContent';
@@ -32,6 +32,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
 
   const ifExtraExist = isNonNullable(extra) && typeof extra !== 'boolean';
 
+  const panelId = useId();
+
   const collapsibleProps = {
     onClick: () => {
       onItemClick?.(panelKey);
@@ -54,6 +56,8 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
     },
     role: accordion ? 'tab' : 'button',
     ['aria-expanded']: isActive,
+    // The panel content is not mounted while collapsed, so only reference it when expanded
+    ['aria-controls']: isActive ? panelId : undefined,
     ['aria-disabled']: disabled,
     tabIndex: disabled ? -1 : 0,
   };
@@ -128,6 +132,7 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
               styles={styles}
               isActive={isActive}
               forceRender={forceRender}
+              id={panelId}
               role={accordion ? 'tabpanel' : undefined}
             >
               {children}

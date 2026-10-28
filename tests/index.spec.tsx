@@ -498,6 +498,35 @@ describe('collapse', () => {
     expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
   });
 
+  it('should link the header to its panel with aria-controls', () => {
+    const { container } = render(
+      <Collapse defaultActiveKey="1">
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+      </Collapse>,
+    );
+    const panelId = container.querySelector('.rc-collapse-panel')!.id;
+
+    expect(panelId).toBeTruthy();
+    expect(container.querySelector('.rc-collapse-header')).toHaveAttribute(
+      'aria-controls',
+      panelId,
+    );
+  });
+
+  it('should not set aria-controls on a collapsed header', () => {
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+      </Collapse>,
+    );
+
+    expect(container.querySelector('.rc-collapse-header')).not.toHaveAttribute('aria-controls');
+  });
+
   describe('wrapped in Fragment', () => {
     const expandIcon = () => <span>test{'>'}</span>;
     const element = (
