@@ -445,6 +445,47 @@ describe('collapse', () => {
     );
   });
 
+  it('should toggle panel when press space', () => {
+    const { container } = render(
+      <Collapse>
+        <Panel header="collapse 1" key="1">
+          first
+        </Panel>
+        <Panel header="collapse 2" key="2" collapsible="disabled">
+          second
+        </Panel>
+      </Collapse>,
+    );
+    const [header, disabledHeader] = container.querySelectorAll('.rc-collapse-header');
+
+    fireEvent.keyDown(disabledHeader, { key: ' ' });
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+
+    // `fireEvent` returns false when the default action (page scroll) is prevented
+    expect(fireEvent.keyDown(header, { key: ' ' })).toBe(false);
+    jest.runAllTimers();
+    expect(container.querySelector('.rc-collapse-panel')).toHaveClass('rc-collapse-panel-active');
+
+    fireEvent.keyDown(header, { key: ' ' });
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+  });
+
+  it('should leave keyboard events on a nested extra button to the button', () => {
+    const { getByRole, container } = render(
+      <Collapse
+        items={[{ key: '1', label: 'Header', extra: <button>Action</button>, children: 'Content' }]}
+      />,
+    );
+    const button = getByRole('button', { name: 'Action' });
+
+    expect(fireEvent.keyDown(button, { key: ' ' })).toBe(true);
+    fireEvent.keyDown(button, { key: 'Enter', keyCode: KeyCode.ENTER });
+    jest.runAllTimers();
+    expect(container.querySelectorAll('.rc-collapse-panel-active')).toHaveLength(0);
+  });
+
   it('should link the header to its panel with aria-controls', () => {
     const { container } = render(
       <Collapse defaultActiveKey="1">

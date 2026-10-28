@@ -39,7 +39,15 @@ const CollapsePanel = React.forwardRef<HTMLDivElement, CollapsePanelProps>((prop
       onItemClick?.(panelKey);
     },
     onKeyDown: (e: React.KeyboardEvent) => {
+      // Leave key events from nested controls (e.g. a button in `extra`) to those controls
+      if (e.target !== e.currentTarget) {
+        return;
+      }
       if (e.key === 'Enter' || e.keyCode === KeyCode.ENTER || e.which === KeyCode.ENTER) {
+        onItemClick?.(panelKey);
+      } else if (e.key === ' ') {
+        // Prevent the page from scrolling, like a native button
+        e.preventDefault();
         onItemClick?.(panelKey);
       }
     },
