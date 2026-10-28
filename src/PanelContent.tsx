@@ -13,6 +13,7 @@ const PanelContent = React.forwardRef<
     style,
     children,
     isActive,
+    id,
     role,
     classNames: customizeClassNames,
     styles,
@@ -42,6 +43,7 @@ const PanelContent = React.forwardRef<
         className,
       )}
       style={style}
+      id={id}
       role={role}
     >
       <div className={clsx(`${prefixCls}-body`, customizeClassNames?.body)} style={styles?.body}>
